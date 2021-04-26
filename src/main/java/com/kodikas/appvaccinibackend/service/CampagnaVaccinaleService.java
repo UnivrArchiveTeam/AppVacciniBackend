@@ -5,36 +5,25 @@ import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CampagnaVaccinaleService {
     private final CampagnaVaccinaleRepository campagnavaccinaleRepository;
 
+    @Autowired
     public CampagnaVaccinaleService(CampagnaVaccinaleRepository campagnavaccinaleRepository) {
         this.campagnavaccinaleRepository = campagnavaccinaleRepository;
     }
 
     public List<CampagnaVaccinale> getCampagneVaccinali() {
-        List<CampagnaVaccinale> campagneVaccinali = new ArrayList<>();
-        campagnavaccinaleRepository.findAll().forEach(campagneVaccinali::add);
-        return campagneVaccinali;
-    }
-
-    public CampagnaVaccinale getCampagneVaccinalibyId(Long id) {
-        return campagnavaccinaleRepository.findById(id).get();
+        return campagnavaccinaleRepository.findAll();
     }
 
     public void addCampagnaVaccinale(CampagnaVaccinale campagnavaccinale) {
-        campagnavaccinaleRepository.save(campagnavaccinale);
-    }
+        if (campagnavaccinaleRepository.existsById(campagnavaccinale.getIdCampagna()))
+            throw new IllegalStateException("The given id is already taken");
 
-    public void updateCampagnaVaccinale(CampagnaVaccinale campagnavaccinale) {
         campagnavaccinaleRepository.save(campagnavaccinale);
-    }
-
-    public void deleteCampagnaVaccinale(Long id) {
-        campagnavaccinaleRepository.deleteById(id);
     }
 }

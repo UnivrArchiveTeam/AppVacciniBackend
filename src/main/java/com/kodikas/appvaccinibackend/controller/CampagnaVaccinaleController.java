@@ -11,33 +11,20 @@ import org.springframework.web.bind.annotation.*;
 public class CampagnaVaccinaleController {
 	private final CampagnaVaccinaleService campagnavaccinaleService;
 
+	@Autowired
 	public CampagnaVaccinaleController(CampagnaVaccinaleService campagnavaccinaleService) {
 		this.campagnavaccinaleService = campagnavaccinaleService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public CampagnaVaccinaleWrapper getCampagneVaccinali() {
-		return new CampagnaVaccinaleWrapper(campagnavaccinaleService.getCampagneVaccinali());
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public CampagnaVaccinale getCampagnaVaccinalebyId(@PathVariable Long id) {
-		return campagnavaccinaleService.getCampagneVaccinalibyId(id);
+		return new CampagnaVaccinaleWrapper(
+				campagnavaccinaleService.getCampagneVaccinali()
+		);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void addCampagnaVaccinale(@RequestBody CampagnaVaccinale campagnavaccinale) {
 		campagnavaccinaleService.addCampagnaVaccinale(campagnavaccinale);
 	}
-
-	@RequestMapping(method = RequestMethod.PUT)
-	public void updateCampagnaVaccinale(@RequestBody CampagnaVaccinale campagnavaccinale) {
-		campagnavaccinaleService.updateCampagnaVaccinale(campagnavaccinale);
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public void deleteCampagnaVaccinale(@PathVariable Long id) {
-		campagnavaccinaleService.deleteCampagnaVaccinale(id);
-	}
-
 }
