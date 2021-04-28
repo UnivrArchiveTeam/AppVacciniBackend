@@ -16,14 +16,14 @@ public class CampagnaVaccinaleController {
 		this.campagnavaccinaleService = campagnavaccinaleService;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public CampagnaVaccinaleWrapper getCampagneVaccinali() {
 		return new CampagnaVaccinaleWrapper(
 				campagnavaccinaleService.getCampagneVaccinali()
 		);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public void addCampagnaVaccinale(@RequestBody CampagnaVaccinale campagnavaccinale) {
 		campagnavaccinaleService.addCampagnaVaccinale(campagnavaccinale);
 	}

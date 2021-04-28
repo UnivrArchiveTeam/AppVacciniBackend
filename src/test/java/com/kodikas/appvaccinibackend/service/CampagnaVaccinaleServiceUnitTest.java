@@ -4,23 +4,23 @@ import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
 import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CampagnaVaccinaleServiceUnitTest {
+    @Mock
     private CampagnaVaccinaleRepository campagnaVaccinaleRepository;
     private CampagnaVaccinaleService underTest;
 
     @BeforeEach
     void setUp() {
-        this.campagnaVaccinaleRepository = Mockito.mock(CampagnaVaccinaleRepository.class);
         this.underTest = new CampagnaVaccinaleService(campagnaVaccinaleRepository);
     }
 
@@ -59,5 +59,27 @@ class CampagnaVaccinaleServiceUnitTest {
 
         // then
         verify(campagnaVaccinaleRepository).save(campagnaVaccinale);
+    }
+
+    @Test
+    void shouldNotAddExistingCampagnaVaccinale() {
+        // given
+        CampagnaVaccinale campagnaVaccinale = new CampagnaVaccinale(
+                1L,
+                "campagna1"
+        );
+
+
+        // when
+        when(campagnaVaccinaleRepository.existsById(campagnaVaccinale.getIdCampagna()))
+                .thenReturn(true);
+
+        // then
+        assertThatThrownBy(
+                () -> underTest.addCampagnaVaccinale(campagnaVaccinale)
+        ).isInstanceOf(IllegalStateException.class)
+                .hasMessage("The given id is already taken");
+
+        verify(campagnaVaccinaleRepository, never()).save(campagnaVaccinale);
     }
 }
