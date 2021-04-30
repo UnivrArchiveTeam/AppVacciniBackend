@@ -1,25 +1,30 @@
 package com.kodikas.appvaccinibackend.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class CampagnaVaccinale {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idCampagna;
     private String nomeMalattia;
-//    Vaccino vaccino;
+    @OneToMany(mappedBy = "campagnaVaccinale", cascade = CascadeType.ALL)
+    private Set<Vaccino> vaccini;
 
     public CampagnaVaccinale(String nomeMalattia) {
         this.nomeMalattia = nomeMalattia;
+    }
+
+    public CampagnaVaccinale(String nomeMalattia, Set<Vaccino> vaccini) {
+        this.nomeMalattia = nomeMalattia;
+        this.vaccini = vaccini;
     }
 }

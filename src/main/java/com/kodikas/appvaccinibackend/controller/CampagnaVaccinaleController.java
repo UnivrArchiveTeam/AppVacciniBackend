@@ -6,10 +6,12 @@ import com.kodikas.appvaccinibackend.wrapper.CampagnaVaccinaleWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+
 @RestController
-@RequestMapping(value = "/campagnevaccinali")
+@RequestMapping(path = "/campagnevaccinali")
 public class CampagnaVaccinaleController {
-	private final CampagnaVaccinaleService campagnavaccinaleService;
+	private CampagnaVaccinaleService campagnavaccinaleService;
 
 	@Autowired
 	public CampagnaVaccinaleController(CampagnaVaccinaleService campagnavaccinaleService) {
@@ -24,7 +26,7 @@ public class CampagnaVaccinaleController {
 	}
 
 	@PostMapping
-	public void addCampagnaVaccinale(@RequestBody CampagnaVaccinale campagnavaccinale) {
-		campagnavaccinaleService.addCampagnaVaccinale(campagnavaccinale);
+	public CampagnaVaccinale addCampagnaVaccinale(@RequestBody CampagnaVaccinale campagnaVaccinale) {
+		return campagnavaccinaleService.addCampagnaVaccinale(campagnaVaccinale);
 	}
 }

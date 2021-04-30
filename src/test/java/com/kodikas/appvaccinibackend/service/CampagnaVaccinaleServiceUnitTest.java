@@ -1,13 +1,17 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
+import com.kodikas.appvaccinibackend.model.Vaccino;
 import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
+import java.util.Set;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
@@ -16,10 +20,26 @@ class CampagnaVaccinaleServiceUnitTest {
     @Mock
     private CampagnaVaccinaleRepository campagnaVaccinaleRepository;
     private CampagnaVaccinaleService underTest;
+    private CampagnaVaccinale campagnaVaccinale;
 
     @BeforeEach
     void setUp() {
         this.underTest = new CampagnaVaccinaleService(campagnaVaccinaleRepository);
+        this.campagnaVaccinale = new CampagnaVaccinale(
+                2L,
+                "campagna2",
+                Set.of(
+                        new Vaccino(
+                                "jansen",
+                                100L
+                        )
+                )
+        );
+    }
+
+    @AfterEach
+    void tearDown() {
+        campagnaVaccinaleRepository.deleteAll();
     }
 
     @Test
@@ -29,9 +49,7 @@ class CampagnaVaccinaleServiceUnitTest {
                 new CampagnaVaccinale(
                         "campagna1"
                 ),
-                new CampagnaVaccinale(
-                        "campagna2"
-                )
+                campagnaVaccinale
         );
 
         // when
@@ -47,11 +65,6 @@ class CampagnaVaccinaleServiceUnitTest {
 
     @Test
     void shouldAddCampagnaVaccinale() {
-        // given
-        CampagnaVaccinale campagnaVaccinale = new CampagnaVaccinale(
-                "campagna1"
-        );
-
         // when
         underTest.addCampagnaVaccinale(campagnaVaccinale);
 
@@ -61,13 +74,6 @@ class CampagnaVaccinaleServiceUnitTest {
 
     @Test
     void shouldNotAddExistingCampagnaVaccinale() {
-        // given
-        CampagnaVaccinale campagnaVaccinale = new CampagnaVaccinale(
-                1L,
-                "campagna1"
-        );
-
-
         // when
         when(campagnaVaccinaleRepository.existsById(campagnaVaccinale.getIdCampagna()))
                 .thenReturn(true);
