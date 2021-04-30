@@ -1,22 +1,17 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Vaccino;
-import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import com.kodikas.appvaccinibackend.repository.VaccinoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
+@AllArgsConstructor
 public class VaccinoService {
     private final VaccinoRepository vaccinoRepository;
-
-    @Autowired
-    public VaccinoService(VaccinoRepository vaccinoRepository, CampagnaVaccinaleRepository campagnaVaccinaleRepository) {
-        this.vaccinoRepository = vaccinoRepository;
-    }
 
     public List<Vaccino> getVaccini() {
         return vaccinoRepository.findAll();

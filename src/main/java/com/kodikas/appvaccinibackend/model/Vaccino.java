@@ -33,6 +33,12 @@ public class Vaccino {
         this.quantità = quantità;
     }
 
+    public Vaccino(Long idVaccino, String nomeVaccino, Long quantità) {
+        this.idVaccino = idVaccino;
+        this.nomeVaccino = nomeVaccino;
+        this.quantità = quantità;
+    }
+
     @JsonIgnore
     private CampagnaVaccinale getCampagnaVaccinale() {
         return campagnaVaccinale;
