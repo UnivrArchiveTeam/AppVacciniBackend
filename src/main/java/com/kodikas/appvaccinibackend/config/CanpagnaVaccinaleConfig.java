@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 import java.util.Set;
 
-//@Configuration
+@Configuration
 public class CanpagnaVaccinaleConfig {
     Vaccino v1 = new Vaccino(
             "sputnik",
@@ -23,7 +23,8 @@ public class CanpagnaVaccinaleConfig {
 
     @Bean
     CommandLineRunner commandLineRunner(
-            CampagnaVaccinaleRepository repository) {
+            CampagnaVaccinaleRepository repository
+    ) {
         return args -> {
             CampagnaVaccinale campagnaVaccinale1 = new CampagnaVaccinale(
                     "campagna1",
