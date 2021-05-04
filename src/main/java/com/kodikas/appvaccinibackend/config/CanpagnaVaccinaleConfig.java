@@ -20,24 +20,24 @@ public class CanpagnaVaccinaleConfig {
             "jansen",
             100L
     );
+    CampagnaVaccinale campagnaVaccinale1 = new CampagnaVaccinale(
+            "campagna1",
+            Set.of(
+                    v1
+            )
+    );
+    CampagnaVaccinale campagnaVaccinale2 = new CampagnaVaccinale(
+            "campagna2",
+            Set.of(
+                    v2
+            )
+    );
 
     @Bean
     CommandLineRunner commandLineRunner(
             CampagnaVaccinaleRepository repository
     ) {
         return args -> {
-            CampagnaVaccinale campagnaVaccinale1 = new CampagnaVaccinale(
-                    "campagna1",
-                    Set.of(
-                            v1
-                    )
-            );
-            CampagnaVaccinale campagnaVaccinale2 = new CampagnaVaccinale(
-                    "campagna2",
-                    Set.of(
-                            v2
-                    )
-            );
             repository.saveAll(
                     List.of(campagnaVaccinale1, campagnaVaccinale2)
             );
