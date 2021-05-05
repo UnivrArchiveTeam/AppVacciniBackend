@@ -22,5 +22,6 @@ public class DisponibilitaService {
 
     public void addNewDisponibilita(Disponibilita disponibilita){
         //System.out.println(disponibilita);
+        disponibilitaRepostitory.save(disponibilita);
     }
 }
