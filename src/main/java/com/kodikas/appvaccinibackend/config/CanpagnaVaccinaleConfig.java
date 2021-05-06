@@ -34,7 +34,7 @@ public class CanpagnaVaccinaleConfig {
     );
 
     @Bean
-    CommandLineRunner commandLineRunner(
+    CommandLineRunner commandLineRunnerCampagna(
             CampagnaVaccinaleRepository repository
     ) {
         return args -> {
