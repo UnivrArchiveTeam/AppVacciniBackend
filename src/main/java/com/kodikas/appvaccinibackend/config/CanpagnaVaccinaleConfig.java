@@ -37,10 +37,8 @@ public class CanpagnaVaccinaleConfig {
     CommandLineRunner commandLineRunnerCampagna(
             CampagnaVaccinaleRepository repository
     ) {
-        return args -> {
-            repository.saveAll(
-                    List.of(campagnaVaccinale1, campagnaVaccinale2)
-            );
-        };
+        return args -> repository.saveAll(
+                List.of(campagnaVaccinale1, campagnaVaccinale2)
+        );
     }
 }

@@ -72,7 +72,7 @@ class VaccinoServiceUnitTest {
         underTest.aggiungiQuantità(id, 50L);
         // then
         verify(vaccinoRepository).save(any());
-        assertThat(vaccino.getQuantità()).isEqualTo(150L);
+        assertThat(vaccino.getQuantita()).isEqualTo(150L);
     }
 
     @ParameterizedTest

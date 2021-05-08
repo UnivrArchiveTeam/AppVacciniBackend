@@ -19,7 +19,7 @@ public class Vaccino {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idVaccino;
     private String nomeVaccino;
-    private Long quantità;
+    private Long quantita;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "id_campagna",
@@ -29,15 +29,15 @@ public class Vaccino {
     private CampagnaVaccinale campagnaVaccinale;
 //    private AventiDiritto aventiDiritto;
 
-    public Vaccino(String nomeVaccino, Long quantità) {
+    public Vaccino(String nomeVaccino, Long quantita) {
         this.nomeVaccino = nomeVaccino;
-        this.quantità = quantità;
+        this.quantita = quantita;
     }
 
-    public Vaccino(Long idVaccino, String nomeVaccino, Long quantità) {
+    public Vaccino(Long idVaccino, String nomeVaccino, Long quantita) {
         this.idVaccino = idVaccino;
         this.nomeVaccino = nomeVaccino;
-        this.quantità = quantità;
+        this.quantita = quantita;
     }
 
     @JsonIgnore

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +24,7 @@ public class CittadinoConfig {
     File file;
     List<Cittadino> cittadini = new ArrayList<>();
 
-    {
+    public CittadinoConfig() {
         try {
             file = ResourceUtils.getFile("classpath:fakeCitadini.csv");
             csvReader = new CSVReader(new FileReader(file));
@@ -55,25 +54,22 @@ public class CittadinoConfig {
         List<String> categorie = List.of("paziente oncologico", "paziente iperteso", "paziente a rischio");
         LocalDate dob = LocalDate.parse(dataDiNascita);
         int age = Period.between(dob, LocalDate.now()).getYears();
-        Random rand = new Random();
 
-        if (age >= 80)
-            return "over 80";
-        else if (age>=70 & age<=79)
+        if (age>=70 && age<=79)
             return "età 70-79";
+        else if (age >= 80)
+            return "over 80";
         else
-            return categorie.get(rand.nextInt(categorie.size()));
+            return categorie.get(new Random().nextInt(categorie.size()));
     }
 
     @Bean
     CommandLineRunner commandLineRunnerCittadino(
             CittadinoRepository repository
     ) {
-        return args -> {
-            repository.saveAll(
-                    cittadini
-            );
-        };
+        return args -> repository.saveAll(
+                cittadini
+        );
     }
 
 

@@ -26,8 +26,8 @@ public class VaccinoService {
             throw new IllegalStateException("La quantità inserita non è valida");
         else if (!vaccinoRepository.existsById(idVaccino))
             throw new IllegalStateException("Inserire un'id valido");
-        Vaccino vaccino = vaccinoRepository.findById(idVaccino).get();
-        vaccino.setQuantità(vaccino.getQuantità() + quantità);
+        var vaccino = vaccinoRepository.findById(idVaccino).get();
+        vaccino.setQuantita(vaccino.getQuantita() + quantità);
         return vaccinoRepository.save(vaccino);
     }
 }

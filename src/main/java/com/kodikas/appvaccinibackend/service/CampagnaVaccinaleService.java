@@ -23,7 +23,7 @@ public class CampagnaVaccinaleService {
         ) {
             throw new IllegalStateException("The given id is already taken");
         } else if (!campagnavaccinale.getVaccini().isEmpty()) {
-            campagnavaccinale.getVaccini().forEach((v) -> v.setCampagnaVaccinale(campagnavaccinale));
+            campagnavaccinale.getVaccini().forEach(vaccino -> vaccino.setCampagnaVaccinale(campagnavaccinale));
         }
         return campagnavaccinaleRepository.save(campagnavaccinale);
     }

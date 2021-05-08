@@ -83,6 +83,6 @@ class VaccinoControllerUnitTest {
         Vaccino result = underTest.modifyQuantità(id, 50L);
 
         verify(vaccinoService).aggiungiQuantità(id, 50L);
-        assertEquals(result.getQuantità(), modifiedVaccino.getQuantità());
+        assertEquals(result.getQuantita(), modifiedVaccino.getQuantita());
     }
 }

@@ -2,7 +2,6 @@ package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Cittadino;
 import com.kodikas.appvaccinibackend.repository.CittadinoRepository;
-import com.kodikas.appvaccinibackend.wrapper.CittadinoWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
