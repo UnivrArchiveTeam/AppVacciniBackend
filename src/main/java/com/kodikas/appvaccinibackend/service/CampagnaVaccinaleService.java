@@ -22,7 +22,15 @@ public class CampagnaVaccinaleService {
                         && campagnavaccinaleRepository.existsById(campagnavaccinale.getIdCampagna())
         ) {
             throw new IllegalStateException("The given id is already taken");
-        } else if (!campagnavaccinale.getVaccini().isEmpty()) {
+        }
+        else if (
+                // TODO add test
+                campagnavaccinale.getNomeMalattia() != null
+                        && campagnavaccinaleRepository.existsByNomeMalattia(campagnavaccinale.getNomeMalattia())
+        ) {
+            throw new IllegalStateException("The given nomeMalattia is already taken");
+        }
+        else if (campagnavaccinale.getVaccini() != null) {
             campagnavaccinale.getVaccini().forEach(vaccino -> vaccino.setCampagnaVaccinale(campagnavaccinale));
         }
         return campagnavaccinaleRepository.save(campagnavaccinale);
