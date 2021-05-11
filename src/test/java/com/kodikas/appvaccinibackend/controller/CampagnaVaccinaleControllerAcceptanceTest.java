@@ -5,7 +5,6 @@ import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
 import com.kodikas.appvaccinibackend.model.Vaccino;
 import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import com.kodikas.appvaccinibackend.wrapper.CampagnaVaccinaleWrapper;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,9 +74,6 @@ class CampagnaVaccinaleControllerAcceptanceTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(campagnaVaccinale)))
                 .andExpect(status().isOk());
-
-        System.out.println("ALL:");
-        List<CampagnaVaccinale> a = campagnaVaccinaleRepository.findAllByNomeMalattia(campagnaVaccinale.getNomeMalattia());
 
         assertThat(campagnaVaccinaleRepository.existsByNomeMalattia(campagnaVaccinale.getNomeMalattia())).isTrue();
         CampagnaVaccinale found = campagnaVaccinaleRepository
