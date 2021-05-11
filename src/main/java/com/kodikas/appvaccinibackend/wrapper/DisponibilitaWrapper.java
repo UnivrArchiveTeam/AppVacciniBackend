@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class DisponibilitaWrapper {
-    private List<Disponibilita> disponilita;
+    private List<Disponibilita> disponibilita;
 }

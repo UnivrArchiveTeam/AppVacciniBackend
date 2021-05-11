@@ -18,9 +18,19 @@ public class DisponibilitaController {
     public DisponibilitaController(DisponibilitaService disponibilitaService) { this.disponibilitaService = disponibilitaService; }
 
     @GetMapping
-    public DisponibilitaWrapper getDisponibilitá(){
+    public DisponibilitaWrapper getDisponibilitaALL(){
         return new DisponibilitaWrapper(disponibilitaService.getDisponibilita());
     }
     @PostMapping
     public void registerNewDisponibilita (@RequestBody Disponibilita disponibilita){disponibilitaService.addNewDisponibilita(disponibilita);}
+
+    @GetMapping("/disponibilita/{categoria}/{vaccino}")
+    public DisponibilitaWrapper getDisponibilita(
+            @PathVariable String categoria,
+            @PathVariable Long vaccino
+    ){
+        return disponibilitaService.getDisponibilitaDate(categoria,vaccino);
+    }
+
+
 }

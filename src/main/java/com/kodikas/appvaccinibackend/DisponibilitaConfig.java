@@ -20,16 +20,16 @@ public class DisponibilitaConfig {
             Disponibilita golosine = new Disponibilita(
                    "Golosine",
                     2341244L,
-                    "GAy",
+                    "over80",
                     LocalDate.of(2021,05,03),
                     LocalDate.of(2021,05,05),
                     LocalTime.of(13,00),
                     LocalTime.of(15,00)
             );
             Disponibilita santa = new Disponibilita(
-                    "santa",
+                    "Santa",
                     2341344L,
-                    "lesbiche",
+                    "over70",
                     LocalDate.of(2021,05,02),
                     LocalDate.of(2021,05,06),
                     LocalTime.of(13,00),
