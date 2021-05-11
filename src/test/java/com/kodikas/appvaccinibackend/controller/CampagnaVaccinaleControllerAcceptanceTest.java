@@ -1,6 +1,5 @@
 package com.kodikas.appvaccinibackend.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
 import com.kodikas.appvaccinibackend.model.Vaccino;
@@ -17,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -44,8 +44,9 @@ class CampagnaVaccinaleControllerAcceptanceTest {
 
     @BeforeEach
     void setUp() {
+        campagnaVaccinaleRepository.deleteAll();
         this.campagnaVaccinale = new CampagnaVaccinale(
-                "campagna2",
+                "campagna4",
                 Set.of(
                         new Vaccino(
                                 "jansen",
@@ -53,11 +54,6 @@ class CampagnaVaccinaleControllerAcceptanceTest {
                         )
                 )
         );
-    }
-
-    @AfterEach
-    void tearDown() {
-        campagnaVaccinaleRepository.deleteAll();
     }
 
     @Test
@@ -75,17 +71,21 @@ class CampagnaVaccinaleControllerAcceptanceTest {
     }
 
     @Test
-    void addCampagnaVaccinale() throws Exception {
+    void shouldAddCampagnaVaccinaleToDatabase() throws Exception {
         mockMvc.perform(post(URI)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(campagnaVaccinale)))
                 .andExpect(status().isOk());
 
+        System.out.println("ALL:");
+        List<CampagnaVaccinale> a = campagnaVaccinaleRepository.findAllByNomeMalattia(campagnaVaccinale.getNomeMalattia());
+
         assertThat(campagnaVaccinaleRepository.existsByNomeMalattia(campagnaVaccinale.getNomeMalattia())).isTrue();
-        assertThat(campagnaVaccinaleRepository.findCampagnaVaccinaleByNomeMalattia(campagnaVaccinale.getNomeMalattia()).get()).isNotNull();
         CampagnaVaccinale found = campagnaVaccinaleRepository
                 .findCampagnaVaccinaleByNomeMalattia(
-                        campagnaVaccinale.getNomeMalattia()).get();
+                        campagnaVaccinale.getNomeMalattia()
+                ).get();
+        assertThat(found).isNotNull();
         assertThat(found.getVaccini()).isNotNull();
     }
 }

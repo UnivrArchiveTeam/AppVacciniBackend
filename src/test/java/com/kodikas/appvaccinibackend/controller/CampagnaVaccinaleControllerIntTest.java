@@ -78,7 +78,6 @@ class CampagnaVaccinaleControllerIntTest {
     }
 
     @Test
-    // TODO: Fix Test
     void shouldAddCampagnaVaccinale() throws Exception {
         // when
         when(campagnaVaccinaleService.addCampagnaVaccinale(any())).thenReturn(expectedCampagnaVaccinale);
