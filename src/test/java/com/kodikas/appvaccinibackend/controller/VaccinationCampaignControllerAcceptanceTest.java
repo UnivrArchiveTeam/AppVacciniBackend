@@ -1,8 +1,8 @@
 package com.kodikas.appvaccinibackend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import com.kodikas.appvaccinibackend.wrapper.CampagnaVaccinaleWrapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -26,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class CampagnaVaccinaleControllerAcceptanceTest {
+class VaccinationCampaignControllerAcceptanceTest {
     private final static String URI = "/campagnevaccinali";
 
     @Autowired
@@ -38,15 +37,15 @@ class CampagnaVaccinaleControllerAcceptanceTest {
     @Autowired
     private CampagnaVaccinaleRepository campagnaVaccinaleRepository;
 
-    private CampagnaVaccinale campagnaVaccinale;
+    private VaccinationCampaign vaccinationCampaign;
 
     @BeforeEach
     void setUp() {
         campagnaVaccinaleRepository.deleteAll();
-        this.campagnaVaccinale = new CampagnaVaccinale(
+        this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna4",
                 Set.of(
-                        new Vaccino(
+                        new Vaccine(
                                 "jansen",
                                 100L
                         )
@@ -55,32 +54,32 @@ class CampagnaVaccinaleControllerAcceptanceTest {
     }
 
     @Test
-    void shouldReturnCampagneVaccinali() throws Exception {
+    void getCampagneVaccinali_shouldReturnCampagneVaccinali() throws Exception {
         // given
-        campagnaVaccinaleRepository.save(campagnaVaccinale);
+        campagnaVaccinaleRepository.save(vaccinationCampaign);
 
         // then
         MvcResult result = mockMvc.perform(get(URI)).andExpect(status().isOk()).andReturn();
         String response = result.getResponse().getContentAsString();
         CampagnaVaccinaleWrapper resultObject = objectMapper.readValue(response, CampagnaVaccinaleWrapper.class);
         assertThat(resultObject.getCampagneVaccinali()).isNotNull();
-        assertThat(resultObject.getCampagneVaccinali().get(0).getVaccini()).isNotNull();
-        assertThat(resultObject.getCampagneVaccinali().get(0).getNomeMalattia()).isEqualTo(campagnaVaccinale.getNomeMalattia());
+        assertThat(resultObject.getCampagneVaccinali().get(0).getVaccines()).isNotNull();
+        assertThat(resultObject.getCampagneVaccinali().get(0).getDiseaseName()).isEqualTo(vaccinationCampaign.getDiseaseName());
     }
 
     @Test
     void shouldAddCampagnaVaccinaleToDatabase() throws Exception {
         mockMvc.perform(post(URI)
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(campagnaVaccinale)))
+                .content(objectMapper.writeValueAsString(vaccinationCampaign)))
                 .andExpect(status().isOk());
 
-        assertThat(campagnaVaccinaleRepository.existsByNomeMalattia(campagnaVaccinale.getNomeMalattia())).isTrue();
-        CampagnaVaccinale found = campagnaVaccinaleRepository
+        assertThat(campagnaVaccinaleRepository.existsByNomeMalattia(vaccinationCampaign.getDiseaseName())).isTrue();
+        VaccinationCampaign found = campagnaVaccinaleRepository
                 .findCampagnaVaccinaleByNomeMalattia(
-                        campagnaVaccinale.getNomeMalattia()
+                        vaccinationCampaign.getDiseaseName()
                 ).get();
         assertThat(found).isNotNull();
-        assertThat(found.getVaccini()).isNotNull();
+        assertThat(found.getVaccines()).isNotNull();
     }
 }

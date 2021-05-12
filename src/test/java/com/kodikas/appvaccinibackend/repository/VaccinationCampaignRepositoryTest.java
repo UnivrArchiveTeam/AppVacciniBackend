@@ -1,6 +1,6 @@
 package com.kodikas.appvaccinibackend.repository;
 
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class CampagnaVaccinaleRepositoryTest {
+class VaccinationCampaignRepositoryTest {
     @Autowired private CampagnaVaccinaleRepository underTest;
-    CampagnaVaccinale campagnaVaccinale;
+    VaccinationCampaign vaccinationCampaign;
     String nomeMalattia;
 
     @Test
@@ -26,7 +26,7 @@ class CampagnaVaccinaleRepositoryTest {
     @BeforeEach
     void setUp() {
         nomeMalattia = "campagna1";
-        campagnaVaccinale = new CampagnaVaccinale(
+        vaccinationCampaign = new VaccinationCampaign(
                 nomeMalattia
         );
     }
@@ -38,16 +38,16 @@ class CampagnaVaccinaleRepositoryTest {
 
     @Test
     void itShoudCheckCampagnaVaccinaleExistanceByNomeMalattia() {
-        underTest.save(campagnaVaccinale);
+        underTest.save(vaccinationCampaign);
         boolean result = underTest.existsByNomeMalattia(nomeMalattia);
         assertThat(result).isTrue();
     }
 
     @Test
     void itShoudRetrieveCampagnaVaccinaleByNomeMalattia() {
-        underTest.save(campagnaVaccinale);
-        CampagnaVaccinale result = underTest.findCampagnaVaccinaleByNomeMalattia(nomeMalattia).get();
+        underTest.save(vaccinationCampaign);
+        VaccinationCampaign result = underTest.findCampagnaVaccinaleByNomeMalattia(nomeMalattia).get();
         assertThat(result).isNotNull();
-        assertThat(result.getNomeMalattia()).isEqualTo(nomeMalattia);
+        assertThat(result.getDiseaseName()).isEqualTo(nomeMalattia);
     }
 }

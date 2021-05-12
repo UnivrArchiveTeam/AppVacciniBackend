@@ -1,6 +1,6 @@
 package com.kodikas.appvaccinibackend.service;
 
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccinoRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,16 +20,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class VaccinoServiceUnitTest {
+class VaccineServiceUnitTest {
     @Mock
     private VaccinoRepository vaccinoRepository;
     private VaccinoService underTest;
-    private Vaccino vaccino;
+    private Vaccine vaccine;
 
     @BeforeEach
     void setUp() {
         this.underTest = new VaccinoService(vaccinoRepository);
-        this.vaccino = new Vaccino(
+        this.vaccine = new Vaccine(
                 8L,
                 "jansen",
                 100L
@@ -40,8 +40,8 @@ class VaccinoServiceUnitTest {
     @Test
     void canGetAllVaccini() {
         // given
-        List<Vaccino> vaccini = List.of(
-                vaccino
+        List<Vaccine> vaccini = List.of(
+                vaccine
         );
 
         // when
@@ -56,30 +56,30 @@ class VaccinoServiceUnitTest {
     @Test
     void shouldAddVaccino() {
         // when
-        underTest.addVaccino(vaccino);
+        underTest.addVaccino(vaccine);
 
         // then
-        verify(vaccinoRepository).save(vaccino);
+        verify(vaccinoRepository).save(vaccine);
     }
 
     @Test
     void shouldAddQuantity() {
         // when
-        Long id = vaccino.getIdVaccino();
+        Long id = vaccine.getVaccineID();
         when(vaccinoRepository.existsById(id)).thenReturn(true);
-        when(vaccinoRepository.findById(id)).thenReturn(Optional.of(vaccino));
+        when(vaccinoRepository.findById(id)).thenReturn(Optional.of(vaccine));
 
         underTest.aggiungiQuantità(id, 50L);
         // then
         verify(vaccinoRepository).save(any());
-        assertThat(vaccino.getQuantita()).isEqualTo(150L);
+        assertThat(vaccine.getQuantity()).isEqualTo(150L);
     }
 
     @ParameterizedTest
     @ValueSource(longs = {-10, 0, Long.MIN_VALUE})
     void shouldThrowErrorWhenQuantitaLessThanOrEqualZero(Long quantità) {
         // when
-        Long id = vaccino.getIdVaccino();
+        Long id = vaccine.getVaccineID();
 
         // then
         assertThatThrownBy(
@@ -94,7 +94,7 @@ class VaccinoServiceUnitTest {
     @Test
     void shouldThrowErrorWhenIdDoesNotExist() {
         // when
-        Long id = vaccino.getIdVaccino();
+        Long id = vaccine.getVaccineID();
         when(vaccinoRepository.existsById(id)).thenReturn(false);
 
         // then

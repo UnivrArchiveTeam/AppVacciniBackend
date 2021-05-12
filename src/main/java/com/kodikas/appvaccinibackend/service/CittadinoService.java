@@ -1,6 +1,6 @@
 package com.kodikas.appvaccinibackend.service;
 
-import com.kodikas.appvaccinibackend.model.Cittadino;
+import com.kodikas.appvaccinibackend.model.Citizen;
 import com.kodikas.appvaccinibackend.repository.CittadinoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,22 +12,22 @@ import java.util.List;
 public class CittadinoService {
     private CittadinoRepository cittadinoRepository;
 
-    public List<Cittadino> getCittadini() {
+    public List<Citizen> getCittadini() {
         return cittadinoRepository.findAll();
     }
 
-    public Cittadino getCittadino(String codiceFiscale) {
+    public Citizen getCittadino(String codiceFiscale) {
         if (!cittadinoRepository.existsById(codiceFiscale))
             throw new IllegalStateException("Inserire un codice fiscale valido");
         return cittadinoRepository.findById(codiceFiscale).get();
     }
 
-    public Cittadino modifyRegistrato(String codiceFiscale) {
+    public Citizen modifyRegistrato(String codiceFiscale) {
         if (!cittadinoRepository.existsById(codiceFiscale))
             throw new IllegalStateException("Inserire un codice fiscale valido");
 
-        Cittadino cittadino = cittadinoRepository.findById(codiceFiscale).get();
-        cittadino.setRegistrato(true);
-        return cittadinoRepository.save(cittadino);
+        Citizen citizen = cittadinoRepository.findById(codiceFiscale).get();
+        citizen.setRegistrato(true);
+        return cittadinoRepository.save(citizen);
     }
 }

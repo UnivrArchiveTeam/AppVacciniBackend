@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.controller;
 
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.service.VaccinoService;
 import com.kodikas.appvaccinibackend.wrapper.VaccinoWrapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,20 +18,20 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class VaccinoControllerUnitTest {
+class VaccineControllerUnitTest {
     @Mock
     private VaccinoService vaccinoService;
     private VaccinoController underTest;
-    private Vaccino vaccino;
+    private Vaccine vaccine;
 
     @BeforeEach
     void setUp() {
         underTest = new VaccinoController(vaccinoService);
-        vaccino = new Vaccino(
+        vaccine = new Vaccine(
                 1L,
                 "jansen",
                 100L,
-                new CampagnaVaccinale(
+                new VaccinationCampaign(
                         "campagna2"
                 )
         );
@@ -40,7 +40,7 @@ class VaccinoControllerUnitTest {
 
     @Test
     void canGetAllVaccini() {
-        List<Vaccino> vaccini = List.of(vaccino);
+        List<Vaccine> vaccini = List.of(vaccine);
 
         // when
         when(vaccinoService.getVaccini()).thenReturn(vaccini);
@@ -55,34 +55,34 @@ class VaccinoControllerUnitTest {
     @Test
     void shouldAddVaccino() {
         // when
-        when(vaccinoService.addVaccino(any())).thenReturn(vaccino);
+        when(vaccinoService.addVaccino(any())).thenReturn(vaccine);
 
         // then
-        Vaccino result = underTest.addVaccino(vaccino);
-        verify(vaccinoService).addVaccino(vaccino);
-        assertEquals(vaccino, result);
+        Vaccine result = underTest.addVaccino(vaccine);
+        verify(vaccinoService).addVaccino(vaccine);
+        assertEquals(vaccine, result);
     }
 
     @Test
     void modifyQuantità() {
         // given
-        Vaccino modifiedVaccino = new Vaccino(
+        Vaccine modifiedVaccine = new Vaccine(
                 1L,
                 "jansen",
                 150L,
-                new CampagnaVaccinale(
+                new VaccinationCampaign(
                         "campagna2"
                 )
         );
-        Long id = vaccino.getIdVaccino();
+        Long id = vaccine.getVaccineID();
 
         // when
-        when(vaccinoService.aggiungiQuantità(id, 50L)).thenReturn(modifiedVaccino);
+        when(vaccinoService.aggiungiQuantità(id, 50L)).thenReturn(modifiedVaccine);
 
         // then
-        Vaccino result = underTest.modifyQuantità(id, 50L);
+        Vaccine result = underTest.modifyQuantità(id, 50L);
 
         verify(vaccinoService).aggiungiQuantità(id, 50L);
-        assertEquals(result.getQuantita(), modifiedVaccino.getQuantita());
+        assertEquals(result.getQuantity(), modifiedVaccine.getQuantity());
     }
 }

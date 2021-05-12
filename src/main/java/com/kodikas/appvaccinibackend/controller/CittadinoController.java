@@ -1,6 +1,6 @@
 package com.kodikas.appvaccinibackend.controller;
 
-import com.kodikas.appvaccinibackend.model.Cittadino;
+import com.kodikas.appvaccinibackend.model.Citizen;
 import com.kodikas.appvaccinibackend.service.CittadinoService;
 import com.kodikas.appvaccinibackend.wrapper.CittadinoWrapper;
 import lombok.AllArgsConstructor;
@@ -20,12 +20,12 @@ public class CittadinoController {
     }
 
     @GetMapping(path = "/{codiceFiscale}")
-    public Cittadino getCittadino(@PathVariable String codiceFiscale) {
+    public Citizen getCittadino(@PathVariable String codiceFiscale) {
         return cittadinoService.getCittadino(codiceFiscale);
     }
 
     @PutMapping(path = "/registrato/{codiceFiscale}")
-    public Cittadino modifyRegistrato(@PathVariable String codiceFiscale) {
+    public Citizen modifyRegistrato(@PathVariable String codiceFiscale) {
         return cittadinoService.modifyRegistrato(codiceFiscale);
     }
 

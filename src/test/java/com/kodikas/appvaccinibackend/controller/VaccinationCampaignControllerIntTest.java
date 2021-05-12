@@ -1,13 +1,12 @@
 package com.kodikas.appvaccinibackend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.service.CampagnaVaccinaleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,16 +23,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = CampagnaVaccinaleController.class)
-class CampagnaVaccinaleControllerIntTest {
+class VaccinationCampaignControllerIntTest {
     private final static String URI = "/campagnevaccinali";
 
-    CampagnaVaccinale campagnaVaccinale;
-    CampagnaVaccinale expectedCampagnaVaccinale;
+    VaccinationCampaign vaccinationCampaign;
+    VaccinationCampaign expectedVaccinationCampaign;
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,21 +45,21 @@ class CampagnaVaccinaleControllerIntTest {
 
     @BeforeEach
     void setUp() {
-        this.campagnaVaccinale = new CampagnaVaccinale(
+        this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna2",
                 Set.of(
-                        new Vaccino(
+                        new Vaccine(
                                 "jansen",
                                 100L
                         )
                 )
         );
 
-        this.expectedCampagnaVaccinale = new CampagnaVaccinale(
+        this.expectedVaccinationCampaign = new VaccinationCampaign(
                 2L,
                 "campagna2",
                 Set.of(
-                        new Vaccino(
+                        new Vaccine(
                                 1L,
                                 "jansen",
                                 100L
@@ -80,17 +78,17 @@ class CampagnaVaccinaleControllerIntTest {
     @Test
     void shouldAddCampagnaVaccinale() throws Exception {
         // when
-        when(campagnaVaccinaleService.addCampagnaVaccinale(any())).thenReturn(expectedCampagnaVaccinale);
+        when(campagnaVaccinaleService.addCampagnaVaccinale(any())).thenReturn(expectedVaccinationCampaign);
 
         MvcResult result = mockMvc.perform(post(URI)
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(campagnaVaccinale)))
+                .content(objectMapper.writeValueAsString(vaccinationCampaign)))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String resultString = result.getResponse().getContentAsString();
         assertThat(resultString).isEqualToIgnoringWhitespace(
-                objectMapper.writeValueAsString(expectedCampagnaVaccinale)
+                objectMapper.writeValueAsString(expectedVaccinationCampaign)
         );
     }
 }

@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.controller;
 
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.service.CampagnaVaccinaleService;
 import com.kodikas.appvaccinibackend.wrapper.CampagnaVaccinaleWrapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,21 +19,21 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CampagnaVaccinaleControllerUnitTest {
+class VaccinationCampaignControllerUnitTest {
 
     @Mock
     private CampagnaVaccinaleService campagnaVaccinaleService;
     private CampagnaVaccinaleController underTest;
-    private CampagnaVaccinale campagnaVaccinale;
+    private VaccinationCampaign vaccinationCampaign;
 
     @BeforeEach
     void setUp() {
         underTest = new CampagnaVaccinaleController(campagnaVaccinaleService);
-        campagnaVaccinale = new CampagnaVaccinale(
+        vaccinationCampaign = new VaccinationCampaign(
                 2L,
                 "campagna2",
                 Set.of(
-                        new Vaccino(
+                        new Vaccine(
                                 1L,
                                 "jansen",
                                 100L
@@ -45,8 +45,8 @@ class CampagnaVaccinaleControllerUnitTest {
     @Test
     void canGetAllCampagneVaccinali() {
         // given
-        List<CampagnaVaccinale> campagnaVaccinali = List.of(
-                campagnaVaccinale
+        List<VaccinationCampaign> campagnaVaccinali = List.of(
+                vaccinationCampaign
         );
 
         // when
@@ -61,10 +61,10 @@ class CampagnaVaccinaleControllerUnitTest {
     void shouldAddCampagnaVaccinale() {
         // when
         when(campagnaVaccinaleService.addCampagnaVaccinale(any()))
-                .thenReturn(campagnaVaccinale);
+                .thenReturn(vaccinationCampaign);
         // then
-        CampagnaVaccinale result =  underTest.addCampagnaVaccinale(campagnaVaccinale);
-        verify(campagnaVaccinaleService).addCampagnaVaccinale(campagnaVaccinale);
-        assertEquals(campagnaVaccinale, result);
+        VaccinationCampaign result =  underTest.addCampagnaVaccinale(vaccinationCampaign);
+        verify(campagnaVaccinaleService).addCampagnaVaccinale(vaccinationCampaign);
+        assertEquals(vaccinationCampaign, result);
     }
 }

@@ -1,6 +1,6 @@
 package com.kodikas.appvaccinibackend.config;
 
-import com.kodikas.appvaccinibackend.model.Cittadino;
+import com.kodikas.appvaccinibackend.model.Citizen;
 import com.kodikas.appvaccinibackend.repository.CittadinoRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -22,7 +22,7 @@ import java.util.Random;
 public class CittadinoConfig {
     CSVReader csvReader;
     File file;
-    List<Cittadino> cittadini = new ArrayList<>();
+    List<Citizen> cittadini = new ArrayList<>();
 
     public CittadinoConfig() {
         try {
@@ -32,7 +32,7 @@ public class CittadinoConfig {
             r.forEach(x -> {
                         if (!x[0].equals("Row")) {
                             cittadini.add(
-                                    new Cittadino(
+                                    new Citizen(
                                             x[6],
                                             Long.parseLong(x[7]),
                                             x[1],

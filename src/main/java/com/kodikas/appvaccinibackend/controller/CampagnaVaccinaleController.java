@@ -1,6 +1,6 @@
 package com.kodikas.appvaccinibackend.controller;
 
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.service.CampagnaVaccinaleService;
 import com.kodikas.appvaccinibackend.wrapper.CampagnaVaccinaleWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class CampagnaVaccinaleController {
 	}
 
 	@PostMapping
-	public CampagnaVaccinale addCampagnaVaccinale(@RequestBody CampagnaVaccinale campagnaVaccinale) {
-		return campagnavaccinaleService.addCampagnaVaccinale(campagnaVaccinale);
+	public VaccinationCampaign addCampagnaVaccinale(@RequestBody VaccinationCampaign vaccinationCampaign) {
+		return campagnavaccinaleService.addCampagnaVaccinale(vaccinationCampaign);
 	}
 }

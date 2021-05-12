@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.config;
 
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -12,21 +12,21 @@ import java.util.Set;
 
 @Configuration
 public class CanpagnaVaccinaleConfig {
-    Vaccino v1 = new Vaccino(
+    Vaccine v1 = new Vaccine(
             "sputnik",
             100L
     );
-    Vaccino v2 = new Vaccino(
+    Vaccine v2 = new Vaccine(
             "jansen",
             100L
     );
-    CampagnaVaccinale campagnaVaccinale1 = new CampagnaVaccinale(
+    VaccinationCampaign vaccinationCampaign1 = new VaccinationCampaign(
             "campagna1",
             Set.of(
                     v1
             )
     );
-    CampagnaVaccinale campagnaVaccinale2 = new CampagnaVaccinale(
+    VaccinationCampaign vaccinationCampaign2 = new VaccinationCampaign(
             "campagna2",
             Set.of(
                     v2
@@ -38,7 +38,7 @@ public class CanpagnaVaccinaleConfig {
             CampagnaVaccinaleRepository repository
     ) {
         return args -> repository.saveAll(
-                List.of(campagnaVaccinale1, campagnaVaccinale2)
+                List.of(vaccinationCampaign1, vaccinationCampaign2)
         );
     }
 }

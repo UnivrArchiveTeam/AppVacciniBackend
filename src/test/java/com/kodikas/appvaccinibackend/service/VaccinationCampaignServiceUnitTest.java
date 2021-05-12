@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.service;
 
-import com.kodikas.appvaccinibackend.model.CampagnaVaccinale;
-import com.kodikas.appvaccinibackend.model.Vaccino;
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,30 +18,30 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CampagnaVaccinaleServiceUnitTest {
+class VaccinationCampaignServiceUnitTest {
     @Mock
     private CampagnaVaccinaleRepository campagnaVaccinaleRepository;
     private CampagnaVaccinaleService underTest;
-    private CampagnaVaccinale campagnaVaccinale;
-    private CampagnaVaccinale expectedCampagnaVaccinale;
+    private VaccinationCampaign vaccinationCampaign;
+    private VaccinationCampaign expectedVaccinationCampaign;
 
     @BeforeEach
     void setUp() {
         this.underTest = new CampagnaVaccinaleService(campagnaVaccinaleRepository);
-        this.campagnaVaccinale = new CampagnaVaccinale(
+        this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna2",
                 Set.of(
-                        new Vaccino(
+                        new Vaccine(
                                 "jansen",
                                 100L
                         )
                 )
         );
-        this.expectedCampagnaVaccinale = new CampagnaVaccinale(
+        this.expectedVaccinationCampaign = new VaccinationCampaign(
                 2L,
                 "campagna2",
                 Set.of(
-                        new Vaccino(
+                        new Vaccine(
                                 1L,
                                 "jansen",
                                 100L
@@ -58,11 +58,11 @@ class CampagnaVaccinaleServiceUnitTest {
     @Test
     void canGetAllCampagneVaccinali() {
         // given
-        List<CampagnaVaccinale> campagne = List.of(
-                new CampagnaVaccinale(
+        List<VaccinationCampaign> campagne = List.of(
+                new VaccinationCampaign(
                         "campagna1"
                 ),
-                expectedCampagnaVaccinale
+                expectedVaccinationCampaign
         );
 
         // when
@@ -70,36 +70,36 @@ class CampagnaVaccinaleServiceUnitTest {
                 campagne
         );
 
-        List<CampagnaVaccinale> result = underTest.getCampagneVaccinali();
+        List<VaccinationCampaign> result = underTest.getCampagneVaccinali();
 
         // then
         verify(campagnaVaccinaleRepository).findAll();
-        assertThat(result.get(0).getNomeMalattia()).isNotNull();
+        assertThat(result.get(0).getDiseaseName()).isNotNull();
     }
 
     @Test
     void shouldAddCampagnaVaccinale() {
         // when
-        when(campagnaVaccinaleRepository.save(any())).thenReturn(expectedCampagnaVaccinale);
+        when(campagnaVaccinaleRepository.save(any())).thenReturn(expectedVaccinationCampaign);
 
         // then
-        CampagnaVaccinale result = underTest.addCampagnaVaccinale(campagnaVaccinale);
-        verify(campagnaVaccinaleRepository).save(campagnaVaccinale);
-        assertThat(result).isEqualTo(expectedCampagnaVaccinale);
+        VaccinationCampaign result = underTest.addCampagnaVaccinale(vaccinationCampaign);
+        verify(campagnaVaccinaleRepository).save(vaccinationCampaign);
+        assertThat(result).isEqualTo(expectedVaccinationCampaign);
     }
 
     @Test
     void shouldNotAddExistingCampagnaVaccinale() {
         // when
-        when(campagnaVaccinaleRepository.existsById(expectedCampagnaVaccinale.getIdCampagna()))
+        when(campagnaVaccinaleRepository.existsById(expectedVaccinationCampaign.getCampaignID()))
                 .thenReturn(true);
 
         // then
         assertThatThrownBy(
-                () -> underTest.addCampagnaVaccinale(expectedCampagnaVaccinale)
+                () -> underTest.addCampagnaVaccinale(expectedVaccinationCampaign)
         ).isInstanceOf(IllegalStateException.class)
                 .hasMessage("The given id is already taken");
 
-        verify(campagnaVaccinaleRepository, never()).save(expectedCampagnaVaccinale );
+        verify(campagnaVaccinaleRepository, never()).save(expectedVaccinationCampaign);
     }
 }
