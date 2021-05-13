@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CampagnaVaccinaleRepository extends JpaRepository<VaccinationCampaign, Long> {
-    boolean existsByNomeMalattia (String nomeMalattia);
-    Optional<VaccinationCampaign> findCampagnaVaccinaleByNomeMalattia (String nomeMalattia);
+public interface VaccinationCampaignRepository extends JpaRepository<VaccinationCampaign, Long> {
+    boolean existsByDiseaseName (String diseaseName);
+    Optional<VaccinationCampaign> findVaccinationCampaignByDiseaseName(String diseaseName);
 }

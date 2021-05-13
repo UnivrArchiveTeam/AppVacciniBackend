@@ -2,7 +2,7 @@ package com.kodikas.appvaccinibackend.config;
 
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
+import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Configuration
-public class CanpagnaVaccinaleConfig {
+public class VaccinationCampaignConfig {
     Vaccine v1 = new Vaccine(
             "sputnik",
             100L
@@ -34,8 +34,8 @@ public class CanpagnaVaccinaleConfig {
     );
 
     @Bean
-    CommandLineRunner commandLineRunnerCampagna(
-            CampagnaVaccinaleRepository repository
+    CommandLineRunner commandLineRunnerCampaign(
+            VaccinationCampaignRepository repository
     ) {
         return args -> repository.saveAll(
                 List.of(vaccinationCampaign1, vaccinationCampaign2)

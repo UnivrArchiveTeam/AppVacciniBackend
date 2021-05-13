@@ -9,6 +9,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class VaccinoWrapper {
-    private List<Vaccine> vaccini;
+public class VaccineWrapper {
+    private List<Vaccine> vaccines;
 }

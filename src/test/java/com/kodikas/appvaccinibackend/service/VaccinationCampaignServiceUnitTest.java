@@ -2,7 +2,7 @@ package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
+import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,14 +20,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class VaccinationCampaignServiceUnitTest {
     @Mock
-    private CampagnaVaccinaleRepository campagnaVaccinaleRepository;
-    private CampagnaVaccinaleService underTest;
+    private VaccinationCampaignRepository vaccinationCampaignRepository;
+    private VaccinationCampaignService underTest;
     private VaccinationCampaign vaccinationCampaign;
     private VaccinationCampaign expectedVaccinationCampaign;
 
     @BeforeEach
     void setUp() {
-        this.underTest = new CampagnaVaccinaleService(campagnaVaccinaleRepository);
+        this.underTest = new VaccinationCampaignService(vaccinationCampaignRepository);
         this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna2",
                 Set.of(
@@ -52,7 +52,7 @@ class VaccinationCampaignServiceUnitTest {
 
     @AfterEach
     void tearDown() {
-        campagnaVaccinaleRepository.deleteAll();
+        vaccinationCampaignRepository.deleteAll();
     }
 
     @Test
@@ -66,40 +66,40 @@ class VaccinationCampaignServiceUnitTest {
         );
 
         // when
-        when(campagnaVaccinaleRepository.findAll()).thenReturn(
+        when(vaccinationCampaignRepository.findAll()).thenReturn(
                 campagne
         );
 
-        List<VaccinationCampaign> result = underTest.getCampagneVaccinali();
+        List<VaccinationCampaign> result = underTest.getVaccinationCampaigns();
 
         // then
-        verify(campagnaVaccinaleRepository).findAll();
+        verify(vaccinationCampaignRepository).findAll();
         assertThat(result.get(0).getDiseaseName()).isNotNull();
     }
 
     @Test
     void shouldAddCampagnaVaccinale() {
         // when
-        when(campagnaVaccinaleRepository.save(any())).thenReturn(expectedVaccinationCampaign);
+        when(vaccinationCampaignRepository.save(any())).thenReturn(expectedVaccinationCampaign);
 
         // then
-        VaccinationCampaign result = underTest.addCampagnaVaccinale(vaccinationCampaign);
-        verify(campagnaVaccinaleRepository).save(vaccinationCampaign);
+        VaccinationCampaign result = underTest.addVaccinationCampaign(vaccinationCampaign);
+        verify(vaccinationCampaignRepository).save(vaccinationCampaign);
         assertThat(result).isEqualTo(expectedVaccinationCampaign);
     }
 
     @Test
     void shouldNotAddExistingCampagnaVaccinale() {
         // when
-        when(campagnaVaccinaleRepository.existsById(expectedVaccinationCampaign.getCampaignID()))
+        when(vaccinationCampaignRepository.existsById(expectedVaccinationCampaign.getCampaignID()))
                 .thenReturn(true);
 
         // then
         assertThatThrownBy(
-                () -> underTest.addCampagnaVaccinale(expectedVaccinationCampaign)
+                () -> underTest.addVaccinationCampaign(expectedVaccinationCampaign)
         ).isInstanceOf(IllegalStateException.class)
                 .hasMessage("The given id is already taken");
 
-        verify(campagnaVaccinaleRepository, never()).save(expectedVaccinationCampaign);
+        verify(vaccinationCampaignRepository, never()).save(expectedVaccinationCampaign);
     }
 }

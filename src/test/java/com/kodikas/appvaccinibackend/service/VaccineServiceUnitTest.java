@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.repository.VaccinoRepository;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,13 +22,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class VaccineServiceUnitTest {
     @Mock
-    private VaccinoRepository vaccinoRepository;
-    private VaccinoService underTest;
+    private VaccineRepository vaccineRepository;
+    private VaccineService underTest;
     private Vaccine vaccine;
 
     @BeforeEach
     void setUp() {
-        this.underTest = new VaccinoService(vaccinoRepository);
+        this.underTest = new VaccineService(vaccineRepository);
         this.vaccine = new Vaccine(
                 8L,
                 "jansen",
@@ -45,33 +45,33 @@ class VaccineServiceUnitTest {
         );
 
         // when
-        when(vaccinoRepository.findAll()).thenReturn(vaccini);
+        when(vaccineRepository.findAll()).thenReturn(vaccini);
 
-        underTest.getVaccini();
+        underTest.getVaccines();
 
         // then
-        verify(vaccinoRepository).findAll();
+        verify(vaccineRepository).findAll();
     }
 
     @Test
     void shouldAddVaccino() {
         // when
-        underTest.addVaccino(vaccine);
+        underTest.addVaccine(vaccine);
 
         // then
-        verify(vaccinoRepository).save(vaccine);
+        verify(vaccineRepository).save(vaccine);
     }
 
     @Test
     void shouldAddQuantity() {
         // when
         Long id = vaccine.getVaccineID();
-        when(vaccinoRepository.existsById(id)).thenReturn(true);
-        when(vaccinoRepository.findById(id)).thenReturn(Optional.of(vaccine));
+        when(vaccineRepository.existsById(id)).thenReturn(true);
+        when(vaccineRepository.findById(id)).thenReturn(Optional.of(vaccine));
 
-        underTest.aggiungiQuantità(id, 50L);
+        underTest.addQuantity(id, 50L);
         // then
-        verify(vaccinoRepository).save(any());
+        verify(vaccineRepository).save(any());
         assertThat(vaccine.getQuantity()).isEqualTo(150L);
     }
 
@@ -83,11 +83,11 @@ class VaccineServiceUnitTest {
 
         // then
         assertThatThrownBy(
-                () -> underTest.aggiungiQuantità(id, quantità)
+                () -> underTest.addQuantity(id, quantità)
         ).isInstanceOf(IllegalStateException.class)
                 .hasMessage("La quantità inserita non è valida");
 
-        verify(vaccinoRepository, never()).save(any());
+        verify(vaccineRepository, never()).save(any());
 
     }
 
@@ -95,15 +95,15 @@ class VaccineServiceUnitTest {
     void shouldThrowErrorWhenIdDoesNotExist() {
         // when
         Long id = vaccine.getVaccineID();
-        when(vaccinoRepository.existsById(id)).thenReturn(false);
+        when(vaccineRepository.existsById(id)).thenReturn(false);
 
         // then
         assertThatThrownBy(
-                () -> underTest.aggiungiQuantità(id, 50L)
+                () -> underTest.addQuantity(id, 50L)
         ).isInstanceOf(IllegalStateException.class)
                 .hasMessage("Inserire un'id valido");
 
-        verify(vaccinoRepository, never()).save(any());
+        verify(vaccineRepository, never()).save(any());
 
     }
 

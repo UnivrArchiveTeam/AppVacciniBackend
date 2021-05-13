@@ -27,7 +27,7 @@ public class CittadinoService {
             throw new IllegalStateException("Inserire un codice fiscale valido");
 
         Citizen citizen = cittadinoRepository.findById(codiceFiscale).get();
-        citizen.setRegistrato(true);
+        citizen.setRegistered(true);
         return cittadinoRepository.save(citizen);
     }
 }

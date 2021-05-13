@@ -14,7 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class VaccinationCampaignRepositoryTest {
-    @Autowired private CampagnaVaccinaleRepository underTest;
+    @Autowired private VaccinationCampaignRepository underTest;
     VaccinationCampaign vaccinationCampaign;
     String nomeMalattia;
 
@@ -39,14 +39,14 @@ class VaccinationCampaignRepositoryTest {
     @Test
     void itShoudCheckCampagnaVaccinaleExistanceByNomeMalattia() {
         underTest.save(vaccinationCampaign);
-        boolean result = underTest.existsByNomeMalattia(nomeMalattia);
+        boolean result = underTest.existsByDiseaseName(nomeMalattia);
         assertThat(result).isTrue();
     }
 
     @Test
     void itShoudRetrieveCampagnaVaccinaleByNomeMalattia() {
         underTest.save(vaccinationCampaign);
-        VaccinationCampaign result = underTest.findCampagnaVaccinaleByNomeMalattia(nomeMalattia).get();
+        VaccinationCampaign result = underTest.findVaccinationCampaignByDiseaseName(nomeMalattia).get();
         assertThat(result).isNotNull();
         assertThat(result.getDiseaseName()).isEqualTo(nomeMalattia);
     }

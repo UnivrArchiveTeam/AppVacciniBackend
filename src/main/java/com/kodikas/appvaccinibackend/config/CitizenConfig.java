@@ -19,19 +19,19 @@ import java.util.List;
 import java.util.Random;
 
 @Configuration
-public class CittadinoConfig {
+public class CitizenConfig {
     CSVReader csvReader;
     File file;
-    List<Citizen> cittadini = new ArrayList<>();
+    List<Citizen> citizens = new ArrayList<>();
 
-    public CittadinoConfig() {
+    public CitizenConfig() {
         try {
             file = ResourceUtils.getFile("classpath:fakeCitadini.csv");
             csvReader = new CSVReader(new FileReader(file));
             List<String[]> r = csvReader.readAll();
             r.forEach(x -> {
                         if (!x[0].equals("Row")) {
-                            cittadini.add(
+                            citizens.add(
                                     new Citizen(
                                             x[6],
                                             Long.parseLong(x[7]),
@@ -51,7 +51,7 @@ public class CittadinoConfig {
     }
 
     private static String getCategory(String dataDiNascita) {
-        List<String> categorie = List.of("paziente oncologico", "paziente iperteso", "paziente a rischio");
+        List<String> categories = List.of("paziente oncologico", "paziente iperteso", "paziente a rischio");
         LocalDate dob = LocalDate.parse(dataDiNascita);
         int age = Period.between(dob, LocalDate.now()).getYears();
 
@@ -60,15 +60,15 @@ public class CittadinoConfig {
         else if (age >= 80)
             return "over 80";
         else
-            return categorie.get(new Random().nextInt(categorie.size()));
+            return categories.get(new Random().nextInt(categories.size()));
     }
 
     @Bean
-    CommandLineRunner commandLineRunnerCittadino(
+    CommandLineRunner commandLineRunnerCitizen(
             CittadinoRepository repository
     ) {
         return args -> repository.saveAll(
-                cittadini
+                citizens
         );
     }
 

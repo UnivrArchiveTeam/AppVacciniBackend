@@ -3,8 +3,8 @@ package com.kodikas.appvaccinibackend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
-import com.kodikas.appvaccinibackend.wrapper.CampagnaVaccinaleWrapper;
+import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
+import com.kodikas.appvaccinibackend.wrapper.VaccinationCampaignWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,13 +35,13 @@ class VaccinationCampaignControllerAcceptanceTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private CampagnaVaccinaleRepository campagnaVaccinaleRepository;
+    private VaccinationCampaignRepository vaccinationCampaignRepository;
 
     private VaccinationCampaign vaccinationCampaign;
 
     @BeforeEach
     void setUp() {
-        campagnaVaccinaleRepository.deleteAll();
+        vaccinationCampaignRepository.deleteAll();
         this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna4",
                 Set.of(
@@ -56,15 +56,15 @@ class VaccinationCampaignControllerAcceptanceTest {
     @Test
     void getCampagneVaccinali_shouldReturnCampagneVaccinali() throws Exception {
         // given
-        campagnaVaccinaleRepository.save(vaccinationCampaign);
+        vaccinationCampaignRepository.save(vaccinationCampaign);
 
         // then
         MvcResult result = mockMvc.perform(get(URI)).andExpect(status().isOk()).andReturn();
         String response = result.getResponse().getContentAsString();
-        CampagnaVaccinaleWrapper resultObject = objectMapper.readValue(response, CampagnaVaccinaleWrapper.class);
-        assertThat(resultObject.getCampagneVaccinali()).isNotNull();
-        assertThat(resultObject.getCampagneVaccinali().get(0).getVaccines()).isNotNull();
-        assertThat(resultObject.getCampagneVaccinali().get(0).getDiseaseName()).isEqualTo(vaccinationCampaign.getDiseaseName());
+        VaccinationCampaignWrapper resultObject = objectMapper.readValue(response, VaccinationCampaignWrapper.class);
+        assertThat(resultObject.getVaccinationCampaigns()).isNotNull();
+        assertThat(resultObject.getVaccinationCampaigns().get(0).getVaccines()).isNotNull();
+        assertThat(resultObject.getVaccinationCampaigns().get(0).getDiseaseName()).isEqualTo(vaccinationCampaign.getDiseaseName());
     }
 
     @Test
@@ -74,9 +74,9 @@ class VaccinationCampaignControllerAcceptanceTest {
                 .content(objectMapper.writeValueAsString(vaccinationCampaign)))
                 .andExpect(status().isOk());
 
-        assertThat(campagnaVaccinaleRepository.existsByNomeMalattia(vaccinationCampaign.getDiseaseName())).isTrue();
-        VaccinationCampaign found = campagnaVaccinaleRepository
-                .findCampagnaVaccinaleByNomeMalattia(
+        assertThat(vaccinationCampaignRepository.existsByDiseaseName(vaccinationCampaign.getDiseaseName())).isTrue();
+        VaccinationCampaign found = vaccinationCampaignRepository
+                .findVaccinationCampaignByDiseaseName(
                         vaccinationCampaign.getDiseaseName()
                 ).get();
         assertThat(found).isNotNull();

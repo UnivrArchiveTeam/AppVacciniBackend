@@ -2,8 +2,8 @@ package com.kodikas.appvaccinibackend.controller;
 
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.service.VaccinoService;
-import com.kodikas.appvaccinibackend.wrapper.VaccinoWrapper;
+import com.kodikas.appvaccinibackend.service.VaccineService;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class VaccineControllerUnitTest {
     @Mock
-    private VaccinoService vaccinoService;
+    private VaccineService vaccineService;
     private VaccinoController underTest;
     private Vaccine vaccine;
 
     @BeforeEach
     void setUp() {
-        underTest = new VaccinoController(vaccinoService);
+        underTest = new VaccinoController(vaccineService);
         vaccine = new Vaccine(
                 1L,
                 "jansen",
@@ -43,23 +43,23 @@ class VaccineControllerUnitTest {
         List<Vaccine> vaccini = List.of(vaccine);
 
         // when
-        when(vaccinoService.getVaccini()).thenReturn(vaccini);
+        when(vaccineService.getVaccines()).thenReturn(vaccini);
 
         // then
-        VaccinoWrapper result = underTest.getVaccini();
+        VaccineWrapper result = underTest.getVaccini();
 
-        verify(vaccinoService).getVaccini();
+        verify(vaccineService).getVaccines();
         assertEquals(result.getVaccini(), vaccini);
     }
 
     @Test
     void shouldAddVaccino() {
         // when
-        when(vaccinoService.addVaccino(any())).thenReturn(vaccine);
+        when(vaccineService.addVaccine(any())).thenReturn(vaccine);
 
         // then
         Vaccine result = underTest.addVaccino(vaccine);
-        verify(vaccinoService).addVaccino(vaccine);
+        verify(vaccineService).addVaccine(vaccine);
         assertEquals(vaccine, result);
     }
 
@@ -77,12 +77,12 @@ class VaccineControllerUnitTest {
         Long id = vaccine.getVaccineID();
 
         // when
-        when(vaccinoService.aggiungiQuantità(id, 50L)).thenReturn(modifiedVaccine);
+        when(vaccineService.addQuantity(id, 50L)).thenReturn(modifiedVaccine);
 
         // then
         Vaccine result = underTest.modifyQuantità(id, 50L);
 
-        verify(vaccinoService).aggiungiQuantità(id, 50L);
+        verify(vaccineService).addQuantity(id, 50L);
         assertEquals(result.getQuantity(), modifiedVaccine.getQuantity());
     }
 }

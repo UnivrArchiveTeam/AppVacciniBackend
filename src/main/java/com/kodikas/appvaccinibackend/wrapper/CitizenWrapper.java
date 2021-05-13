@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CittadinoWrapper {
-    private List<Citizen> cittadini;
+public class CitizenWrapper {
+    private List<Citizen> citizens;
 }

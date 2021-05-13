@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CampagnaVaccinaleWrapper {
-    List<VaccinationCampaign> campagneVaccinali;
+public class VaccinationCampaignWrapper {
+    List<VaccinationCampaign> vaccinationCampaigns;
 }

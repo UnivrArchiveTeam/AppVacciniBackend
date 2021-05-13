@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
-import com.kodikas.appvaccinibackend.repository.CampagnaVaccinaleRepository;
+import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,14 +9,14 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CampagnaVaccinaleService {
-    private final CampagnaVaccinaleRepository campagnavaccinaleRepository;
+public class VaccinationCampaignService {
+    private final VaccinationCampaignRepository campagnavaccinaleRepository;
 
-    public List<VaccinationCampaign> getCampagneVaccinali() {
+    public List<VaccinationCampaign> getVaccinationCampaigns() {
         return campagnavaccinaleRepository.findAll();
     }
 
-    public VaccinationCampaign addCampagnaVaccinale(VaccinationCampaign campagnavaccinale) {
+    public VaccinationCampaign addVaccinationCampaign(VaccinationCampaign campagnavaccinale) {
         if (
                 campagnavaccinale.getCampaignID() != null
                         && campagnavaccinaleRepository.existsById(campagnavaccinale.getCampaignID())
@@ -26,7 +26,7 @@ public class CampagnaVaccinaleService {
         else if (
                 // TODO add test
                 campagnavaccinale.getDiseaseName() != null
-                        && campagnavaccinaleRepository.existsByNomeMalattia(campagnavaccinale.getDiseaseName())
+                        && campagnavaccinaleRepository.existsByDiseaseName(campagnavaccinale.getDiseaseName())
         ) {
             throw new IllegalStateException("The given diseaseName is already taken");
         }

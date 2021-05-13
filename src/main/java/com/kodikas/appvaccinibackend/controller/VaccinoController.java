@@ -1,27 +1,27 @@
 package com.kodikas.appvaccinibackend.controller;
 
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.service.VaccinoService;
-import com.kodikas.appvaccinibackend.wrapper.VaccinoWrapper;
+import com.kodikas.appvaccinibackend.service.VaccineService;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/vaccini")
 public class VaccinoController {
-    private final VaccinoService vaccinoService;
+    private final VaccineService vaccineService;
 
-    public VaccinoController(VaccinoService vaccinoService) {
-        this.vaccinoService = vaccinoService;
+    public VaccinoController(VaccineService vaccineService) {
+        this.vaccineService = vaccineService;
     }
 
     @GetMapping
-    public VaccinoWrapper getVaccini(){
-        return new VaccinoWrapper(vaccinoService.getVaccini());
+    public VaccineWrapper getVaccini(){
+        return new VaccineWrapper(vaccineService.getVaccines());
     }
 
     @PostMapping
     public Vaccine addVaccino(@RequestBody Vaccine vaccine) {
-        return vaccinoService.addVaccino(vaccine);
+        return vaccineService.addVaccine(vaccine);
     }
 
     @PutMapping(path = "/{idVaccino}/quantità/{quantità}")
@@ -29,6 +29,6 @@ public class VaccinoController {
             @PathVariable Long idVaccino,
             @PathVariable Long quantità
     ) {
-        return vaccinoService.aggiungiQuantità(idVaccino, quantità);
+        return vaccineService.addQuantity(idVaccino, quantità);
     }
 }

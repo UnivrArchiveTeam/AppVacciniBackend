@@ -3,7 +3,7 @@ package com.kodikas.appvaccinibackend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import com.kodikas.appvaccinibackend.service.CampagnaVaccinaleService;
+import com.kodikas.appvaccinibackend.service.VaccinationCampaignService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = CampagnaVaccinaleController.class)
+@WebMvcTest(controllers = VaccinationCampaignController.class)
 class VaccinationCampaignControllerIntTest {
     private final static String URI = "/campagnevaccinali";
 
@@ -40,7 +40,7 @@ class VaccinationCampaignControllerIntTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private CampagnaVaccinaleService campagnaVaccinaleService;
+    private VaccinationCampaignService vaccinationCampaignService;
 
 
     @BeforeEach
@@ -72,13 +72,13 @@ class VaccinationCampaignControllerIntTest {
     @Test
     void shouldReturnCampagneVaccinali() throws Exception {
         mockMvc.perform(get(URI)).andExpect(status().isOk());
-        verify(campagnaVaccinaleService).getCampagneVaccinali();
+        verify(vaccinationCampaignService).getVaccinationCampaigns();
     }
 
     @Test
     void shouldAddCampagnaVaccinale() throws Exception {
         // when
-        when(campagnaVaccinaleService.addCampagnaVaccinale(any())).thenReturn(expectedVaccinationCampaign);
+        when(vaccinationCampaignService.addVaccinationCampaign(any())).thenReturn(expectedVaccinationCampaign);
 
         MvcResult result = mockMvc.perform(post(URI)
                 .contentType("application/json")
