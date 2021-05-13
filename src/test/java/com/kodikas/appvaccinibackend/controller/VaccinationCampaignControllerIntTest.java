@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = VaccinationCampaignController.class)
 class VaccinationCampaignControllerIntTest {
-    private final static String URI = "/campagnevaccinali";
+    private final static String URI = "/vaccinationCampaign";
 
     VaccinationCampaign vaccinationCampaign;
     VaccinationCampaign expectedVaccinationCampaign;
@@ -70,13 +70,13 @@ class VaccinationCampaignControllerIntTest {
 
 
     @Test
-    void shouldReturnCampagneVaccinali() throws Exception {
+    void getVaccinationCampaigns_shouldCallService() throws Exception {
         mockMvc.perform(get(URI)).andExpect(status().isOk());
         verify(vaccinationCampaignService).getVaccinationCampaigns();
     }
 
     @Test
-    void shouldAddCampagnaVaccinale() throws Exception {
+    void addVaccinationCampaign_shouldReturnVaccinationCampaign() throws Exception {
         // when
         when(vaccinationCampaignService.addVaccinationCampaign(any())).thenReturn(expectedVaccinationCampaign);
 

@@ -38,14 +38,14 @@ class VaccineServiceUnitTest {
 
 
     @Test
-    void canGetAllVaccini() {
+    void getVaccines_shouldReturnListOfVaccines() {
         // given
-        List<Vaccine> vaccini = List.of(
+        List<Vaccine> vaccines = List.of(
                 vaccine
         );
 
         // when
-        when(vaccineRepository.findAll()).thenReturn(vaccini);
+        when(vaccineRepository.findAll()).thenReturn(vaccines);
 
         underTest.getVaccines();
 
@@ -54,7 +54,7 @@ class VaccineServiceUnitTest {
     }
 
     @Test
-    void shouldAddVaccino() {
+    void addVaccine_shouldCallRepository() {
         // when
         underTest.addVaccine(vaccine);
 
@@ -63,10 +63,11 @@ class VaccineServiceUnitTest {
     }
 
     @Test
-    void shouldAddQuantity() {
-        // when
+    void addQuantity_shouldCallRepository() {
+        // given
         Long id = vaccine.getVaccineID();
-        when(vaccineRepository.existsById(id)).thenReturn(true);
+
+        // when
         when(vaccineRepository.findById(id)).thenReturn(Optional.of(vaccine));
 
         underTest.addQuantity(id, 50L);
@@ -77,31 +78,24 @@ class VaccineServiceUnitTest {
 
     @ParameterizedTest
     @ValueSource(longs = {-10, 0, Long.MIN_VALUE})
-    void shouldThrowErrorWhenQuantitaLessThanOrEqualZero(Long quantità) {
-        // when
-        Long id = vaccine.getVaccineID();
-
+    void addQuantity_shouldThrowErrorWhenQuantityLessThanOrEqualZero(Long quantity) {
         // then
         assertThatThrownBy(
-                () -> underTest.addQuantity(id, quantità)
+                () -> underTest.addQuantity(vaccine.getVaccineID(), quantity)
         ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("La quantità inserita non è valida");
+                .hasMessage("Insert a Valid quantity");
 
         verify(vaccineRepository, never()).save(any());
 
     }
 
     @Test
-    void shouldThrowErrorWhenIdDoesNotExist() {
-        // when
-        Long id = vaccine.getVaccineID();
-        when(vaccineRepository.existsById(id)).thenReturn(false);
-
+    void addQuantity_shouldThrowErrorWhenIdDoesNotExist() {
         // then
         assertThatThrownBy(
-                () -> underTest.addQuantity(id, 50L)
+                () -> underTest.addQuantity(vaccine.getVaccineID(), 50L)
         ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("Inserire un'id valido");
+                .hasMessage("Insert a Valid quantity");
 
         verify(vaccineRepository, never()).save(any());
 

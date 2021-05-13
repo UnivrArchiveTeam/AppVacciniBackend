@@ -1,14 +1,15 @@
 package com.kodikas.appvaccinibackend.wrapper;
 
 import com.kodikas.appvaccinibackend.model.Vaccine;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 
 import java.util.List;
 
 @AllArgsConstructor
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class VaccineWrapper {
     private List<Vaccine> vaccines;
 }

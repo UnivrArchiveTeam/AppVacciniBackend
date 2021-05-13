@@ -21,12 +21,12 @@ import static org.mockito.Mockito.when;
 class VaccineControllerUnitTest {
     @Mock
     private VaccineService vaccineService;
-    private VaccinoController underTest;
+    private VaccineController underTest;
     private Vaccine vaccine;
 
     @BeforeEach
     void setUp() {
-        underTest = new VaccinoController(vaccineService);
+        underTest = new VaccineController(vaccineService);
         vaccine = new Vaccine(
                 1L,
                 "jansen",
@@ -39,32 +39,32 @@ class VaccineControllerUnitTest {
 
 
     @Test
-    void canGetAllVaccini() {
-        List<Vaccine> vaccini = List.of(vaccine);
+    void getVaccines_shouldCallServiceAndReturnVaccineWrapper() {
+        List<Vaccine> vaccines = List.of(vaccine);
 
         // when
-        when(vaccineService.getVaccines()).thenReturn(vaccini);
+        when(vaccineService.getVaccines()).thenReturn(vaccines);
 
         // then
-        VaccineWrapper result = underTest.getVaccini();
+        VaccineWrapper result = underTest.getVaccines();
 
         verify(vaccineService).getVaccines();
-        assertEquals(result.getVaccini(), vaccini);
+        assertEquals(result.getVaccines(), vaccines);
     }
 
     @Test
-    void shouldAddVaccino() {
+    void addVaccine_shouldCallServiceAndReturnVaccine() {
         // when
         when(vaccineService.addVaccine(any())).thenReturn(vaccine);
 
         // then
-        Vaccine result = underTest.addVaccino(vaccine);
+        Vaccine result = underTest.addVaccine(vaccine);
         verify(vaccineService).addVaccine(vaccine);
         assertEquals(vaccine, result);
     }
 
     @Test
-    void modifyQuantità() {
+    void modifyQuantity_shouldModifyGivenObjectsCallServiceAndReturnVaccine() {
         // given
         Vaccine modifiedVaccine = new Vaccine(
                 1L,
@@ -80,7 +80,7 @@ class VaccineControllerUnitTest {
         when(vaccineService.addQuantity(id, 50L)).thenReturn(modifiedVaccine);
 
         // then
-        Vaccine result = underTest.modifyQuantità(id, 50L);
+        Vaccine result = underTest.modifyQuantity(id, 50L);
 
         verify(vaccineService).addQuantity(id, 50L);
         assertEquals(result.getQuantity(), modifiedVaccine.getQuantity());

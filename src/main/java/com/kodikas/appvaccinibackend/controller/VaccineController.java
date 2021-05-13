@@ -7,28 +7,28 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/vaccini")
-public class VaccinoController {
+public class VaccineController {
     private final VaccineService vaccineService;
 
-    public VaccinoController(VaccineService vaccineService) {
+    public VaccineController(VaccineService vaccineService) {
         this.vaccineService = vaccineService;
     }
 
     @GetMapping
-    public VaccineWrapper getVaccini(){
+    public VaccineWrapper getVaccines(){
         return new VaccineWrapper(vaccineService.getVaccines());
     }
 
     @PostMapping
-    public Vaccine addVaccino(@RequestBody Vaccine vaccine) {
+    public Vaccine addVaccine(@RequestBody Vaccine vaccine) {
         return vaccineService.addVaccine(vaccine);
     }
 
-    @PutMapping(path = "/{idVaccino}/quantità/{quantità}")
-    public Vaccine modifyQuantità(
-            @PathVariable Long idVaccino,
-            @PathVariable Long quantità
+    @PutMapping(path = "/{vaccineID}/quantity/{quantity}")
+    public Vaccine modifyQuantity(
+            @PathVariable Long vaccineID,
+            @PathVariable Long quantity
     ) {
-        return vaccineService.addQuantity(idVaccino, quantità);
+        return vaccineService.addQuantity(vaccineID, quantity);
     }
 }

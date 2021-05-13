@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Vaccine {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long vaccineID;
+    private long vaccineID;
     private String vaccineName;
     private Long quantity;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -28,12 +28,12 @@ public class Vaccine {
     private VaccinationCampaign vaccinationCampaign;
 //    private AventiDiritto aventiDiritto;
 
-    public Vaccine(String vaccineName, Long quantity) {
+    public Vaccine(String vaccineName, long quantity) {
         this.vaccineName = vaccineName;
         this.quantity = quantity;
     }
 
-    public Vaccine(Long vaccineID, String vaccineName, Long quantity) {
+    public Vaccine(Long vaccineID, String vaccineName, long quantity) {
         this.vaccineID = vaccineID;
         this.vaccineName = vaccineName;
         this.quantity = quantity;

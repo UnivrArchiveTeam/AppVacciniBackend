@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,13 +22,17 @@ public class VaccineService {
         return vaccineRepository.save(vaccine);
     }
 
-    public Vaccine addQuantity(Long idVaccino, Long quantità) {
-        if (quantità <= 0)
-            throw new IllegalStateException("La quantità inserita non è valida");
-        else if (!vaccineRepository.existsById(idVaccino))
-            throw new IllegalStateException("Inserire un'id valido");
-        var vaccine = vaccineRepository.findById(idVaccino).get();
-        vaccine.setQuantity(vaccine.getQuantity() + quantità);
+    public Vaccine addQuantity(Long vaccineID, Long quantity) {
+        if (quantity <= 0)
+            throw new IllegalStateException("Insert a Valid quantity");
+
+        Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineID);
+        Vaccine vaccine;
+        if (optionalVaccine.isPresent())
+            vaccine = optionalVaccine.get();
+        else
+            throw new IllegalStateException("Insert a Valid quantity");
+        vaccine.setQuantity(vaccine.getQuantity() + quantity);
         return vaccineRepository.save(vaccine);
     }
 }

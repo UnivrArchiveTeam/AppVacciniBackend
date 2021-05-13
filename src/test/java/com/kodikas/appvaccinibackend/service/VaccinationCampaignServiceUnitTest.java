@@ -56,9 +56,9 @@ class VaccinationCampaignServiceUnitTest {
     }
 
     @Test
-    void canGetAllCampagneVaccinali() {
+    void getVaccinationCampaigns_shouldReturnListOfVaccinationCampaigns() {
         // given
-        List<VaccinationCampaign> campagne = List.of(
+        List<VaccinationCampaign> campaigns = List.of(
                 new VaccinationCampaign(
                         "campagna1"
                 ),
@@ -67,7 +67,7 @@ class VaccinationCampaignServiceUnitTest {
 
         // when
         when(vaccinationCampaignRepository.findAll()).thenReturn(
-                campagne
+                campaigns
         );
 
         List<VaccinationCampaign> result = underTest.getVaccinationCampaigns();
@@ -78,7 +78,7 @@ class VaccinationCampaignServiceUnitTest {
     }
 
     @Test
-    void shouldAddCampagnaVaccinale() {
+    void addVaccinationCampaign_shouldReturnVaccinationCampaign() {
         // when
         when(vaccinationCampaignRepository.save(any())).thenReturn(expectedVaccinationCampaign);
 
@@ -89,7 +89,7 @@ class VaccinationCampaignServiceUnitTest {
     }
 
     @Test
-    void shouldNotAddExistingCampagnaVaccinale() {
+    void addVaccinationCampaign_existingId_shouldThrowException() {
         // when
         when(vaccinationCampaignRepository.existsById(expectedVaccinationCampaign.getCampaignID()))
                 .thenReturn(true);
@@ -101,5 +101,34 @@ class VaccinationCampaignServiceUnitTest {
                 .hasMessage("The given id is already taken");
 
         verify(vaccinationCampaignRepository, never()).save(expectedVaccinationCampaign);
+    }
+
+    @Test
+    void addVaccinationCampaign_existingDisease_shouldThrowException() {
+        // when
+        when(vaccinationCampaignRepository.existsByDiseaseName(expectedVaccinationCampaign.getDiseaseName()))
+                .thenReturn(true);
+
+        // then
+        assertThatThrownBy(
+                () -> underTest.addVaccinationCampaign(expectedVaccinationCampaign)
+        ).isInstanceOf(IllegalStateException.class)
+                .hasMessage("The given diseaseName is already present");
+
+        verify(vaccinationCampaignRepository, never()).save(expectedVaccinationCampaign);
+    }
+
+    @Test
+    void addVaccinationCampaign_nullDisease_shouldThrowException() {
+        // given
+        expectedVaccinationCampaign.setDiseaseName(null);
+
+        // when
+        when(vaccinationCampaignRepository.save(any())).thenReturn(expectedVaccinationCampaign);
+
+        // then
+        VaccinationCampaign result = underTest.addVaccinationCampaign(vaccinationCampaign);
+        verify(vaccinationCampaignRepository).save(vaccinationCampaign);
+        assertThat(result).isEqualTo(expectedVaccinationCampaign);
     }
 }

@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(path = "/campagnevaccinali")
+@RequestMapping(path = "/vaccinationCampaign")
 public class VaccinationCampaignController {
-	private VaccinationCampaignService campagnavaccinaleService;
+	private final VaccinationCampaignService vaccinationCampaignService;
 
 	@Autowired
-	public VaccinationCampaignController(VaccinationCampaignService campagnavaccinaleService) {
-		this.campagnavaccinaleService = campagnavaccinaleService;
+	public VaccinationCampaignController(VaccinationCampaignService vaccinationCampaignService) {
+		this.vaccinationCampaignService = vaccinationCampaignService;
 	}
 
 	@GetMapping
-	public VaccinationCampaignWrapper getCampagneVaccinali() {
+	public VaccinationCampaignWrapper getVaccinationCampaigns() {
 		return new VaccinationCampaignWrapper(
-				campagnavaccinaleService.getVaccinationCampaigns()
+				vaccinationCampaignService.getVaccinationCampaigns()
 		);
 	}
 
 	@PostMapping
-	public VaccinationCampaign addCampagnaVaccinale(@RequestBody VaccinationCampaign vaccinationCampaign) {
-		return campagnavaccinaleService.addVaccinationCampaign(vaccinationCampaign);
+	public VaccinationCampaign addVaccinationCampaign(@RequestBody VaccinationCampaign vaccinationCampaign) {
+		return vaccinationCampaignService.addVaccinationCampaign(vaccinationCampaign);
 	}
 }

@@ -16,7 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class VaccinationCampaignRepositoryTest {
     @Autowired private VaccinationCampaignRepository underTest;
     VaccinationCampaign vaccinationCampaign;
-    String nomeMalattia;
+    String diseaseName;
 
     @Test
     void injectedComponentsAreNotNull(){
@@ -25,9 +25,9 @@ class VaccinationCampaignRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        nomeMalattia = "campagna1";
+        diseaseName = "disease_example";
         vaccinationCampaign = new VaccinationCampaign(
-                nomeMalattia
+                diseaseName
         );
     }
 
@@ -37,17 +37,23 @@ class VaccinationCampaignRepositoryTest {
     }
 
     @Test
-    void itShoudCheckCampagnaVaccinaleExistanceByNomeMalattia() {
+    void existsByDiseaseName_shouldReturnTrue() {
         underTest.save(vaccinationCampaign);
-        boolean result = underTest.existsByDiseaseName(nomeMalattia);
+        boolean result = underTest.existsByDiseaseName(diseaseName);
         assertThat(result).isTrue();
     }
 
     @Test
-    void itShoudRetrieveCampagnaVaccinaleByNomeMalattia() {
+    void existsByDiseaseName_shouldReturnFalse() {
+        boolean result = underTest.existsByDiseaseName(diseaseName);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    void findVaccinationCampaignByDiseaseName_shouldRetrieveVaccinationCampaignFromDatabase() {
         underTest.save(vaccinationCampaign);
-        VaccinationCampaign result = underTest.findVaccinationCampaignByDiseaseName(nomeMalattia).get();
+        VaccinationCampaign result = underTest.findVaccinationCampaignByDiseaseName(diseaseName).get();
         assertThat(result).isNotNull();
-        assertThat(result.getDiseaseName()).isEqualTo(nomeMalattia);
+        assertThat(result.getDiseaseName()).isEqualTo(diseaseName);
     }
 }

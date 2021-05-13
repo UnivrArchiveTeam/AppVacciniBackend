@@ -10,29 +10,27 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class VaccinationCampaignService {
-    private final VaccinationCampaignRepository campagnavaccinaleRepository;
+    private final VaccinationCampaignRepository vaccinationCampaignRepository;
 
     public List<VaccinationCampaign> getVaccinationCampaigns() {
-        return campagnavaccinaleRepository.findAll();
+        return vaccinationCampaignRepository.findAll();
     }
 
-    public VaccinationCampaign addVaccinationCampaign(VaccinationCampaign campagnavaccinale) {
+    public VaccinationCampaign addVaccinationCampaign(VaccinationCampaign vaccinationCampaign) {
         if (
-                campagnavaccinale.getCampaignID() != null
-                        && campagnavaccinaleRepository.existsById(campagnavaccinale.getCampaignID())
+                vaccinationCampaignRepository.existsById(vaccinationCampaign.getCampaignID())
         ) {
             throw new IllegalStateException("The given id is already taken");
         }
         else if (
-                // TODO add test
-                campagnavaccinale.getDiseaseName() != null
-                        && campagnavaccinaleRepository.existsByDiseaseName(campagnavaccinale.getDiseaseName())
+                vaccinationCampaign.getDiseaseName() != null
+                        && vaccinationCampaignRepository.existsByDiseaseName(vaccinationCampaign.getDiseaseName())
         ) {
-            throw new IllegalStateException("The given diseaseName is already taken");
+            throw new IllegalStateException("The given diseaseName is already present");
         }
-        else if (campagnavaccinale.getVaccines() != null) {
-            campagnavaccinale.getVaccines().forEach(vaccino -> vaccino.setVaccinationCampaign(campagnavaccinale));
+        else if (vaccinationCampaign.getVaccines() != null) {
+            vaccinationCampaign.getVaccines().forEach(vaccine -> vaccine.setVaccinationCampaign(vaccinationCampaign));
         }
-        return campagnavaccinaleRepository.save(campagnavaccinale);
+        return vaccinationCampaignRepository.save(vaccinationCampaign);
     }
 }

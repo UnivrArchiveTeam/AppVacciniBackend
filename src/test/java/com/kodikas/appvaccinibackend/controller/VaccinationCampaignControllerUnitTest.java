@@ -43,27 +43,27 @@ class VaccinationCampaignControllerUnitTest {
     }
 
     @Test
-    void canGetAllCampagneVaccinali() {
+    void getVaccinationCampaigns_shouldCallServiceAndReturnListOfVaccinationCampaign() {
         // given
-        List<VaccinationCampaign> campagnaVaccinali = List.of(
+        List<VaccinationCampaign> vaccinationCampaigns = List.of(
                 vaccinationCampaign
         );
 
         // when
         when(vaccinationCampaignService.getVaccinationCampaigns())
-                .thenReturn(campagnaVaccinali);
-        VaccinationCampaignWrapper wrapper = underTest.getCampagneVaccinali();
+                .thenReturn(vaccinationCampaigns);
+        VaccinationCampaignWrapper wrapper = underTest.getVaccinationCampaigns();
         verify(vaccinationCampaignService).getVaccinationCampaigns();
-        assertEquals(campagnaVaccinali, wrapper.getCampagneVaccinali());
+        assertEquals(vaccinationCampaigns, wrapper.getVaccinationCampaigns());
     }
 
     @Test
-    void shouldAddCampagnaVaccinale() {
+    void addVaccinationCampaign_shouldCallServiceAndReturnVaccinationCampaign() {
         // when
         when(vaccinationCampaignService.addVaccinationCampaign(any()))
                 .thenReturn(vaccinationCampaign);
         // then
-        VaccinationCampaign result =  underTest.addCampagnaVaccinale(vaccinationCampaign);
+        VaccinationCampaign result =  underTest.addVaccinationCampaign(vaccinationCampaign);
         verify(vaccinationCampaignService).addVaccinationCampaign(vaccinationCampaign);
         assertEquals(vaccinationCampaign, result);
     }

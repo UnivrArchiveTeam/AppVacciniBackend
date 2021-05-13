@@ -1,10 +1,12 @@
 package com.kodikas.appvaccinibackend.controller;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
 import com.kodikas.appvaccinibackend.wrapper.VaccinationCampaignWrapper;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class VaccinationCampaignControllerAcceptanceTest {
-    private final static String URI = "/campagnevaccinali";
+    private final static String URI = "/vaccinationCampaign";
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,6 +43,7 @@ class VaccinationCampaignControllerAcceptanceTest {
 
     @BeforeEach
     void setUp() {
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         vaccinationCampaignRepository.deleteAll();
         this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna4",
@@ -54,7 +57,7 @@ class VaccinationCampaignControllerAcceptanceTest {
     }
 
     @Test
-    void getCampagneVaccinali_shouldReturnCampagneVaccinali() throws Exception {
+    void getVaccinationCampaigns_shouldRetrieveListOfVaccinationCampaignFromDatabase() throws Exception {
         // given
         vaccinationCampaignRepository.save(vaccinationCampaign);
 
@@ -68,7 +71,8 @@ class VaccinationCampaignControllerAcceptanceTest {
     }
 
     @Test
-    void shouldAddCampagnaVaccinaleToDatabase() throws Exception {
+    void addVaccinationCampaign_shouldAddVaccinationCampaignToDatabase() throws Exception {
+
         mockMvc.perform(post(URI)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(vaccinationCampaign)))
