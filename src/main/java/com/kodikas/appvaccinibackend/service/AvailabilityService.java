@@ -42,10 +42,18 @@ public class AvailabilityService {
                 }
             }
         }
-
         if(result == null){
             throw new IllegalStateException("Nothing on this date");
         }
+
+        return result;
+    }
+
+    List<Availability> getAvailabilitybyCategoryAndClinic (String Category,String Clinic){
+
+        List<Availability>result= availabilityRepostitory.findAllById_NomeAmbulatorioAndCategoria(Clinic,Category);
+
+        if ( result.isEmpty()){ throw new IllegalStateException("No date available in this moth ");}
 
         return result;
     }

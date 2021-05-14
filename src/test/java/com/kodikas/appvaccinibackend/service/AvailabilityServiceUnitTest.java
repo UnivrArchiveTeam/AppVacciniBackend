@@ -83,4 +83,24 @@ class AvailabilityServiceUnitTest {
         assertThat(check).isTrue();
 
     }
+    @Test
+    void getAvailabilitybyCategoryAndClinic(){
+        //when
+        List<Availability> availabilityList = List.of(entry);
+        String category = "over80";
+        String clinic = "Golosine";
+
+
+        when(availabilityRepostitory.findAllById_NomeAmbulatorioAndCategoria(clinic,category)).thenReturn(availabilityList);
+
+        List<Availability> result = underTest.getAvailabilitybyCategoryAndClinic(category,clinic);
+
+        boolean check = false;
+        for (Availability find : result){
+            if (find.getCategoria().equals(category)&&find.getId().getNomeAmbulatorio().equals(clinic)){
+                check = true;
+            }
+        }
+        assertThat(check).isTrue();
+    }
 }

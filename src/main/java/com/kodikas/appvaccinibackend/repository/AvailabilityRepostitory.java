@@ -14,6 +14,8 @@ public interface AvailabilityRepostitory extends JpaRepository<Availability, Dis
 
     List<Availability> findAllById_IdVaccino(Long vaccino);
 
+    List<Availability> findAllById_NomeAmbulatorioAndCategoria(String Clinic , String Category);
+
 
 
 }
