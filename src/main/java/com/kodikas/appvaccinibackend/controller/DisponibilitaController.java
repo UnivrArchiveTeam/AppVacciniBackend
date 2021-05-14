@@ -1,35 +1,36 @@
 package com.kodikas.appvaccinibackend.controller;
 
-import com.kodikas.appvaccinibackend.model.Disponibilita;
-import com.kodikas.appvaccinibackend.service.DisponibilitaService;
-import com.kodikas.appvaccinibackend.wrapper.DisponibilitaWrapper;
+import com.kodikas.appvaccinibackend.model.Availability;
+import com.kodikas.appvaccinibackend.service.AvailabilityService;
+import com.kodikas.appvaccinibackend.wrapper.AvailabilityWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @RestController
-@RequestMapping(path = "vaccini/disponibilita")
+@RequestMapping(path = "vaccini/availability")
 public class DisponibilitaController {
 
-    private DisponibilitaService disponibilitaService;
+    private AvailabilityService availabilityService;
 
     @Autowired
-    public DisponibilitaController(DisponibilitaService disponibilitaService) { this.disponibilitaService = disponibilitaService; }
+    public DisponibilitaController(AvailabilityService availabilityService) { this.availabilityService = availabilityService; }
 
     @GetMapping
-    public DisponibilitaWrapper getDisponibilitaALL(){
-        return new DisponibilitaWrapper(disponibilitaService.getDisponibilita());
+    public AvailabilityWrapper getDisponibilitaALL(){
+        return new AvailabilityWrapper(availabilityService.getAllAvailability());
     }
     @PostMapping
-    public void registerNewDisponibilita (@RequestBody Disponibilita disponibilita){disponibilitaService.addNewDisponibilita(disponibilita);}
+    public void registerNewDisponibilita (@RequestBody Availability availability){
+        availabilityService.addAvailability(availability);}
 
-    @GetMapping("/disponibilita/{categoria}/{vaccino}")
-    public DisponibilitaWrapper getDisponibilita(
-            @PathVariable String categoria,
-            @PathVariable Long vaccino
-    ){
-        return disponibilitaService.getDisponibilitaDate(categoria,vaccino);
+    @GetMapping("/availability/{category}/{date}")
+    public AvailabilityWrapper getDisponibilita(
+            @PathVariable String category,
+            @PathVariable LocalDate date
+            ){
+        return (AvailabilityWrapper) availabilityService.getByDateandCategoryAvailability(category, date);
     }
 
 

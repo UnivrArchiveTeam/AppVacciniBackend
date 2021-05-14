@@ -13,7 +13,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Disponibilita {
+@EqualsAndHashCode
+public class Availability {
    @EmbeddedId DispId id;
     private String categoria;
 
@@ -22,8 +23,8 @@ public class Disponibilita {
     private LocalDate dataFine;
     private LocalTime oraInzio;
     private LocalTime oraFine;
-    public Disponibilita(String nomeAmbulatorio,Long idVaccino, String categoria, LocalDate dataInizio,
-                         LocalDate dataFine, LocalTime oraInzio, LocalTime oraFine) {
+    public Availability(String nomeAmbulatorio, Long idVaccino, String categoria, LocalDate dataInizio,
+                        LocalDate dataFine, LocalTime oraInzio, LocalTime oraFine) {
         this.id = new DispId(nomeAmbulatorio,idVaccino);
         this.categoria = categoria;
         this.dataInizio = dataInizio;
