@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.controller;
 
 import com.kodikas.appvaccinibackend.model.Citizen;
-import com.kodikas.appvaccinibackend.service.CittadinoService;
+import com.kodikas.appvaccinibackend.service.CitizenService;
 import com.kodikas.appvaccinibackend.wrapper.CitizenWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/cittadini")
 @AllArgsConstructor
 public class CitizenController {
-    private CittadinoService cittadinoService;
+    private CitizenService cittadinoService;
 
     @GetMapping
     public CitizenWrapper getCittadini() {
         return new CitizenWrapper(
-                cittadinoService.getCittadini()
+                cittadinoService.getCitizens()
         );
     }
 
     @GetMapping(path = "/{codiceFiscale}")
     public Citizen getCittadino(@PathVariable String codiceFiscale) {
-        return cittadinoService.getCittadino(codiceFiscale);
+        return cittadinoService.getCitizen(codiceFiscale);
     }
 
     @PutMapping(path = "/registrato/{codiceFiscale}")
     public Citizen modifyRegistrato(@PathVariable String codiceFiscale) {
-        return cittadinoService.modifyRegistrato(codiceFiscale);
+        return cittadinoService.modifyRegistered(codiceFiscale);
     }
 
 }

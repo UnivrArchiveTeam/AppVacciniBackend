@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.config;
 
 import com.kodikas.appvaccinibackend.model.Citizen;
-import com.kodikas.appvaccinibackend.repository.CittadinoRepository;
+import com.kodikas.appvaccinibackend.repository.CitizenRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.boot.CommandLineRunner;
@@ -65,7 +65,7 @@ public class CitizenConfig {
 
     @Bean
     CommandLineRunner commandLineRunnerCitizen(
-            CittadinoRepository repository
+            CitizenRepository repository
     ) {
         return args -> repository.saveAll(
                 citizens
