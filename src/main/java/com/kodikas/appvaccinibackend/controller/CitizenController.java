@@ -7,26 +7,26 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/cittadini")
+@RequestMapping(path = "/citizens")
 @AllArgsConstructor
 public class CitizenController {
-    private CitizenService cittadinoService;
+    private final CitizenService citizenService;
 
     @GetMapping
-    public CitizenWrapper getCittadini() {
+    public CitizenWrapper getCitizens() {
         return new CitizenWrapper(
-                cittadinoService.getCitizens()
+                citizenService.getCitizens()
         );
     }
 
-    @GetMapping(path = "/{codiceFiscale}")
-    public Citizen getCittadino(@PathVariable String codiceFiscale) {
-        return cittadinoService.getCitizen(codiceFiscale);
+    @GetMapping(path = "/{fiscalCode}")
+    public Citizen getCitizen(@PathVariable String fiscalCode) {
+        return citizenService.getCitizen(fiscalCode);
     }
 
-    @PutMapping(path = "/registrato/{codiceFiscale}")
-    public Citizen modifyRegistrato(@PathVariable String codiceFiscale) {
-        return cittadinoService.modifyRegistered(codiceFiscale);
+    @PutMapping(path = "/registered/{fiscalCode}")
+    public Citizen modifyRegistered(@PathVariable String fiscalCode) {
+        return citizenService.modifyRegistered(fiscalCode);
     }
 
 }
