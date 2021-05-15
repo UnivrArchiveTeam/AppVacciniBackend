@@ -80,6 +80,7 @@ class VaccinationCampaignControllerIntTest {
         // when
         when(vaccinationCampaignService.addVaccinationCampaign(any())).thenReturn(expectedVaccinationCampaign);
 
+        // then
         MvcResult result = mockMvc.perform(post(URI)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(vaccinationCampaign)))
