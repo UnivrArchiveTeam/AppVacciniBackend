@@ -6,7 +6,6 @@ import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
 import com.kodikas.appvaccinibackend.wrapper.VaccinationCampaignWrapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
