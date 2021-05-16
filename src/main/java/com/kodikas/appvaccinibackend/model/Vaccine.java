@@ -26,7 +26,6 @@ public class Vaccine {
             referencedColumnName = "campaignID"
     )
     private VaccinationCampaign vaccinationCampaign;
-//    private AventiDiritto aventiDiritto;
 
     public Vaccine(String vaccineName, long quantity) {
         this.vaccineName = vaccineName;
@@ -37,6 +36,12 @@ public class Vaccine {
         this.vaccineID = vaccineID;
         this.vaccineName = vaccineName;
         this.quantity = quantity;
+    }
+
+    public Vaccine(String vaccineName, Long quantity, VaccinationCampaign vaccinationCampaign) {
+        this.vaccineName = vaccineName;
+        this.quantity = quantity;
+        this.vaccinationCampaign = vaccinationCampaign;
     }
 
     @JsonIgnore

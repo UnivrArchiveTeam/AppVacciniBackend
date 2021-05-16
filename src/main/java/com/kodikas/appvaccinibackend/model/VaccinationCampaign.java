@@ -22,9 +22,13 @@ public class VaccinationCampaign {
     public VaccinationCampaign(String diseaseName) {
         this.diseaseName = diseaseName;
     }
-
     public VaccinationCampaign(String diseaseName, Set<Vaccine> vaccines) {
         this.diseaseName = diseaseName;
         this.vaccines = vaccines;
+    }
+
+    public VaccinationCampaign(long campaignID, String diseaseName) {
+        this.campaignID = campaignID;
+        this.diseaseName = diseaseName;
     }
 }

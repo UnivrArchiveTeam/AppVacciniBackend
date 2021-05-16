@@ -6,7 +6,7 @@ import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/vaccini")
+@RequestMapping(path = "/vaccines")
 public class VaccineController {
     private final VaccineService vaccineService;
 

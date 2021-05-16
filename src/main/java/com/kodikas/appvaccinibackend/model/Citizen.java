@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Entity
 @Table
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Citizen {
