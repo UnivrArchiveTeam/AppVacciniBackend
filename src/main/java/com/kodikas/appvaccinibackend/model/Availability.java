@@ -1,9 +1,8 @@
 package com.kodikas.appvaccinibackend.model;
-import com.kodikas.appvaccinibackend.id.DispId;
+import com.kodikas.appvaccinibackend.id.IdAvailability;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -15,21 +14,19 @@ import java.time.LocalTime;
 @Setter
 @EqualsAndHashCode
 public class Availability {
-   @EmbeddedId DispId id;
-    private String categoria;
-
+   @EmbeddedId
+   IdAvailability id;
     //Date
-    private LocalDate dataInizio;
-    private LocalDate dataFine;
-    private LocalTime oraInzio;
-    private LocalTime oraFine;
-    public Availability(String nomeAmbulatorio, Long idVaccino, String categoria, LocalDate dataInizio,
-                        LocalDate dataFine, LocalTime oraInzio, LocalTime oraFine) {
-        this.id = new DispId(nomeAmbulatorio,idVaccino);
-        this.categoria = categoria;
-        this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
-        this.oraInzio = oraInzio;
-        this.oraFine = oraFine;
+    private LocalDate start_date;
+    private LocalDate end_date;
+    private LocalTime start_hour;
+    private LocalTime end_hour;
+    public Availability(String clinicname, Long idVaccine, LocalDate start_date,
+                        LocalDate end_date, LocalTime start_hour, LocalTime end_hour) {
+        this.id = new IdAvailability(clinicname,idVaccine);
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.start_hour = start_hour;
+        this.end_hour = end_hour;
     }
 }

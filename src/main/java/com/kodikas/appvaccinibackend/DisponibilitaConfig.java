@@ -20,7 +20,6 @@ public class DisponibilitaConfig {
             Availability golosine = new Availability(
                    "Golosine",
                     2341244L,
-                    "over80",
                     LocalDate.of(2021,05,03),
                     LocalDate.of(2021,05,05),
                     LocalTime.of(13,00),
@@ -29,7 +28,6 @@ public class DisponibilitaConfig {
             Availability santa = new Availability(
                     "Santa",
                     2341344L,
-                    "over70",
                     LocalDate.of(2021,05,02),
                     LocalDate.of(2021,05,06),
                     LocalTime.of(13,00),

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
-public class DispId implements Serializable {
-    private String nomeAmbulatorio;
-    private Long idVaccino;
+public class IdAvailability implements Serializable {
+    private String clinicName;
+    private Long idVaccine;
 }

@@ -15,7 +15,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyVararg;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,11 +31,11 @@ class AvailabilityControllerUnitTest {
     void setUp(){
         undetTest = new AvailabilityController(availabilityService);
         disponibilita = new Availability(
-                "Golosine",1L,"over80",
+                "Golosine",1L,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),
                 LocalTime.of(9,00),LocalTime.of(12,00));
         disponibilita2 = new Availability(
-                "SantaLucia",2L,"over80",
+                "SantaLucia",2L,
                 LocalDate.of(2021,05,02),LocalDate.of(2021,05,25),
                 LocalTime.of(11,00),LocalTime.of(13,00));
 
@@ -76,7 +75,7 @@ class AvailabilityControllerUnitTest {
         int check = 0;
         for(Availability find : result.getAvailability()){
 
-            if(!(find.getId().getIdVaccino().equals(id))){
+            if(!(find.getId().getIdVaccine().equals(id))){
                 check ++;
             }
         }

@@ -36,11 +36,11 @@ class AvailabilityRepostitoryTest {
         categoria = "over80";
 
         disponibilita = new Availability(
-                nomeAmbulatorio,idVaccino,categoria,
+                nomeAmbulatorio,idVaccino,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),
                 LocalTime.of(9,00),LocalTime.of(12,00));
         disponibilita2 = new Availability(
-                "SantaLucia",2L,"over80",
+                "SantaLucia",2L,
                 LocalDate.of(2021,05,02),LocalDate.of(2021,05,25),
                 LocalTime.of(11,00),LocalTime.of(13,00));
     }
@@ -63,7 +63,7 @@ class AvailabilityRepostitoryTest {
         List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
         boolean test = true;
         for (Availability find : result){
-            if (!(find.getId().getIdVaccino().equals(disponibilita.getId().getIdVaccino()))) {
+            if (!(find.getId().getIdVaccine().equals(disponibilita.getId().getIdVaccine()))) {
                 test = false;
             }
         }
@@ -78,7 +78,7 @@ class AvailabilityRepostitoryTest {
         List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
         boolean test = true;
         for (Availability find : result){
-            if (!(find.getId().getIdVaccino().equals(disponibilita.getId().getIdVaccino()))) {
+            if (!(find.getId().getIdVaccine().equals(disponibilita.getId().getIdVaccine()))) {
                 test = false;
             }
         }

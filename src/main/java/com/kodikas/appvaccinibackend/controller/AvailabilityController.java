@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "vaccini/availability")
+@RequestMapping(path = "vaccine/availability")
 public class AvailabilityController {
 
     private AvailabilityService availabilityService;

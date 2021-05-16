@@ -2,7 +2,6 @@ package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.repository.AvailabilityRepostitory;
-import com.kodikas.appvaccinibackend.wrapper.AvailabilityWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +32,7 @@ class AvailabilityServiceUnitTest {
     void setUp(){
         underTest= new AvailabilityService(availabilityRepostitory);
         entry= new Availability(
-                "Golosine",1L,"over80",
+                "Golosine",1L,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),
                 LocalTime.of(9,00),LocalTime.of(12,00));
     }
@@ -67,7 +66,7 @@ class AvailabilityServiceUnitTest {
         boolean check = false;
 
         for (Availability find : result){
-            if(find.getId().getIdVaccino().equals(idVaccine)){
+            if(find.getId().getIdVaccine().equals(idVaccine)){
                 check = true;
             }
         }
