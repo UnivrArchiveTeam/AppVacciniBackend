@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AvailabilityRepostitory extends JpaRepository<Availability, IdAvailability> {
-    List<Availability> findAllById_IdVaccino(Long vaccine);
+public interface AvailabilityRepository extends JpaRepository<Availability, IdAvailability> {
+    List<Availability> findAllById_IdVaccine(Long vaccine);
 }

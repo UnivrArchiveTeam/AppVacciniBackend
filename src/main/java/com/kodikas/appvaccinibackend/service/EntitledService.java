@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EntitledService {
 
-    final private EntitledRepository  entitledRepository ;
+    private final EntitledRepository entitledRepository ;
 
     public List<Entitled> getAllEntitled () { return entitledRepository.findAll();}
 

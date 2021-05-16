@@ -16,8 +16,8 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class AvailabilityRepostitoryTest {
-    @Autowired private AvailabilityRepostitory underTest;
+class AvailabilityRepositoryTest {
+    @Autowired private AvailabilityRepository underTest;
     Availability disponibilita;
     Availability disponibilita2;
     String nomeAmbulatorio;
@@ -53,14 +53,14 @@ class AvailabilityRepostitoryTest {
     @Test
     void findAllById_IdVaccino_itShoudRetrieve() {
         underTest.save(disponibilita);
-        List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
+        List<Availability> result = underTest.findAllById_IdVaccine(idVaccino);
         assertThat(result.isEmpty()).isFalse();
     }
 
     @Test
     void findAllById_IdVaccino_itShouldRetrivedcorrect() {
         underTest.save(disponibilita);
-        List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
+        List<Availability> result = underTest.findAllById_IdVaccine(idVaccino);
         boolean test = true;
         for (Availability find : result){
             if (!(find.getId().getIdVaccine().equals(disponibilita.getId().getIdVaccine()))) {
@@ -75,7 +75,7 @@ class AvailabilityRepostitoryTest {
     void findAllById_IdVaccino_itShouldreturnsonlythecorrectvalues() {
         underTest.save(disponibilita);
         underTest.save(disponibilita2);
-        List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
+        List<Availability> result = underTest.findAllById_IdVaccine(idVaccino);
         boolean test = true;
         for (Availability find : result){
             if (!(find.getId().getIdVaccine().equals(disponibilita.getId().getIdVaccine()))) {

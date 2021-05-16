@@ -2,7 +2,7 @@ package com.kodikas.appvaccinibackend;
 
 
 import com.kodikas.appvaccinibackend.model.Availability;
-import com.kodikas.appvaccinibackend.repository.AvailabilityRepostitory;
+import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import java.util.List;
 public class DisponibilitaConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(AvailabilityRepostitory repostitory){
+    CommandLineRunner commandLineRunner(AvailabilityRepository repostitory){
         return  args -> {
             Availability golosine = new Availability(
                    "Golosine",
