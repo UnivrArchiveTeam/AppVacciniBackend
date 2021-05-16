@@ -9,13 +9,5 @@ import java.util.List;
 
 @Repository
 public interface AvailabilityRepostitory extends JpaRepository<Availability, DispId> {
-
-    List<Availability> findAllByCategoria(String categoria);
-
     List<Availability> findAllById_IdVaccino(Long vaccino);
-
-    List<Availability> findAllById_NomeAmbulatorioAndCategoria(String Clinic , String Category);
-
-
-
 }

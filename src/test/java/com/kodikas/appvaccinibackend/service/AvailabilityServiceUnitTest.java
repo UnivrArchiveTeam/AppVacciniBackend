@@ -57,50 +57,42 @@ class AvailabilityServiceUnitTest {
     }
 
     @Test
-    void getByDateandCategoryAvailability() {
+    void getAvailabilitybyId_Vaccine_shouldcorrectlyreturns(){
+        List<Availability> list_availability = List.of(entry);
+         Long idVaccine = 1L ;
 
-        //when
-        List<Availability> availabilityList = List.of(entry);
-        String category = "over80";
-        LocalDate date = LocalDate.of(2021 ,05 ,13);
+        when(availabilityRepostitory.findAllById_IdVaccino(idVaccine)).thenReturn(list_availability);
 
-        when(availabilityRepostitory.findAllByCategoria(category)).thenReturn(availabilityList);
-
-
-        List<Availability> result = underTest.getByDateandCategoryAvailability(category,date);
-
-
-        verify(availabilityRepostitory).findAllByCategoria(category);
+        List<Availability>result = underTest.getAvailabilitybyId_Vaccine(idVaccine);
         boolean check = false;
 
         for (Availability find : result){
-            if(find.getCategoria().equals(category)){
-                check = true ;
-                break;
-            }
-        }
-
-        assertThat(check).isTrue();
-
-    }
-    @Test
-    void getAvailabilitybyCategoryAndClinic(){
-        //when
-        List<Availability> availabilityList = List.of(entry);
-        String category = "over80";
-        String clinic = "Golosine";
-
-
-        when(availabilityRepostitory.findAllById_NomeAmbulatorioAndCategoria(clinic,category)).thenReturn(availabilityList);
-
-        List<Availability> result = underTest.getAvailabilitybyCategoryAndClinic(category,clinic);
-
-        boolean check = false;
-        for (Availability find : result){
-            if (find.getCategoria().equals(category)&&find.getId().getNomeAmbulatorio().equals(clinic)){
+            if(find.getId().getIdVaccino().equals(idVaccine)){
                 check = true;
             }
         }
+
         assertThat(check).isTrue();
+    }
+
+    @Test
+
+    void getAvailabilitybyId_Vaccine_shouldThrowErrorWhenIdDoesNotCorrect(){
+        long id = -123L;
+        assertThatThrownBy(
+                ()-> underTest.getAvailabilitybyId_Vaccine(id)
+        ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine id");
+
+        verify(availabilityRepostitory,never()).findAllById_IdVaccino(any());
+    }
+
+    @Test
+    void getAvailabilitybyId_VaccineshouldThrowErrorWhenfindsnothing_(){
+        long id = 232L;
+        assertThatThrownBy(
+                ()-> underTest.getAvailabilitybyId_Vaccine(id)
+        ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine id");
+
+        verify(availabilityRepostitory).findAllById_IdVaccino(any());
     }
 }

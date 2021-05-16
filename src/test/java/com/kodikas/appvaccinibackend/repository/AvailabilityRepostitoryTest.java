@@ -19,6 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class AvailabilityRepostitoryTest {
     @Autowired private AvailabilityRepostitory underTest;
     Availability disponibilita;
+    Availability disponibilita2;
     String nomeAmbulatorio;
     Long idVaccino;
     String categoria;
@@ -38,6 +39,10 @@ class AvailabilityRepostitoryTest {
                 nomeAmbulatorio,idVaccino,categoria,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),
                 LocalTime.of(9,00),LocalTime.of(12,00));
+        disponibilita2 = new Availability(
+                "SantaLucia",2L,"over80",
+                LocalDate.of(2021,05,02),LocalDate.of(2021,05,25),
+                LocalTime.of(11,00),LocalTime.of(13,00));
     }
 
     @AfterEach
@@ -46,35 +51,35 @@ class AvailabilityRepostitoryTest {
     }
 
     @Test
-    void findAllByCategoria() {
-        underTest.save(disponibilita);
-        List<Availability> result = underTest.findAllByCategoria(categoria);
-        boolean test = false;
-        for (Availability find : result){
-            if(find.getCategoria().equals(categoria)){
-                test = true ;
-                break;
-            }
-        }
-        assertThat(test).isTrue();
-    }
-
-    @Test
-    void itShoudRetrievefindAllById_IdVaccino() {
+    void findAllById_IdVaccino_itShoudRetrieve() {
         underTest.save(disponibilita);
         List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
         assertThat(result.isEmpty()).isFalse();
     }
 
     @Test
-    void itShouldRetrivedcorrect_findAllById_IdVaccino() {
+    void findAllById_IdVaccino_itShouldRetrivedcorrect() {
         underTest.save(disponibilita);
         List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
-        boolean test = false;
+        boolean test = true;
         for (Availability find : result){
-            if (find.getId().getIdVaccino().equals(disponibilita.getId().getIdVaccino())) {
-                test = true;
-                break;
+            if (!(find.getId().getIdVaccino().equals(disponibilita.getId().getIdVaccino()))) {
+                test = false;
+            }
+        }
+        assertThat(test).isTrue();
+    }
+
+
+    @Test
+    void findAllById_IdVaccino_itShouldreturnsonlythecorrectvalues() {
+        underTest.save(disponibilita);
+        underTest.save(disponibilita2);
+        List<Availability> result = underTest.findAllById_IdVaccino(idVaccino);
+        boolean test = true;
+        for (Availability find : result){
+            if (!(find.getId().getIdVaccino().equals(disponibilita.getId().getIdVaccino()))) {
+                test = false;
             }
         }
         assertThat(test).isTrue();

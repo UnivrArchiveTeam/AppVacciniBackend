@@ -2,12 +2,9 @@ package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.repository.AvailabilityRepostitory;
-import com.kodikas.appvaccinibackend.wrapper.AvailabilityWrapper;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,41 +17,18 @@ public class AvailabilityService {
         return  availabilityRepostitory.findAll();
     }
 
-    public void addAvailability(Availability newEntry){
-        availabilityRepostitory.save(newEntry);
+    public Availability addAvailability(Availability newEntry){
+        return availabilityRepostitory.save(newEntry);
     }
 
-    public List<Availability> getByDateandCategoryAvailability(String category , LocalDate date){
-
-        List<Availability> filtered_category = availabilityRepostitory.findAllByCategoria(category);
-        List<Availability> result = null;
-
-        if (filtered_category.isEmpty()){
-            throw  new IllegalStateException("Nothing available");
+    public List<Availability> getAvailabilitybyId_Vaccine(Long idVaccine){
+        if(idVaccine < 0L){
+            throw new IllegalStateException("Invalid vaccine id");
         }
-        for(Availability search : filtered_category){
-            if (search.getDataInizio().isBefore(date)&&search.getDataFine().isAfter(date)||(search.getDataInizio().isEqual(date)||search.getDataFine().isEqual(date))){
-                if (result == null){
-                    result = List.of(search);
-                }
-                else {
-                    result.add(search);
-                }
-            }
+        List<Availability>list_availability = availabilityRepostitory.findAllById_IdVaccino(idVaccine);
+        if(list_availability.isEmpty()){
+            throw new IllegalStateException("No availability found matching the vaccine id");
         }
-        if(result == null){
-            throw new IllegalStateException("Nothing on this date");
-        }
-
-        return result;
-    }
-
-    List<Availability> getAvailabilitybyCategoryAndClinic (String Category,String Clinic){
-
-        List<Availability>result= availabilityRepostitory.findAllById_NomeAmbulatorioAndCategoria(Clinic,Category);
-
-        if ( result.isEmpty()){ throw new IllegalStateException("No date available in this moth ");}
-
-        return result;
+        return list_availability;
     }
 }
