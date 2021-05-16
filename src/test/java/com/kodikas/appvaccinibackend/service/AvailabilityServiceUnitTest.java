@@ -62,7 +62,7 @@ class AvailabilityServiceUnitTest {
 
         when(availabilityRepository.findAllById_IdVaccine(idVaccine)).thenReturn(list_availability);
 
-        List<Availability>result = underTest.getAvailabilitybyId_Vaccine(idVaccine);
+        List<Availability>result = underTest.getAvailabilityByIdVaccine(idVaccine);
         boolean check = false;
 
         for (Availability find : result){
@@ -79,7 +79,7 @@ class AvailabilityServiceUnitTest {
     void getAvailabilitybyId_Vaccine_shouldThrowErrorWhenIdDoesNotCorrect(){
         long id = -123L;
         assertThatThrownBy(
-                ()-> underTest.getAvailabilitybyId_Vaccine(id)
+                ()-> underTest.getAvailabilityByIdVaccine(id)
         ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine id");
 
         verify(availabilityRepository,never()).findAllById_IdVaccine(any());
@@ -89,7 +89,7 @@ class AvailabilityServiceUnitTest {
     void getAvailabilitybyId_VaccineshouldThrowErrorWhenfindsnothing_(){
         long id = 232L;
         assertThatThrownBy(
-                ()-> underTest.getAvailabilitybyId_Vaccine(id)
+                ()-> underTest.getAvailabilityByIdVaccine(id)
         ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine id");
 
         verify(availabilityRepository).findAllById_IdVaccine(any());

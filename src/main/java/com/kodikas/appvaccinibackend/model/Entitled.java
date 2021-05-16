@@ -14,7 +14,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Entitled {
     @Id
-    Long idEntilted;
+    Long entitledId;
     String category;
     Long idVaccine;
 }

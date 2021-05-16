@@ -28,7 +28,7 @@ public class AvailabilityController {
     @GetMapping("/{idVaccine}")
     public AvailabilityWrapper getAvailability( @PathVariable long idVaccine ) {
         return new AvailabilityWrapper(
-                availabilityService.getAvailabilitybyId_Vaccine(idVaccine)
+                availabilityService.getAvailabilityByIdVaccine(idVaccine)
         );
     }
 }

@@ -13,7 +13,9 @@ public class EntitledController {
     private final EntitledService entitledService;
 
     @GetMapping
-    public EntitledWrapper getAllEntitled (){return new EntitledWrapper(entitledService.getAllEntitled());}
+    public EntitledWrapper getAllEntitled (){
+        return new EntitledWrapper(entitledService.getAllEntitled());
+    }
 
     @PostMapping
     public Entitled addEntitled(Entitled entitled){
@@ -21,7 +23,7 @@ public class EntitledController {
     }
 
     @GetMapping("/{category}")
-    public  EntitledWrapper getEntitledbyCategory (@PathVariable String category){
-        return new EntitledWrapper(entitledService.getEntitledbyCategory(category));
+    public EntitledWrapper getAllEntitledByCategory(@PathVariable String category){
+        return new EntitledWrapper(entitledService.getEntitledByCategory(category));
     }
 }

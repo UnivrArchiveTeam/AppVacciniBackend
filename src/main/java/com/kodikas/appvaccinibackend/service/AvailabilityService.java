@@ -21,14 +21,14 @@ public class AvailabilityService {
         return availabilityRepository.save(newEntry);
     }
 
-    public List<Availability> getAvailabilitybyId_Vaccine(Long idVaccine){
+    public List<Availability> getAvailabilityByIdVaccine(Long idVaccine){
         if(idVaccine < 0L){
             throw new IllegalStateException("Invalid vaccine id");
         }
-        List<Availability>list_availability = availabilityRepository.findAllById_IdVaccine(idVaccine);
-        if(list_availability.isEmpty()){
+        List<Availability> availabilityList = availabilityRepository.findAllById_IdVaccine(idVaccine);
+        if(availabilityList.isEmpty()){
             throw new IllegalStateException("No availability found matching the vaccine id");
         }
-        return list_availability;
+        return availabilityList;
     }
 }

@@ -17,16 +17,16 @@ public class Availability {
    @EmbeddedId
    IdAvailability id;
     //Date
-    private LocalDate start_date;
-    private LocalDate end_date;
-    private LocalTime start_hour;
-    private LocalTime end_hour;
-    public Availability(String clinicname, Long idVaccine, LocalDate start_date,
-                        LocalDate end_date, LocalTime start_hour, LocalTime end_hour) {
-        this.id = new IdAvailability(clinicname,idVaccine);
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.start_hour = start_hour;
-        this.end_hour = end_hour;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalTime startHour;
+    private LocalTime endHour;
+    public Availability(String clinicName, Long idVaccine, LocalDate startDate,
+                        LocalDate endDate, LocalTime startHour, LocalTime endHour) {
+        this.id = new IdAvailability(clinicName,idVaccine);
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startHour = startHour;
+        this.endHour = endHour;
     }
 }

@@ -69,7 +69,7 @@ class AvailabilityControllerUnitTest {
     void getAvailability() {
         List<Availability>list_availability = List.of(disponibilita,disponibilita2);
         Long id = 2L;
-        when(availabilityService.getAvailabilitybyId_Vaccine(id)).thenReturn(List.of(disponibilita2));
+        when(availabilityService.getAvailabilityByIdVaccine(id)).thenReturn(List.of(disponibilita2));
 
         AvailabilityWrapper result =undetTest.getAvailability(id);
         int check = 0;
