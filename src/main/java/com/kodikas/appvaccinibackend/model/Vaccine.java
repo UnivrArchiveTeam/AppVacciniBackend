@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -20,19 +22,23 @@ public class Vaccine {
     private long vaccineID;
     private String vaccineName;
     private Long quantity;
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "campaign_id",
-            referencedColumnName = "campaignID"
-    )
+    @JoinColumn
     private VaccinationCampaign vaccinationCampaign;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Availability> availabilities = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vaccine")
+    private Set<Entitled> entitleds = new HashSet<>();
 
     public Vaccine(String vaccineName, long quantity) {
         this.vaccineName = vaccineName;
         this.quantity = quantity;
     }
 
-    public Vaccine(Long vaccineID, String vaccineName, long quantity) {
+    public Vaccine(long vaccineID, String vaccineName, long quantity) {
         this.vaccineID = vaccineID;
         this.vaccineName = vaccineName;
         this.quantity = quantity;
@@ -44,8 +50,20 @@ public class Vaccine {
         this.vaccinationCampaign = vaccinationCampaign;
     }
 
+    public Vaccine(long vaccineID, String vaccineName, Long quantity, VaccinationCampaign vaccinationCampaign) {
+        this.vaccineID = vaccineID;
+        this.vaccineName = vaccineName;
+        this.quantity = quantity;
+        this.vaccinationCampaign = vaccinationCampaign;
+    }
+
     @JsonIgnore
-    private VaccinationCampaign getVaccinationCampaign() {
+    public VaccinationCampaign getVaccinationCampaign() {
         return vaccinationCampaign;
+    }
+
+    @JsonIgnore
+    public Set<Availability> getAvailabilities() {
+        return availabilities;
     }
 }

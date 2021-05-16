@@ -23,18 +23,18 @@ class AvailabilityControllerUnitTest {
 
     @Mock
     private AvailabilityService availabilityService;
-    private AvailabilityController undetTest;
-    private Availability disponibilita;
-    private Availability disponibilita2;
+    private AvailabilityController underTest;
+    private Availability availability;
+    private Availability availability2;
 
     @BeforeEach
     void setUp(){
-        undetTest = new AvailabilityController(availabilityService);
-        disponibilita = new Availability(
+        underTest = new AvailabilityController(availabilityService);
+        availability = new Availability(
                 "Golosine",1L,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),
                 LocalTime.of(9,00),LocalTime.of(12,00));
-        disponibilita2 = new Availability(
+        availability2 = new Availability(
                 "SantaLucia",2L,
                 LocalDate.of(2021,05,02),LocalDate.of(2021,05,25),
                 LocalTime.of(11,00),LocalTime.of(13,00));
@@ -42,11 +42,11 @@ class AvailabilityControllerUnitTest {
     }
     @Test
     void getAvailabilityALL() {
-        List<Availability> list_availability = List.of(disponibilita,disponibilita2);
+        List<Availability> list_availability = List.of(availability, availability2);
 
         when(availabilityService.getAllAvailability()).thenReturn(list_availability);
 
-        AvailabilityWrapper result = undetTest.getAvailabilityALL();
+        AvailabilityWrapper result = underTest.getAvailabilityALL();
 
         verify(availabilityService).getAllAvailability();
 
@@ -54,28 +54,28 @@ class AvailabilityControllerUnitTest {
     }
 
     @Test
-    void registerNewDisponibilita() {
+    void registerNewAvailability() {
 
-        when(availabilityService.addAvailability(disponibilita)).thenReturn(disponibilita);
+        when(availabilityService.addAvailability(availability)).thenReturn(availability);
 
-        Availability result = undetTest.registerNewAvailability(disponibilita);
+        Availability result = underTest.registerNewAvailability(availability);
 
-        verify(availabilityService).addAvailability(disponibilita);
+        verify(availabilityService).addAvailability(availability);
 
-        assertEquals(disponibilita,result);
+        assertEquals(availability,result);
     }
 
     @Test
     void getAvailability() {
-        List<Availability>list_availability = List.of(disponibilita,disponibilita2);
+        List<Availability>list_availability = List.of(availability, availability2);
         Long id = 2L;
-        when(availabilityService.getAvailabilityByIdVaccine(id)).thenReturn(List.of(disponibilita2));
+        when(availabilityService.getAvailabilityByIdVaccine(id)).thenReturn(List.of(availability2));
 
-        AvailabilityWrapper result =undetTest.getAvailability(id);
+        AvailabilityWrapper result = underTest.getAvailability(id);
         int check = 0;
         for(Availability find : result.getAvailability()){
 
-            if(!(find.getId().getIdVaccine().equals(id))){
+            if(!(find.getAvailabilityId().getIdVaccine().equals(id))){
                 check ++;
             }
         }

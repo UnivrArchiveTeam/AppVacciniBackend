@@ -53,17 +53,17 @@ class AvailabilityRepositoryTest {
     @Test
     void findAllById_IdVaccino_itShoudRetrieve() {
         underTest.save(disponibilita);
-        List<Availability> result = underTest.findAllById_IdVaccine(idVaccino);
+        List<Availability> result = underTest.findAllByAvailabilityId_IdVaccine(idVaccino);
         assertThat(result.isEmpty()).isFalse();
     }
 
     @Test
     void findAllById_IdVaccino_itShouldRetrivedcorrect() {
         underTest.save(disponibilita);
-        List<Availability> result = underTest.findAllById_IdVaccine(idVaccino);
+        List<Availability> result = underTest.findAllByAvailabilityId_IdVaccine(idVaccino);
         boolean test = true;
         for (Availability find : result){
-            if (!(find.getId().getIdVaccine().equals(disponibilita.getId().getIdVaccine()))) {
+            if (!(find.getAvailabilityId().getIdVaccine().equals(disponibilita.getAvailabilityId().getIdVaccine()))) {
                 test = false;
             }
         }
@@ -75,10 +75,10 @@ class AvailabilityRepositoryTest {
     void findAllById_IdVaccino_itShouldreturnsonlythecorrectvalues() {
         underTest.save(disponibilita);
         underTest.save(disponibilita2);
-        List<Availability> result = underTest.findAllById_IdVaccine(idVaccino);
+        List<Availability> result = underTest.findAllByAvailabilityId_IdVaccine(idVaccino);
         boolean test = true;
         for (Availability find : result){
-            if (!(find.getId().getIdVaccine().equals(disponibilita.getId().getIdVaccine()))) {
+            if (!(find.getAvailabilityId().getIdVaccine().equals(disponibilita.getAvailabilityId().getIdVaccine()))) {
                 test = false;
             }
         }

@@ -17,8 +17,10 @@ public class EntitledService {
         return entitledRepository.findAll();
     }
 
-    public Entitled addEntitled (Entitled newEntry){
-        return entitledRepository.save(newEntry);
+    public Entitled addEntitled (Entitled entitled){
+        if (entitled.getVaccine() != null)
+            entitled.getVaccine().getEntitleds().add(entitled);
+        return entitledRepository.save(entitled);
     }
 
     public List<Entitled> getEntitledByCategory(String category){

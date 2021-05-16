@@ -17,17 +17,20 @@ public class AvailabilityService {
         return  availabilityRepository.findAll();
     }
 
-    public Availability addAvailability(Availability newEntry){
-        return availabilityRepository.save(newEntry);
+    public Availability addAvailability(Availability availability){
+        if (availability.getVaccine() != null)
+            availability.getVaccine().getAvailabilities().add(availability);
+        return availabilityRepository.save(availability);
     }
 
     public List<Availability> getAvailabilityByIdVaccine(Long idVaccine){
         if(idVaccine < 0L){
-            throw new IllegalStateException("Invalid vaccine id");
+            throw new IllegalStateException("Invalid vaccine availabilityId");
         }
-        List<Availability> availabilityList = availabilityRepository.findAllById_IdVaccine(idVaccine);
+
+        List<Availability> availabilityList = availabilityRepository.findAllByAvailabilityId_IdVaccine(idVaccine);
         if(availabilityList.isEmpty()){
-            throw new IllegalStateException("No availability found matching the vaccine id");
+            throw new IllegalStateException("No availability found matching the vaccine availabilityId");
         }
         return availabilityList;
     }

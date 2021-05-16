@@ -19,6 +19,18 @@ public class VaccineService {
     }
 
     public Vaccine addVaccine(Vaccine vaccine) {
+        if (! vaccine.getAvailabilities().isEmpty())
+            vaccine.getAvailabilities().forEach(
+                    availability -> availability.setVaccine(vaccine)
+            );
+        if (! vaccine.getEntitleds().isEmpty())
+            vaccine.getEntitleds().forEach(
+                    entitled -> entitled.setVaccine(vaccine)
+            );
+        if (vaccine.getVaccinationCampaign() != null)
+            vaccine.getEntitleds().forEach(
+                    entitled -> entitled.setVaccine(vaccine)
+            );
         return vaccineRepository.save(vaccine);
     }
 

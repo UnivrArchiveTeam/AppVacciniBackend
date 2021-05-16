@@ -98,7 +98,7 @@ class VaccinationCampaignServiceUnitTest {
         assertThatThrownBy(
                 () -> underTest.addVaccinationCampaign(expectedVaccinationCampaign)
         ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("The given id is already taken");
+                .hasMessage("The given availabilityId is already taken");
 
         verify(vaccinationCampaignRepository, never()).save(expectedVaccinationCampaign);
     }

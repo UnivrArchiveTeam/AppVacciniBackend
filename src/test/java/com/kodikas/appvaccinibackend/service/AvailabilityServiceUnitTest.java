@@ -60,13 +60,13 @@ class AvailabilityServiceUnitTest {
         List<Availability> list_availability = List.of(entry);
          Long idVaccine = 1L ;
 
-        when(availabilityRepository.findAllById_IdVaccine(idVaccine)).thenReturn(list_availability);
+        when(availabilityRepository.findAllByAvailabilityId_IdVaccine(idVaccine)).thenReturn(list_availability);
 
         List<Availability>result = underTest.getAvailabilityByIdVaccine(idVaccine);
         boolean check = false;
 
         for (Availability find : result){
-            if(find.getId().getIdVaccine().equals(idVaccine)){
+            if(find.getAvailabilityId().getIdVaccine().equals(idVaccine)){
                 check = true;
             }
         }
@@ -80,9 +80,9 @@ class AvailabilityServiceUnitTest {
         long id = -123L;
         assertThatThrownBy(
                 ()-> underTest.getAvailabilityByIdVaccine(id)
-        ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine id");
+        ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine availabilityId");
 
-        verify(availabilityRepository,never()).findAllById_IdVaccine(any());
+        verify(availabilityRepository,never()).findAllByAvailabilityId_IdVaccine(any());
     }
 
     @Test
@@ -90,8 +90,8 @@ class AvailabilityServiceUnitTest {
         long id = 232L;
         assertThatThrownBy(
                 ()-> underTest.getAvailabilityByIdVaccine(id)
-        ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine id");
+        ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine availabilityId");
 
-        verify(availabilityRepository).findAllById_IdVaccine(any());
+        verify(availabilityRepository).findAllByAvailabilityId_IdVaccine(any());
     }
 }

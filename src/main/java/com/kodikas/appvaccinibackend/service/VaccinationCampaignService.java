@@ -17,18 +17,16 @@ public class VaccinationCampaignService {
     }
 
     public VaccinationCampaign addVaccinationCampaign(VaccinationCampaign vaccinationCampaign) {
-        if (
-                vaccinationCampaignRepository.existsById(vaccinationCampaign.getCampaignID())
-        ) {
-            throw new IllegalStateException("The given id is already taken");
+        if (vaccinationCampaignRepository.existsById(vaccinationCampaign.getCampaignID())) {
+            throw new IllegalStateException("The given availabilityId is already taken");
         }
-        else if (
-                vaccinationCampaign.getDiseaseName() != null
-                        && vaccinationCampaignRepository.existsByDiseaseName(vaccinationCampaign.getDiseaseName())
+        else if (vaccinationCampaign.getDiseaseName() != null
+                && vaccinationCampaignRepository.existsByDiseaseName(vaccinationCampaign.getDiseaseName())
         ) {
             throw new IllegalStateException("The given diseaseName is already present");
         }
-        else if (vaccinationCampaign.getVaccines() != null) {
+
+        if (! vaccinationCampaign.getVaccines().isEmpty()) {
             vaccinationCampaign.getVaccines().forEach(vaccine -> vaccine.setVaccinationCampaign(vaccinationCampaign));
         }
         return vaccinationCampaignRepository.save(vaccinationCampaign);

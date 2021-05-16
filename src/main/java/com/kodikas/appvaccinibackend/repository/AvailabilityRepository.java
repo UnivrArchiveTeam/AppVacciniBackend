@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface AvailabilityRepository extends JpaRepository<Availability, IdAvailability> {
-    List<Availability> findAllById_IdVaccine(Long vaccine);
+    List<Availability> findAllByAvailabilityId_IdVaccine(Long vaccine);
 }
