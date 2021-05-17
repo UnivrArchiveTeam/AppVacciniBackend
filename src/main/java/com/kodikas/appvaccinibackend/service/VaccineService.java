@@ -1,0 +1,50 @@
+package com.kodikas.appvaccinibackend.service;
+
+import com.kodikas.appvaccinibackend.model.Vaccine;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+
+@Service
+@AllArgsConstructor
+public class VaccineService {
+    private final VaccineRepository vaccineRepository;
+
+    public List<Vaccine> getVaccines() {
+        return vaccineRepository.findAll();
+    }
+
+    public Vaccine addVaccine(Vaccine vaccine) {
+        if (! vaccine.getAvailabilities().isEmpty())
+            vaccine.getAvailabilities().forEach(
+                    availability -> availability.setVaccine(vaccine)
+            );
+        if (! vaccine.getEntitleds().isEmpty())
+            vaccine.getEntitleds().forEach(
+                    entitled -> entitled.setVaccine(vaccine)
+            );
+        if (vaccine.getVaccinationCampaign() != null)
+            vaccine.getEntitleds().forEach(
+                    entitled -> entitled.setVaccine(vaccine)
+            );
+        return vaccineRepository.save(vaccine);
+    }
+
+    public Vaccine addQuantity(Long vaccineID, Long quantity) {
+        if (quantity <= 0)
+            throw new IllegalStateException("Insert a Valid quantity");
+
+        Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineID);
+        Vaccine vaccine;
+        if (optionalVaccine.isPresent())
+            vaccine = optionalVaccine.get();
+        else
+            throw new IllegalStateException("Insert a Valid quantity");
+        vaccine.setQuantity(vaccine.getQuantity() + quantity);
+        return vaccineRepository.save(vaccine);
+    }
+}

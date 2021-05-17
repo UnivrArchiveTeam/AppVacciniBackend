@@ -1,8 +1,8 @@
-package com.kodikas.appvaccinibackend;
+package com.kodikas.appvaccinibackend.config;
 
 
 import com.kodikas.appvaccinibackend.model.Availability;
-import com.kodikas.appvaccinibackend.repository.AvailabilityRepostitory;
+import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +12,10 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Configuration
-public class DisponibilitaConfig {
+public class AvailabilityConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(AvailabilityRepostitory repostitory){
+    CommandLineRunner commandLineRunnerAvailability(AvailabilityRepository repository){
         return  args -> {
             Availability golosine = new Availability(
                    "Golosine",
@@ -33,7 +33,7 @@ public class DisponibilitaConfig {
                     LocalTime.of(13,00),
                     LocalTime.of(15,00)
             );
-            repostitory.saveAll(List.of(golosine,santa));
+            repository.saveAll(List.of(golosine,santa));
         };
     }
 }
