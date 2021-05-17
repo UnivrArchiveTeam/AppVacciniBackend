@@ -1,7 +1,9 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Entitled;
+import com.kodikas.appvaccinibackend.model.Reservation;
 import com.kodikas.appvaccinibackend.repository.EntitledRepository;
+import jdk.jfr.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,17 +35,56 @@ class EntitledServiceUnitTest {
     void setUp(){
         underTest = new EntitledService(entitledRepository);
 
-        entry1 = new Entitled()
+        entry1 = new Entitled("over80",2L);
+        entry2 = new Entitled("over50",4L);
     }
     @Test
     void getAllEntitled() {
+        List<Entitled> entitledsList = List.of(entry1,entry2);
+
+        when(entitledRepository.findAll()).thenReturn(entitledsList);
+
+        underTest.getAllEntitled();
+
+        verify(entitledRepository).findAll();
     }
 
     @Test
     void addEntitled() {
+
+        underTest.addEntitled(entry1);
+        verify(entitledRepository).save(entry1);
     }
 
     @Test
-    void getEntitledbyCategory() {
+    void getEntitledbyCategory_shouldcorrectlyreturns() {
+
+        List<Entitled> list_entitled = List.of(entry1);
+        String category = "over80";
+
+        when(entitledRepository.findAllByCategory(category)).thenReturn(list_entitled);
+
+        List<Entitled> result = underTest.getEntitledByCategory(category);
+        boolean check= false;
+
+        for (Entitled find : result){
+
+            if(!(find.getCategory().equals(category))){
+                check = true;
+            }
+        }
+
+        assertThat(check).isFalse();
+    }
+
+    @Test
+    void getEntitledbyCategory_shouldreturnException() {
+
+        String category = "under40";
+        assertThatThrownBy(
+                ()-> underTest.getEntitledByCategory(category)
+        ).isInstanceOf(IllegalStateException.class).hasMessage("I have not found anyone entitled to this category");
+
+        verify(entitledRepository).findAllByCategory(any());
     }
 }

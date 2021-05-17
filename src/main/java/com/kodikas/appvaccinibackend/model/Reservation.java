@@ -3,6 +3,7 @@ package com.kodikas.appvaccinibackend.model;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 
 
@@ -19,6 +20,6 @@ public class Reservation {
     String fiscalcode;
     String clinicname;
     Long idVaccine;
-    LocalDate reservation;
+    LocalDateTime reservation;
 
 }
