@@ -1,5 +1,4 @@
 package com.kodikas.appvaccinibackend.service;
-import com.kodikas.appvaccinibackend.model.Entitled;
 import com.kodikas.appvaccinibackend.model.Reservation;
 import com.kodikas.appvaccinibackend.repository.ReservationRepository;
 import lombok.AllArgsConstructor;
@@ -19,10 +18,10 @@ public class ReservationService {
 
     public List<Reservation> getReservation(String fiscalcode){
 
-        List<Reservation> list_reservations = reservationRepository.findAllByFiscalcode(fiscalcode);
+        List<Reservation> list_reservations = reservationRepository.findAllByFiscalCode(fiscalcode);
 
         if(list_reservations.isEmpty()){
-            throw new IllegalStateException("I have not found any reservations for this fiscalcode");
+            throw new IllegalStateException("I have not found any reservations for this fiscalCode");
         }
 
         return list_reservations;

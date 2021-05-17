@@ -17,9 +17,9 @@ import javax.persistence.*;
 public class Reservation {
 
     @Id
-    String fiscalcode;
-    String clinicname;
+    String fiscalCode;
+    String clinicName;
     Long idVaccine;
-    LocalDateTime reservation;
+    LocalDateTime reservationDateTime;
 
 }

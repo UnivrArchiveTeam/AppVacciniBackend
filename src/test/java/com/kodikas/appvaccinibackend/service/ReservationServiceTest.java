@@ -8,8 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDate;
 import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -62,14 +60,14 @@ class ReservationServiceTest {
         List<Reservation> reservation_list = List.of(entry1);
         String fiscalcode = "GRRDFN68H68L414I";
 
-        when(reservationRepository.findAllByFiscalcode(fiscalcode)).thenReturn(reservation_list);
+        when(reservationRepository.findAllByFiscalCode(fiscalcode)).thenReturn(reservation_list);
 
         List<Reservation>result = underTest.getReservation(fiscalcode);
 
         boolean check = false;
 
         for (Reservation find : result){
-            if(!(find.getFiscalcode().equals(fiscalcode))){
+            if(!(find.getFiscalCode().equals(fiscalcode))){
                 check = true;
             }
         }
@@ -82,8 +80,8 @@ class ReservationServiceTest {
         String fiscalcode = "GRRDFN68H68L414I";
         assertThatThrownBy(
                 ()-> underTest.getReservation(fiscalcode)
-        ).isInstanceOf(IllegalStateException.class).hasMessage("I have not found any reservations for this fiscalcode");
+        ).isInstanceOf(IllegalStateException.class).hasMessage("I have not found any reservations for this fiscalCode");
 
-        verify(reservationRepository).findAllByFiscalcode(any());
+        verify(reservationRepository).findAllByFiscalCode(any());
     }
 }

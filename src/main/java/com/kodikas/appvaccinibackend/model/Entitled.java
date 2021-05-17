@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 public class Entitled {
-
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long entitledId;
     private String category;
