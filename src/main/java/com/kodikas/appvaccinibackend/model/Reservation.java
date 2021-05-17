@@ -2,6 +2,7 @@ package com.kodikas.appvaccinibackend.model;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import javax.persistence.*;
 
 
@@ -12,11 +13,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Entitled {
+public class Reservation {
 
     @Id
-            @GeneratedValue(strategy=GenerationType.AUTO)
-    Long idEntilted;
-    String Category;
+    String fiscalcode;
+    String clinicname;
     Long idVaccine;
+    LocalDate reservation;
+
 }
