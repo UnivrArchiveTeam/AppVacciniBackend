@@ -72,7 +72,7 @@ class ReservationControllerUnitTest {
 
         when(reservationService.getReservation(ficalcode)).thenReturn(reservations_list);
 
-        ReservationWrapper result = underTest.getReservationsByFiscalcode(ficalcode);
+        ReservationWrapper result = underTest.getReservationsByFiscalCode(ficalcode);
         boolean check = true ;
 
         for (Reservation find : result.getReservations()){

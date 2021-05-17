@@ -17,19 +17,18 @@ public class EntitledService {
         return entitledRepository.findAll();
     }
 
-    public Entitled addEntitled (Entitled entitled){
+    public Entitled addEntitled (Entitled entitled) {
         if (entitled.getVaccine() != null)
             entitled.getVaccine().getEntitleds().add(entitled);
         return entitledRepository.save(entitled);
     }
 
     public List<Entitled> getEntitledByCategory(String category){
-
         List<Entitled> entitledList = entitledRepository.findAllByCategory(category);
 
-        if(entitledList.isEmpty()){
+        if(entitledList.isEmpty())
             throw new IllegalStateException("I have not found anyone entitled to this category");
-        }
+
 
         return entitledList;
     }

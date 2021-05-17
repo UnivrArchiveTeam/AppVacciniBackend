@@ -7,15 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,8 +33,8 @@ class EntitledControllerUnitTest {
 
         underTest = new EntitledController(entitledService);
 
-        entry1 = new Entitled("over80",2L);
-        entry2 = new Entitled("over50",4L);
+        entry1 = new Entitled("over80");
+        entry2 = new Entitled("over50");
     }
 
     @Test

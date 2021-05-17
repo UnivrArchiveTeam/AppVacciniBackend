@@ -19,31 +19,20 @@ public class VaccineService {
     }
 
     public Vaccine addVaccine(Vaccine vaccine) {
-        if (! vaccine.getAvailabilities().isEmpty())
-            vaccine.getAvailabilities().forEach(
-                    availability -> availability.setVaccine(vaccine)
-            );
-        if (! vaccine.getEntitleds().isEmpty())
-            vaccine.getEntitleds().forEach(
-                    entitled -> entitled.setVaccine(vaccine)
-            );
-        if (vaccine.getVaccinationCampaign() != null)
-            vaccine.getEntitleds().forEach(
-                    entitled -> entitled.setVaccine(vaccine)
-            );
         return vaccineRepository.save(vaccine);
     }
 
     public Vaccine addQuantity(Long vaccineID, Long quantity) {
-        if (quantity <= 0)
-            throw new IllegalStateException("Insert a Valid quantity");
-
         Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineID);
         Vaccine vaccine;
         if (optionalVaccine.isPresent())
             vaccine = optionalVaccine.get();
         else
+            throw new IllegalStateException("Insert a Valid ID");
+
+        if (quantity > vaccine.getQuantity())
             throw new IllegalStateException("Insert a Valid quantity");
+
         vaccine.setQuantity(vaccine.getQuantity() + quantity);
         return vaccineRepository.save(vaccine);
     }

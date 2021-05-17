@@ -1,24 +1,18 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Entitled;
-import com.kodikas.appvaccinibackend.model.Reservation;
 import com.kodikas.appvaccinibackend.repository.EntitledRepository;
-import jdk.jfr.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.when;
 
@@ -35,8 +29,8 @@ class EntitledServiceUnitTest {
     void setUp(){
         underTest = new EntitledService(entitledRepository);
 
-        entry1 = new Entitled("over80",2L);
-        entry2 = new Entitled("over50",4L);
+        entry1 = new Entitled("over80");
+        entry2 = new Entitled("over50");
     }
     @Test
     void getAllEntitled() {

@@ -13,7 +13,7 @@ public class EntitledController {
     private final EntitledService entitledService;
 
     @GetMapping
-    public EntitledWrapper getAllEntitled (){
+    public EntitledWrapper getAllEntitled(){
         return new EntitledWrapper(entitledService.getAllEntitled());
     }
 

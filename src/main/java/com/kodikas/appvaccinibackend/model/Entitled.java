@@ -17,20 +17,16 @@ public class Entitled {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long entitledId;
     private String category;
-    private Long idVaccine;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Vaccine vaccine;
 
-    public Entitled(String category, Long idVaccine) {
-
+    public Entitled(String category) {
         this.category = category;
-        this.idVaccine = idVaccine;
     }
 
-    public Entitled(String category, Long idVaccine, Vaccine vaccine) {
+    public Entitled(String category, Vaccine vaccine) {
         this.category = category;
-        this.idVaccine = idVaccine;
         this.vaccine = vaccine;
     }
 }
