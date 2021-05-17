@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Availability;
-import com.kodikas.appvaccinibackend.repository.AvailabilityRepostitory;
+import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,24 +11,27 @@ import java.util.List;
 @AllArgsConstructor
 public class AvailabilityService {
 
-    private  final AvailabilityRepostitory availabilityRepostitory;
+    private  final AvailabilityRepository availabilityRepository;
 
     public List<Availability> getAllAvailability(){
-        return  availabilityRepostitory.findAll();
+        return  availabilityRepository.findAll();
     }
 
-    public Availability addAvailability(Availability newEntry){
-        return availabilityRepostitory.save(newEntry);
+    public Availability addAvailability(Availability availability){
+        if (availability.getVaccine() != null)
+            availability.getVaccine().getAvailabilities().add(availability);
+        return availabilityRepository.save(availability);
     }
 
-    public List<Availability> getAvailabilitybyId_Vaccine(Long idVaccine){
+    public List<Availability> getAvailabilityByIdVaccine(Long idVaccine){
         if(idVaccine < 0L){
-            throw new IllegalStateException("Invalid vaccine id");
+            throw new IllegalStateException("Invalid vaccine availabilityId");
         }
-        List<Availability>list_availability = availabilityRepostitory.findAllById_IdVaccino(idVaccine);
-        if(list_availability.isEmpty()){
-            throw new IllegalStateException("No availability found matching the vaccine id");
+
+        List<Availability> availabilityList = availabilityRepository.findAllByAvailabilityId_IdVaccine(idVaccine);
+        if(availabilityList.isEmpty()){
+            throw new IllegalStateException("No availability found matching the vaccine availabilityId");
         }
-        return list_availability;
+        return availabilityList;
     }
 }

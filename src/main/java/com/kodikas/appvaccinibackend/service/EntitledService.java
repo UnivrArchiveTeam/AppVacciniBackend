@@ -11,21 +11,27 @@ import java.util.List;
 @AllArgsConstructor
 public class EntitledService {
 
-    final private EntitledRepository  entitledRepository ;
+    private final EntitledRepository entitledRepository ;
 
-    public List<Entitled> getAllEntitled () { return entitledRepository.findAll();}
+    public List<Entitled> getAllEntitled () {
+        return entitledRepository.findAll();
+    }
 
-    public Entitled addEntitled (Entitled newEntry){ return entitledRepository.save(newEntry);}
+    public Entitled addEntitled (Entitled entitled){
+        if (entitled.getVaccine() != null)
+            entitled.getVaccine().getEntitleds().add(entitled);
+        return entitledRepository.save(entitled);
+    }
 
-    public List<Entitled> getEntitledbyCategory(String category){
+    public List<Entitled> getEntitledByCategory(String category){
 
-        List<Entitled> list_entitled = entitledRepository.findAllByCategory(category);
+        List<Entitled> entitledList = entitledRepository.findAllByCategory(category);
 
-        if(list_entitled.isEmpty()){
+        if(entitledList.isEmpty()){
             throw new IllegalStateException("I have not found anyone entitled to this category");
         }
 
-        return list_entitled;
+        return entitledList;
     }
 
 }

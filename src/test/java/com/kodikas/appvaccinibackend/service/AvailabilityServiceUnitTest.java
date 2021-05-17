@@ -1,7 +1,7 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Availability;
-import com.kodikas.appvaccinibackend.repository.AvailabilityRepostitory;
+import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,13 +24,13 @@ import static org.mockito.Mockito.when;
 class AvailabilityServiceUnitTest {
 
     @Mock
-    private AvailabilityRepostitory availabilityRepostitory;
+    private AvailabilityRepository availabilityRepository;
     private AvailabilityService underTest;
     private Availability entry;
 
     @BeforeEach
     void setUp(){
-        underTest= new AvailabilityService(availabilityRepostitory);
+        underTest= new AvailabilityService(availabilityRepository);
         entry= new Availability(
                 "Golosine",1L,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),
@@ -41,18 +41,18 @@ class AvailabilityServiceUnitTest {
     void getAllAvailability() {
         List<Availability> availabilityList = List.of(entry);
 
-        when(availabilityRepostitory.findAll()).thenReturn(availabilityList);
+        when(availabilityRepository.findAll()).thenReturn(availabilityList);
 
         underTest.getAllAvailability();
 
-        verify(availabilityRepostitory).findAll();
+        verify(availabilityRepository).findAll();
     }
 
     @Test
     void addAvailability() {
         underTest.addAvailability(entry);
 
-        verify(availabilityRepostitory).save(entry);
+        verify(availabilityRepository).save(entry);
     }
 
     @Test
@@ -60,13 +60,13 @@ class AvailabilityServiceUnitTest {
         List<Availability> list_availability = List.of(entry);
          Long idVaccine = 1L ;
 
-        when(availabilityRepostitory.findAllById_IdVaccino(idVaccine)).thenReturn(list_availability);
+        when(availabilityRepository.findAllByAvailabilityId_IdVaccine(idVaccine)).thenReturn(list_availability);
 
-        List<Availability>result = underTest.getAvailabilitybyId_Vaccine(idVaccine);
+        List<Availability>result = underTest.getAvailabilityByIdVaccine(idVaccine);
         boolean check = false;
 
         for (Availability find : result){
-            if(find.getId().getIdVaccine().equals(idVaccine)){
+            if(find.getAvailabilityId().getIdVaccine().equals(idVaccine)){
                 check = true;
             }
         }
@@ -79,19 +79,19 @@ class AvailabilityServiceUnitTest {
     void getAvailabilitybyId_Vaccine_shouldThrowErrorWhenIdDoesNotCorrect(){
         long id = -123L;
         assertThatThrownBy(
-                ()-> underTest.getAvailabilitybyId_Vaccine(id)
-        ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine id");
+                ()-> underTest.getAvailabilityByIdVaccine(id)
+        ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine availabilityId");
 
-        verify(availabilityRepostitory,never()).findAllById_IdVaccino(any());
+        verify(availabilityRepository,never()).findAllByAvailabilityId_IdVaccine(any());
     }
 
     @Test
     void getAvailabilitybyId_VaccineshouldThrowErrorWhenfindsnothing_(){
         long id = 232L;
         assertThatThrownBy(
-                ()-> underTest.getAvailabilitybyId_Vaccine(id)
-        ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine id");
+                ()-> underTest.getAvailabilityByIdVaccine(id)
+        ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine availabilityId");
 
-        verify(availabilityRepostitory).findAllById_IdVaccino(any());
+        verify(availabilityRepository).findAllByAvailabilityId_IdVaccine(any());
     }
 }
