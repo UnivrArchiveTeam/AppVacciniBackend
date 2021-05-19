@@ -76,9 +76,16 @@ class VaccineServiceUnitTest {
         assertThat(vaccine.getQuantity()).isEqualTo(150L);
     }
 
-    @ParameterizedTest
-    @ValueSource(longs = {-10, 0, Long.MIN_VALUE})
-    void addQuantity_shouldThrowErrorWhenQuantityLessThanOrEqualZero(Long quantity) {
+    @Test
+    void addQuantity_shouldThrowErrorWhenQuantityGreaterThanVaccineQuantity() {
+        // given
+        long quantity = vaccine.getQuantity()+5;
+
+        // when
+        when(vaccineRepository.findById(vaccine.getVaccineID())).thenReturn(
+                Optional.of(vaccine)
+        );
+
         // then
         assertThatThrownBy(
                 () -> underTest.addQuantity(vaccine.getVaccineID(), quantity)
@@ -95,7 +102,7 @@ class VaccineServiceUnitTest {
         assertThatThrownBy(
                 () -> underTest.addQuantity(vaccine.getVaccineID(), 50L)
         ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("Insert a Valid quantity");
+                .hasMessage("Insert a Valid ID");
 
         verify(vaccineRepository, never()).save(any());
 
