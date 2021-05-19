@@ -98,7 +98,7 @@ class ReservationControllerAcceptanceTest {
     }
 
     @Test
-    void getReservationsByFiscalCode_shouldReturnCorrectReservation() throws Exception{
+    void getReservationsByFiscalCode_shouldReturnCorrectReservation() throws Exception {
         // given
         List<Reservation> reservations = List.of(
                 reservation,

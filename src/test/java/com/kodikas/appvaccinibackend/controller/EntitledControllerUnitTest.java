@@ -47,7 +47,7 @@ class EntitledControllerUnitTest {
 
         verify(entitledService).getAllEntitled();
 
-        assertEquals(result.getEntitleds(),entitled_list);
+        assertEquals(result.getEntitles(),entitled_list);
     }
 
     @Test
@@ -73,7 +73,7 @@ class EntitledControllerUnitTest {
         EntitledWrapper result = underTest.getAllEntitledByCategory(category);
         boolean check= false;
 
-        for (Entitled find : result.getEntitleds()){
+        for (Entitled find : result.getEntitles()){
 
             if(!(find.getCategory().equals(category))){
                 check = true;

@@ -1,13 +1,14 @@
 package com.kodikas.appvaccinibackend.wrapper;
 
 import com.kodikas.appvaccinibackend.model.Entitled;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @AllArgsConstructor
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class EntitledWrapper {
-    List<Entitled> entitleds;
+    List<Entitled> entitles;
 }
