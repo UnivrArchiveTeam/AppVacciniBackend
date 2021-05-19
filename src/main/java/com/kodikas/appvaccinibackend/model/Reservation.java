@@ -15,11 +15,9 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 public class Reservation {
-
     @Id
-    String fiscalCode;
-    String clinicName;
-    Long idVaccine;
-    LocalDateTime reservationDateTime;
-
+    private String fiscalCode;
+    private String clinicName;
+    private Long idVaccine;
+    private LocalDateTime reservationDateTime;
 }

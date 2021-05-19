@@ -32,16 +32,22 @@ class ReservationControllerUnitTest {
     void setUp() {
 
         underTest = new ReservationController(reservationService);
-        entry1 = new Reservation("GRRDFN68H68L414I","Fiera",2L,
-                LocalDate.of(2021,05,20).atTime(13,0));
+        entry1 = new Reservation(
+                "GRRDFN68H68L414I",
+                "Fiera",
+                2L,
+                LocalDate.of(2021, 5, 20).atTime(13, 0));
 
-        entry2 = new Reservation("FRRFTH32C49L058J","Golosine",25L,
-                LocalDate.of(2021,05,21).atTime(9,0));
+        entry2 = new Reservation(
+                "FRRFTH32C49L058J",
+                "Golosine",
+                25L,
+                LocalDate.of(2021, 5, 21).atTime(9, 0));
     }
 
     @Test
     void getAllReservations() {
-        List<Reservation> reservation_list = List.of(entry1,entry2);
+        List<Reservation> reservation_list = List.of(entry1, entry2);
 
         when(reservationService.getAllReservations()).thenReturn(reservation_list);
 
@@ -49,36 +55,36 @@ class ReservationControllerUnitTest {
 
         verify(reservationService).getAllReservations();
 
-        assertEquals(result.getReservations(),reservation_list);
+        assertEquals(result.getReservations(), reservation_list);
 
     }
 
     @Test
-    void addEntitled() {
+    void addReservation() {
 
         when(reservationService.addReservation(entry1)).thenReturn(entry1);
 
-        Reservation result = underTest.addEntitled(entry1);
+        Reservation result = underTest.addReservation(entry1);
 
         verify(reservationService).addReservation(entry1);
 
-        assertEquals(entry1,result);
+        assertEquals(entry1, result);
     }
 
     @Test
-    void getReservationsbyfiscalcode() {
+    void getReservationsByFiscalCode() {
         List<Reservation> reservations_list = List.of(entry2);
         String ficalcode = "FRRFTH32C49L058J";
 
         when(reservationService.getReservation(ficalcode)).thenReturn(reservations_list);
 
         ReservationWrapper result = underTest.getReservationsByFiscalCode(ficalcode);
-        boolean check = true ;
+        boolean check = true;
 
-        for (Reservation find : result.getReservations()){
-
-            if(!(find.getFiscalCode().equals(ficalcode))){
-                check =false;
+        for (Reservation find : result.getReservations()) {
+            if (!(find.getFiscalCode().equals(ficalcode))) {
+                check = false;
+                break;
             }
         }
 

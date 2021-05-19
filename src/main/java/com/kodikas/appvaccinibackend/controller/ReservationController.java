@@ -19,12 +19,12 @@ public class ReservationController {
     }
 
     @PostMapping
-    public Reservation addEntitled(Reservation newEntry){
-        return reservationService.addReservation(newEntry);
+    public Reservation addReservation(@RequestBody Reservation reservation){
+        return reservationService.addReservation(reservation);
     }
 
     @GetMapping("/{fiscalCode}")
-    public  ReservationWrapper getReservationsByFiscalCode(@PathVariable String fiscalCode){
+    public ReservationWrapper getReservationsByFiscalCode(@PathVariable String fiscalCode){
         return new ReservationWrapper(reservationService.getReservation(fiscalCode));
     }
 }

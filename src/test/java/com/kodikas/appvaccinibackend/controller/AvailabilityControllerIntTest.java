@@ -73,7 +73,6 @@ class AvailabilityControllerIntTest {
     }
 
     @Test
-    // TODO Finish
     void getAvailability_shouldReturnAllAvailabilitiesConnectedToASpecificVaccine() throws Exception {
         // when
         when(availabilityService.getAvailabilityByIdVaccine(idVaccine)).thenReturn(List.of(availability));

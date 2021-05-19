@@ -10,20 +10,20 @@ import java.util.List;
 @AllArgsConstructor
 public class ReservationService {
 
-    final private ReservationRepository reservationRepository ;
+    private final ReservationRepository reservationRepository ;
 
     public List<Reservation> getAllReservations () { return reservationRepository.findAll();}
 
     public Reservation addReservation (Reservation newEntry){ return reservationRepository.save(newEntry);}
 
-    public List<Reservation> getReservation(String fiscalcode){
+    public List<Reservation> getReservation(String fiscalCode){
 
-        List<Reservation> list_reservations = reservationRepository.findAllByFiscalCode(fiscalcode);
+        List<Reservation> reservationList = reservationRepository.findAllById(List.of(fiscalCode));
 
-        if(list_reservations.isEmpty()){
+        if(reservationList.isEmpty()){
             throw new IllegalStateException("I have not found any reservations for this fiscalCode");
         }
 
-        return list_reservations;
+        return reservationList;
     }
 }

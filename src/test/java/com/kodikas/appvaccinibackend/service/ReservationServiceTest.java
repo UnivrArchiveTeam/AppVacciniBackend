@@ -60,7 +60,7 @@ class ReservationServiceTest {
         List<Reservation> reservation_list = List.of(entry1);
         String fiscalcode = "GRRDFN68H68L414I";
 
-        when(reservationRepository.findAllByFiscalCode(fiscalcode)).thenReturn(reservation_list);
+        when(reservationRepository.findAllById(List.of(fiscalcode))).thenReturn(reservation_list);
 
         List<Reservation>result = underTest.getReservation(fiscalcode);
 
@@ -82,6 +82,6 @@ class ReservationServiceTest {
                 ()-> underTest.getReservation(fiscalcode)
         ).isInstanceOf(IllegalStateException.class).hasMessage("I have not found any reservations for this fiscalCode");
 
-        verify(reservationRepository).findAllByFiscalCode(any());
+        verify(reservationRepository).findAllById(any());
     }
 }
