@@ -1,7 +1,9 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Entitled;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.EntitledRepository;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,13 +25,15 @@ class EntitledServiceUnitTest {
 
     @Mock
     private EntitledRepository entitledRepository;
+    @Mock
+    private VaccineRepository vaccineRepository;
     private EntitledService underTest;
     private Entitled entry1;
     private Entitled entry2;
 
     @BeforeEach
     void setUp(){
-        underTest = new EntitledService(entitledRepository);
+        underTest = new EntitledService(entitledRepository,vaccineRepository);
 
         entry1 = new Entitled("over80");
         entry2 = new Entitled("over50");
@@ -44,7 +50,23 @@ class EntitledServiceUnitTest {
     }
 
     @Test
-    void addEntitled() {
+    void addEntitled_noVaccine() {
+        underTest.addEntitled(entry1);
+        verify(entitledRepository).save(entry1);
+    }
+
+    @Test
+    void addEntitled_withExistingVaccine() {
+        // given
+        Vaccine vaccine = new Vaccine(
+                1L,
+                "jansen",
+                100L
+        );
+        entry1.setVaccine(vaccine);
+
+        // when
+        when(vaccineRepository.findById(any())).thenReturn(Optional.of(vaccine));
 
         underTest.addEntitled(entry1);
         verify(entitledRepository).save(entry1);

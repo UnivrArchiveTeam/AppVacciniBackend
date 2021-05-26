@@ -18,7 +18,7 @@ public class EntitledController {
     }
 
     @PostMapping
-    public Entitled addEntitled(Entitled entitled){
+    public Entitled addEntitled(@RequestBody Entitled entitled){
         return entitledService.addEntitled(entitled);
     }
 

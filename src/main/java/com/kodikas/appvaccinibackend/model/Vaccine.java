@@ -66,4 +66,9 @@ public class Vaccine {
     public Set<Availability> getAvailabilities() {
         return availabilities;
     }
+
+    @JsonIgnore
+    public Set<Entitled> getEntitleds() {
+        return entitleds;
+    }
 }

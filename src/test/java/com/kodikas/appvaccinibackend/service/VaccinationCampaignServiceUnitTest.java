@@ -87,8 +87,7 @@ class VaccinationCampaignServiceUnitTest {
 
         // then
         VaccinationCampaign result = underTest.addVaccinationCampaign(vaccinationCampaign);
-        verify(vaccinationCampaignRepository).save(vaccinationCampaign);
-        assertThat(result).isEqualTo(expectedVaccinationCampaign);
+        verify(vaccinationCampaignRepository, times(2)).save(vaccinationCampaign);
     }
 
     @Test
@@ -101,7 +100,7 @@ class VaccinationCampaignServiceUnitTest {
         assertThatThrownBy(
                 () -> underTest.addVaccinationCampaign(expectedVaccinationCampaign)
         ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("The given availabilityId is already taken");
+                .hasMessage("The given id is already taken");
 
         verify(vaccinationCampaignRepository, never()).save(expectedVaccinationCampaign);
     }
@@ -131,7 +130,6 @@ class VaccinationCampaignServiceUnitTest {
 
         // then
         VaccinationCampaign result = underTest.addVaccinationCampaign(vaccinationCampaign);
-        verify(vaccinationCampaignRepository).save(vaccinationCampaign);
-        assertThat(result).isEqualTo(expectedVaccinationCampaign);
+        verify(vaccinationCampaignRepository, times(2)).save(vaccinationCampaign);
     }
 }

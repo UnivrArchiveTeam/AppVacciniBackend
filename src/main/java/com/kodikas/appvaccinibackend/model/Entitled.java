@@ -17,7 +17,7 @@ public class Entitled {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long entitledId;
     private String category;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn
     private Vaccine vaccine;
 

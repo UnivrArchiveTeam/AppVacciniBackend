@@ -1,25 +1,33 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Entitled;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.EntitledRepository;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class EntitledService {
 
-    private final EntitledRepository entitledRepository ;
+    private final EntitledRepository entitledRepository;
+    private final VaccineRepository vaccineRepository;
 
     public List<Entitled> getAllEntitled () {
         return entitledRepository.findAll();
     }
 
     public Entitled addEntitled (Entitled entitled) {
-        if (entitled.getVaccine() != null)
-            entitled.getVaccine().getEntitleds().add(entitled);
+        if (entitled.getVaccine() != null) {
+            Vaccine vaccine = vaccineRepository
+                    .findById(entitled.getVaccine().getVaccineID())
+                    .orElseThrow(IllegalArgumentException::new);
+            entitled.setVaccine(vaccine);
+        }
         return entitledRepository.save(entitled);
     }
 

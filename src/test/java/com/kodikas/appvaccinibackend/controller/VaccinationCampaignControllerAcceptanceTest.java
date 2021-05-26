@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 import com.kodikas.appvaccinibackend.wrapper.VaccinationCampaignWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,13 +38,16 @@ class VaccinationCampaignControllerAcceptanceTest {
 
     @Autowired
     private VaccinationCampaignRepository vaccinationCampaignRepository;
+    @Autowired
+    private VaccineRepository vaccineRepository;
 
     private VaccinationCampaign vaccinationCampaign;
 
     @BeforeEach
     void setUp() {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        vaccineRepository.deleteAll();
         vaccinationCampaignRepository.deleteAll();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna4",
                 Set.of(
