@@ -29,4 +29,9 @@ public class VaccinationCampaignController {
 	public VaccinationCampaign addVaccinationCampaign(@RequestBody VaccinationCampaign vaccinationCampaign) {
 		return vaccinationCampaignService.addVaccinationCampaign(vaccinationCampaign);
 	}
+
+	@PutMapping
+	public VaccinationCampaign updateVaccinationCampaign(@RequestBody VaccinationCampaign vaccinationCampaign) {
+		return vaccinationCampaignService.addVaccinationCampaign(vaccinationCampaign);
+	}
 }

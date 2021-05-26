@@ -3,6 +3,7 @@ package com.kodikas.appvaccinibackend.service;
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccinationCampaignRepository;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,13 +22,15 @@ import static org.mockito.Mockito.*;
 class VaccinationCampaignServiceUnitTest {
     @Mock
     private VaccinationCampaignRepository vaccinationCampaignRepository;
+    @Mock
+    private VaccineRepository vaccineRepository;
     private VaccinationCampaignService underTest;
     private VaccinationCampaign vaccinationCampaign;
     private VaccinationCampaign expectedVaccinationCampaign;
 
     @BeforeEach
     void setUp() {
-        this.underTest = new VaccinationCampaignService(vaccinationCampaignRepository);
+        this.underTest = new VaccinationCampaignService(vaccinationCampaignRepository, vaccineRepository);
         this.vaccinationCampaign = new VaccinationCampaign(
                 "campagna2",
                 Set.of(

@@ -2,6 +2,8 @@ package com.kodikas.appvaccinibackend.model;
 
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +19,7 @@ public class VaccinationCampaign {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long campaignID;
     private String diseaseName;
-    @OneToMany(mappedBy = "vaccinationCampaign", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vaccinationCampaign", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Set<Vaccine> vaccines = new HashSet<>();
 
     public VaccinationCampaign(String diseaseName) {

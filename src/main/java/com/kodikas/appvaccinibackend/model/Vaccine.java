@@ -30,7 +30,7 @@ public class Vaccine {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Availability> availabilities = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vaccine")
+    @OneToMany(mappedBy = "vaccine")
     private Set<Entitled> entitleds = new HashSet<>();
 
     public Vaccine(String vaccineName, long quantity) {
