@@ -22,8 +22,8 @@ public class Availability {
     private LocalTime startHour;
     private LocalTime endHour;
 
-    @ManyToOne( cascade = CascadeType.ALL)
-    @JoinColumn
+    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @PrimaryKeyJoinColumn(name = "idVaccine", referencedColumnName = "vaccineID")
     private Vaccine vaccine;
 
     public Availability(String clinicName, Long idVaccine, LocalDate startDate,

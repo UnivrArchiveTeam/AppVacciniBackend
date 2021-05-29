@@ -2,6 +2,7 @@ package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
+import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,12 +26,14 @@ class AvailabilityServiceUnitTest {
 
     @Mock
     private AvailabilityRepository availabilityRepository;
+    @Mock
+    private VaccineRepository vaccineRepository;
     private AvailabilityService underTest;
     private Availability entry;
 
     @BeforeEach
     void setUp(){
-        underTest= new AvailabilityService(availabilityRepository);
+        underTest= new AvailabilityService(availabilityRepository, vaccineRepository);
         entry= new Availability(
                 "Golosine",1L,
                 LocalDate.of(2021,05,06),LocalDate.of(2021,05,21),

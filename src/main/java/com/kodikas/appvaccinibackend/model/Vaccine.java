@@ -23,14 +23,14 @@ public class Vaccine {
     private String vaccineName;
     private Long quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn
     private VaccinationCampaign vaccinationCampaign;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Set<Availability> availabilities = new HashSet<>();
 
-    @OneToMany(mappedBy = "vaccine")
+    @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL)
     private Set<Entitled> entitleds = new HashSet<>();
 
     public Vaccine(String vaccineName, long quantity) {
