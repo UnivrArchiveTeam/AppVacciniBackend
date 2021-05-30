@@ -46,19 +46,17 @@ class ReservationControllerAcceptanceTest {
                 fiscalCode,
                 "Golosine",
                 1L,
-                LocalDateTime.of(
-                        LocalDate.of(2021, 6,21),
-                        LocalTime.of(10, 0)
-                )
+                LocalDate.of(2021, 6,21),
+                LocalTime.of(10, 0)
+
         );
         reservation2 = new Reservation(
                 "NNCFNC59C67E709B",
                 "San Martino",
                 3L,
-                LocalDateTime.of(
-                        LocalDate.of(2021, 7,6),
-                        LocalTime.of(15, 0)
-                )
+                LocalDate.of(2021, 7,6),
+                LocalTime.of(15, 0)
+
         );
     }
 

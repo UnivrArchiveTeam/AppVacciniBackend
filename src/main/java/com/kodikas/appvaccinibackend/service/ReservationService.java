@@ -4,6 +4,7 @@ import com.kodikas.appvaccinibackend.repository.ReservationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,6 +20,17 @@ public class ReservationService {
     public List<Reservation> getReservation(String fiscalCode){
 
         List<Reservation> reservationList = reservationRepository.findAllById(List.of(fiscalCode));
+
+        if(reservationList.isEmpty()){
+            throw new IllegalStateException("I have not found any reservations for this fiscalCode");
+        }
+
+        return reservationList;
+    }
+
+    public List<Reservation> getReservationbyDate (LocalDate date){
+
+        List<Reservation> reservationList = reservationRepository.findAllByDate(date);
 
         if(reservationList.isEmpty()){
             throw new IllegalStateException("I have not found any reservations for this fiscalCode");

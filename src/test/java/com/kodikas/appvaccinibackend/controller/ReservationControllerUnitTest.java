@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,17 +33,11 @@ class ReservationControllerUnitTest {
     void setUp() {
 
         underTest = new ReservationController(reservationService);
-        entry1 = new Reservation(
-                "GRRDFN68H68L414I",
-                "Fiera",
-                2L,
-                LocalDate.of(2021, 5, 20).atTime(13, 0));
+        entry1 = new Reservation("GRRDFN68H68L414I","Fiera",2L,
+                LocalDate.of(2021,05,20), LocalTime.of(13,0));
 
-        entry2 = new Reservation(
-                "FRRFTH32C49L058J",
-                "Golosine",
-                25L,
-                LocalDate.of(2021, 5, 21).atTime(9, 0));
+        entry2 = new Reservation("FRRFTH32C49L058J","Golosine",25L,
+                LocalDate.of(2021,05,21), LocalTime.of(13,0));
     }
 
     @Test

@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.*;
 
 
@@ -19,5 +20,6 @@ public class Reservation {
     private String fiscalCode;
     private String clinicName;
     private Long idVaccine;
-    private LocalDateTime reservationDateTime;
+    private LocalDate  date;
+    private LocalTime  time;
 }
