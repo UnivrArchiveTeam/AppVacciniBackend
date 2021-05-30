@@ -6,6 +6,8 @@ import com.kodikas.appvaccinibackend.wrapper.ReservationWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/reservations")
@@ -26,5 +28,10 @@ public class ReservationController {
     @GetMapping("/{fiscalCode}")
     public ReservationWrapper getReservationsByFiscalCode(@PathVariable String fiscalCode){
         return new ReservationWrapper(reservationService.getReservation(fiscalCode));
+    }
+
+    @GetMapping("/{date}")
+    public ReservationWrapper getReservationsByDate(@PathVariable LocalDate date){
+        return new ReservationWrapper(reservationService.getReservationbyDate(date));
     }
 }

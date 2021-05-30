@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -31,10 +32,10 @@ class ReservationServiceUnitTest {
     void setUp() {
         underTest = new ReservationService(reservationRepository);
         entry1 = new Reservation("GRRDFN68H68L414I","Fiera",2L,
-                LocalDate.of(2021,05,20).atTime(13,0));
+                LocalDate.of(2021,05,20), LocalTime.of(13,0));
 
         entry2 = new Reservation("FRRFTH32C49L058J","Golosine",25L,
-                LocalDate.of(2021,05,21).atTime(9,0));
+                LocalDate.of(2021,05,21), LocalTime.of(13,0));
     }
 
     @Test
