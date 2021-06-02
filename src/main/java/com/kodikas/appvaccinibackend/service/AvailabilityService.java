@@ -4,6 +4,8 @@ import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
 import com.kodikas.appvaccinibackend.repository.VaccineRepository;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,15 +34,27 @@ public class AvailabilityService {
         return availabilityRepository.save(availability);
     }
 
-    public List<Availability> getAvailabilityByIdVaccine(Long idVaccine){
-        if(idVaccine < 0L){
+    public List<Availability> getAvailabilityByIdVaccine(VaccineIdWrapper idVaccines){
+        if(idVaccines.getIdVaccines().isEmpty()){
             throw new IllegalStateException("Invalid vaccine availabilityId");
         }
 
-        List<Availability> availabilityList = availabilityRepository.findAllByAvailabilityId_IdVaccine(idVaccine);
+        List<Availability> availabilityList = null;
+
+        for(long vaccine : idVaccines.getIdVaccines()) {
+
+            if(availabilityList.isEmpty()) {
+                availabilityList = availabilityRepository.findAllByAvailabilityId_IdVaccine(vaccine);
+            }
+            else{
+                availabilityList.addAll(availabilityRepository.findAllByAvailabilityId_IdVaccine(vaccine));
+            }
+        }
+
         if(availabilityList.isEmpty()){
             throw new IllegalStateException("No availability found matching the vaccine availabilityId");
         }
+
         return availabilityList;
     }
 }

@@ -48,17 +48,17 @@ class ReservationControllerIntTest {
     void setUp() {
         fiscalCode = "MZZMMT61M22D854K";
         reservation = new Reservation(
+                1L,
                 fiscalCode,
                 "Golosine",
-                1L,
                 LocalDate.of(2021, 6,21),
                 LocalTime.of(10, 0)
 
         );
         reservation2 = new Reservation(
+                2L,
                 "NNCFNC59C67E709B",
                 "San Martino",
-                3L,
                 LocalDate.of(2021, 7,6),
                 LocalTime.of(15, 0)
         );

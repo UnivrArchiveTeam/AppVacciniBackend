@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,10 +32,10 @@ class ReservationControllerUnitTest {
     void setUp() {
 
         underTest = new ReservationController(reservationService);
-        entry1 = new Reservation("GRRDFN68H68L414I","Fiera",2L,
+        entry1 = new Reservation(2L,"GRRDFN68H68L414I","Fiera",
                 LocalDate.of(2021,05,20), LocalTime.of(13,0));
 
-        entry2 = new Reservation("FRRFTH32C49L058J","Golosine",25L,
+        entry2 = new Reservation(25L,"FRRFTH32C49L058J","Golosine",
                 LocalDate.of(2021,05,21), LocalTime.of(13,0));
     }
 
@@ -77,7 +76,7 @@ class ReservationControllerUnitTest {
         boolean check = true;
 
         for (Reservation find : result.getReservations()) {
-            if (!(find.getFiscalCode().equals(ficalcode))) {
+            if (!(find.getReservationId().getFiscalCode().equals(ficalcode))) {
                 check = false;
                 break;
             }

@@ -3,7 +3,10 @@ package com.kodikas.appvaccinibackend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodikas.appvaccinibackend.model.Availability;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.service.AvailabilityService;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +34,7 @@ class AvailabilityControllerIntTest {
 
     private Availability availability;
     private long idVaccine;
+    private VaccineIdWrapper vaccineWrapper;
 
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
@@ -47,6 +51,7 @@ class AvailabilityControllerIntTest {
                 LocalTime.of(9, 0),
                 LocalTime.of(12, 0)
         );
+        vaccineWrapper = (VaccineIdWrapper) List.of(idVaccine);
     }
 
     @Test
@@ -75,7 +80,7 @@ class AvailabilityControllerIntTest {
     @Test
     void getAvailability_shouldReturnAllAvailabilitiesConnectedToASpecificVaccine() throws Exception {
         // when
-        when(availabilityService.getAvailabilityByIdVaccine(idVaccine)).thenReturn(List.of(availability));
+        when(availabilityService.getAvailabilityByIdVaccine(vaccineWrapper)).thenReturn(List.of(availability));
 
         // then
         MvcResult result = mockMvc.perform(get(URI+"/"+idVaccine))
@@ -84,6 +89,6 @@ class AvailabilityControllerIntTest {
 
         String resultString = result.getResponse().getContentAsString();
         assertThat(resultString).isNotNull();
-        verify(availabilityService).getAvailabilityByIdVaccine(idVaccine);
+        verify(availabilityService).getAvailabilityByIdVaccine(vaccineWrapper);
     }
 }
