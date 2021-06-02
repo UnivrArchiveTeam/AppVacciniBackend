@@ -3,6 +3,8 @@ package com.kodikas.appvaccinibackend.controller;
 import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.service.AvailabilityService;
 import com.kodikas.appvaccinibackend.wrapper.AvailabilityWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,14 +70,15 @@ class AvailabilityControllerUnitTest {
     @Test
     void getAvailability() {
         List<Availability>list_availability = List.of(availability, availability2);
-        Long id = 2L;
-        when(availabilityService.getAvailabilityByIdVaccine(id)).thenReturn(List.of(availability2));
+        long id = 2L;
+        VaccineIdWrapper vaccineWrapper = (VaccineIdWrapper) List.of(id);
+        when(availabilityService.getAvailabilityByIdVaccine(vaccineWrapper)).thenReturn(List.of(availability2));
 
-        AvailabilityWrapper result = underTest.getAvailability(id);
+        AvailabilityWrapper result = underTest.getAvailability(vaccineWrapper);
         int check = 0;
         for(Availability find : result.getAvailability()){
 
-            if(!(find.getAvailabilityId().getIdVaccine().equals(id))){
+            if(!(find.getAvailabilityId().getIdVaccine().equals(vaccineWrapper.getIdVaccines()))){
                 check ++;
             }
         }

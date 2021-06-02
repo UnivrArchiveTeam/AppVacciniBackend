@@ -1,6 +1,7 @@
 package com.kodikas.appvaccinibackend.repository;
 
 import com.kodikas.appvaccinibackend.model.Availability;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ class AvailabilityRepositoryTest {
     String nomeAmbulatorio;
     Long idVaccino;
     String categoria;
+    VaccineIdWrapper vaccineWrapper;
 
     @Test
     void injectedComponentsAreNotNull(){

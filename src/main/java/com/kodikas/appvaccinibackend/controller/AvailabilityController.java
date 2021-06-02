@@ -3,6 +3,8 @@ package com.kodikas.appvaccinibackend.controller;
 import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.service.AvailabilityService;
 import com.kodikas.appvaccinibackend.wrapper.AvailabilityWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +28,7 @@ public class AvailabilityController {
     }
 
     @GetMapping("/{idVaccine}")
-    public AvailabilityWrapper getAvailability( @PathVariable long idVaccine ) {
+    public AvailabilityWrapper getAvailability( @PathVariable VaccineIdWrapper idVaccine ) {
         return new AvailabilityWrapper(
                 availabilityService.getAvailabilityByIdVaccine(idVaccine)
         );

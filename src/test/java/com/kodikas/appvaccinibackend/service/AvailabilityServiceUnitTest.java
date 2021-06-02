@@ -3,6 +3,8 @@ package com.kodikas.appvaccinibackend.service;
 import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.repository.AvailabilityRepository;
 import com.kodikas.appvaccinibackend.repository.VaccineRepository;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,10 +64,10 @@ class AvailabilityServiceUnitTest {
     void getAvailabilitybyId_Vaccine_shouldcorrectlyreturns(){
         List<Availability> list_availability = List.of(entry);
          Long idVaccine = 1L ;
-
+         VaccineIdWrapper vaccineWrapper = (VaccineIdWrapper) List.of(idVaccine);
         when(availabilityRepository.findAllByAvailabilityId_IdVaccine(idVaccine)).thenReturn(list_availability);
 
-        List<Availability>result = underTest.getAvailabilityByIdVaccine(idVaccine);
+        List<Availability>result = underTest.getAvailabilityByIdVaccine(vaccineWrapper);
         boolean check = false;
 
         for (Availability find : result){
@@ -81,8 +83,9 @@ class AvailabilityServiceUnitTest {
 
     void getAvailabilitybyId_Vaccine_shouldThrowErrorWhenIdDoesNotCorrect(){
         long id = -123L;
+        VaccineIdWrapper vaccineWrapper = (VaccineIdWrapper) List.of(id);
         assertThatThrownBy(
-                ()-> underTest.getAvailabilityByIdVaccine(id)
+                ()-> underTest.getAvailabilityByIdVaccine(vaccineWrapper)
         ).isInstanceOf(IllegalStateException.class).hasMessage("Invalid vaccine availabilityId");
 
         verify(availabilityRepository,never()).findAllByAvailabilityId_IdVaccine(any());
@@ -91,8 +94,9 @@ class AvailabilityServiceUnitTest {
     @Test
     void getAvailabilitybyId_VaccineshouldThrowErrorWhenfindsnothing_(){
         long id = 232L;
+        VaccineIdWrapper vaccineWrapper = (VaccineIdWrapper) List.of(id);
         assertThatThrownBy(
-                ()-> underTest.getAvailabilityByIdVaccine(id)
+                ()-> underTest.getAvailabilityByIdVaccine(vaccineWrapper)
         ).isInstanceOf(IllegalStateException.class).hasMessage("No availability found matching the vaccine availabilityId");
 
         verify(availabilityRepository).findAllByAvailabilityId_IdVaccine(any());

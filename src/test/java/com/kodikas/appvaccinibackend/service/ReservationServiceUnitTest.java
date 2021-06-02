@@ -31,10 +31,10 @@ class ReservationServiceUnitTest {
     @BeforeEach
     void setUp() {
         underTest = new ReservationService(reservationRepository);
-        entry1 = new Reservation("GRRDFN68H68L414I","Fiera",2L,
+        entry1 = new Reservation(2L,"GRRDFN68H68L414I","Fiera",
                 LocalDate.of(2021,05,20), LocalTime.of(13,0));
 
-        entry2 = new Reservation("FRRFTH32C49L058J","Golosine",25L,
+        entry2 = new Reservation(25L,"FRRFTH32C49L058J","Golosine",
                 LocalDate.of(2021,05,21), LocalTime.of(13,0));
     }
 
@@ -68,7 +68,7 @@ class ReservationServiceUnitTest {
         boolean check = false;
 
         for (Reservation find : result){
-            if(!(find.getFiscalCode().equals(fiscalcode))){
+            if(!(find.getReservationId().getFiscalCode().equals(fiscalcode))){
                 check = true;
             }
         }
