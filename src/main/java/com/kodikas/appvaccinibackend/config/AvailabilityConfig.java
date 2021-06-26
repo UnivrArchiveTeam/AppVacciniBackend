@@ -18,10 +18,10 @@ public class AvailabilityConfig {
     CommandLineRunner commandLineRunnerAvailability(AvailabilityRepository repository){
         return  args -> {
             Availability golosine = new Availability(
-                   "Fiera Verona\nViale dell'industria - Verona - c/o Fiera - Ingresso Porta Re Teodorico",
+                   "Golosine",
                     2L,
-                    LocalDate.of(2021,06,25),
-                    LocalDate.of(2021,06,29),
+                    LocalDate.of(2021,05,03),
+                    LocalDate.of(2021,05,05),
                     LocalTime.of(13,00),
                     LocalTime.of(15,00)
             );

@@ -7,6 +7,7 @@ import com.kodikas.appvaccinibackend.model.Availability;
 import com.kodikas.appvaccinibackend.service.AvailabilityService;
 import com.kodikas.appvaccinibackend.wrapper.AvailabilityWrapper;
 import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
+import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +30,8 @@ public class AvailabilityController {
         return availabilityService.addAvailability(availability);
     }
 
-    @GetMapping("/idvaccine")
-    public AvailabilityWrapper getAvailability( @RequestParam String ids) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
-        VaccineIdWrapper result = objectMapper.readValue(ids, VaccineIdWrapper.class);
+    @GetMapping("/{idVaccine}")
+    public AvailabilityWrapper getAvailability( @PathVariable long idVaccine ) {
         return new AvailabilityWrapper(
                 availabilityService.getAvailabilityByIdVaccine(result)
         );
