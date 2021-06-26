@@ -35,15 +35,12 @@ public class AvailabilityService {
     }
 
     public List<Availability> getAvailabilityByIdVaccine(VaccineIdWrapper idVaccines){
-        if(idVaccines.getIdVaccines().isEmpty()){
-            throw new IllegalStateException("Invalid vaccine availabilityId");
-        }
-
         List<Availability> availabilityList = null;
-
         for(long vaccine : idVaccines.getIdVaccines()) {
-
-            if(availabilityList.isEmpty()) {
+            if(vaccine < 0L){
+                throw new IllegalStateException("Invalid vaccine availabilityId");
+            }
+            if(availabilityList == null) {
                 availabilityList = availabilityRepository.findAllByAvailabilityId_IdVaccine(vaccine);
             }
             else{
