@@ -19,17 +19,17 @@ public class AvailabilityConfig {
         return  args -> {
             Availability golosine = new Availability(
                    "Fiera Verona\nViale dell'industria - Verona - c/o Fiera - Ingresso Porta Re Teodorico",
-                    2341244L,
-                    LocalDate.of(2021,05,03),
-                    LocalDate.of(2021,05,05),
+                    2L,
+                    LocalDate.of(2021,06,25),
+                    LocalDate.of(2021,06,29),
                     LocalTime.of(13,00),
                     LocalTime.of(15,00)
             );
             Availability santa = new Availability(
-                    "Santa",
-                    2341344L,
-                    LocalDate.of(2021,05,02),
-                    LocalDate.of(2021,05,06),
+                    "Bussolengo\nVia Strada San Vittore - Bussolengo - presso Bocciodromo",
+                    1L,
+                    LocalDate.of(2021,06,3),
+                    LocalDate.of(2021,06,16),
                     LocalTime.of(13,00),
                     LocalTime.of(15,00)
             );

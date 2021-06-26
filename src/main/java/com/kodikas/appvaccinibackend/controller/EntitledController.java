@@ -24,6 +24,7 @@ public class EntitledController {
 
     @GetMapping("/{category}")
     public EntitledWrapper getAllEntitledByCategory(@PathVariable String category){
+        System.out.println(category);
         return new EntitledWrapper(entitledService.getEntitledByCategory(category));
     }
 }

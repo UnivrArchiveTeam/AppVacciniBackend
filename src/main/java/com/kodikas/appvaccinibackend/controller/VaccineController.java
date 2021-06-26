@@ -1,5 +1,6 @@
 package com.kodikas.appvaccinibackend.controller;
 
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.service.VaccineService;
 import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
@@ -30,5 +31,15 @@ public class VaccineController {
             @PathVariable Long quantity
     ) {
         return vaccineService.addQuantity(vaccineID, quantity);
+    }
+
+    @GetMapping(path = "/{vaccineID}")
+    public Vaccine getVaccine(@PathVariable Long vaccineID) {
+        return vaccineService.getbyId(vaccineID);
+    }
+
+    @GetMapping(path = "/campaign/{vaccineID}")
+    public VaccinationCampaign getVaccinationCampaign (@PathVariable Long vaccineID) {
+        return vaccineService.getVaccinationCampaign(vaccineID);
     }
 }

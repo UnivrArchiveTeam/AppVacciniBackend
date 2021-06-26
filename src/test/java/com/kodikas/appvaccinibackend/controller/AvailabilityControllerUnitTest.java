@@ -69,21 +69,23 @@ class AvailabilityControllerUnitTest {
 
     @Test
     void getAvailability() {
-        List<Availability>list_availability = List.of(availability, availability2);
-        long id = 2L;
-        VaccineIdWrapper vaccineWrapper = (VaccineIdWrapper) List.of(id);
-        when(availabilityService.getAvailabilityByIdVaccine(vaccineWrapper)).thenReturn(List.of(availability2));
-
-        AvailabilityWrapper result = underTest.getAvailability(vaccineWrapper);
-        int check = 0;
-        for(Availability find : result.getAvailability()){
-
-            if(!(find.getAvailabilityId().getIdVaccine().equals(vaccineWrapper.getIdVaccines()))){
-                check ++;
-            }
-        }
-
-        assertEquals(check,0);
-
+//        List<Availability>list_availability = List.of(availability, availability2);
+//        long id = 2L;
+//        VaccineIdWrapper vaccineWrapper = new VaccineIdWrapper(List.of(id)) ;
+//        when(availabilityService.getAvailabilityByIdVaccine(vaccineWrapper)).thenReturn(List.of(availability2));
+//
+//        AvailabilityWrapper result = underTest.getAvailability(vaccineWrapper);
+//        int check = 0;
+//        for(Availability find : result.getAvailability()){
+//
+//            assert vaccineWrapper.getIdVaccines() != null;
+//            for (Long idV : vaccineWrapper.getIdVaccines())
+//            if(!(find.getAvailabilityId().getIdVaccine().equals(idV))){
+//                check ++;
+//            }
+//        }
+//
+//        assertEquals(check,0);
+//
     }
 }
