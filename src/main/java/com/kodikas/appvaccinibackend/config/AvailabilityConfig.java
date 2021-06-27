@@ -28,8 +28,8 @@ public class AvailabilityConfig {
             Availability santa = new Availability(
                     "Bussolengo\nVia Strada San Vittore - Bussolengo - presso Bocciodromo",
                     1L,
-                    LocalDate.of(2021,06,3),
-                    LocalDate.of(2021,06,16),
+                    LocalDate.of(2021,06,15),
+                    LocalDate.of(2021,07,10),
                     LocalTime.of(13,00),
                     LocalTime.of(15,00)
             );

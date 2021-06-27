@@ -7,6 +7,8 @@ import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Wrapper;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,11 +35,15 @@ public class ReservationController {
         return new ReservationWrapper(reservationService.getReservation(fiscalCode));
     }
 
-    @GetMapping("/clinicName/{clinicName}/idVaccine/{idVaccine}/date{date}")
-    public ReservationWrapper getReservationsByDate(@PathVariable String clinicName , @PathVariable VaccineIdWrapper idVaccine, @PathVariable String date){
+    @GetMapping("/clinicName/{clinicName}/idVaccine/{idVaccine}/date/{date}")
+    public ReservationWrapper getReservationsByDate(@PathVariable String clinicName , @PathVariable Long idVaccine, @PathVariable String date) throws UnsupportedEncodingException {
         //convert String to LocalDate
         LocalDate localDate = LocalDate.parse(date);
-        return new ReservationWrapper(reservationService.getReservationbyDate(clinicName,idVaccine,localDate));
+        String clinicNameDecode = URLDecoder.decode(clinicName,"UTF-8");
+
+       // System.out.println(">>>>>>MEGA TEST:"+ "\n" + clinicNameDecode +idVaccine +localDate);
+        
+        return new ReservationWrapper(reservationService.getReservationbyDate(clinicNameDecode,idVaccine,localDate));
     }
 
     @GetMapping("/fiscalcode/{fiscalcode}/idvaccine/{idVaccine}")
