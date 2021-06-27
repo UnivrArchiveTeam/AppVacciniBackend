@@ -26,10 +26,10 @@ public class AvailabilityService {
     public Availability addAvailability(Availability availability){
         if (availability.getVaccine() != null) {
             Vaccine vaccine = vaccineRepository.findById(availability.getVaccine().getVaccineID()).get();
-            vaccine.getAvailabilities().add(availability);
             availability.getAvailabilityId().setIdVaccine(
                    vaccine.getVaccineID()
             );
+            availability.setVaccine(vaccine);
         }
         return availabilityRepository.save(availability);
     }
