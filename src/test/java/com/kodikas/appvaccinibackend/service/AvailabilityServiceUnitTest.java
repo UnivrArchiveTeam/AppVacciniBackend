@@ -71,8 +71,9 @@ class AvailabilityServiceUnitTest {
         boolean check = false;
 
         for (Availability find : result){
-            if(find.getAvailabilityId().getIdVaccine().equals(idVaccine)){
+            if (find.getAvailabilityId().getIdVaccine() == idVaccine) {
                 check = true;
+                break;
             }
         }
 

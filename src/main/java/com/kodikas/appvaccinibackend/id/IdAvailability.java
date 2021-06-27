@@ -15,5 +15,5 @@ import java.io.Serializable;
 @Setter
 public class IdAvailability implements Serializable {
     private String clinicName;
-    private Long idVaccine;
+    private long idVaccine;
 }

@@ -65,7 +65,7 @@ class AvailabilityRepositoryTest {
         List<Availability> result = underTest.findAllByAvailabilityId_IdVaccine(idVaccino);
         boolean test = true;
         for (Availability find : result){
-            if (!(find.getAvailabilityId().getIdVaccine().equals(disponibilita.getAvailabilityId().getIdVaccine()))) {
+            if (!(find.getAvailabilityId().getIdVaccine() == disponibilita.getAvailabilityId().getIdVaccine())) {
                 test = false;
             }
         }
@@ -80,7 +80,7 @@ class AvailabilityRepositoryTest {
         List<Availability> result = underTest.findAllByAvailabilityId_IdVaccine(idVaccino);
         boolean test = true;
         for (Availability find : result){
-            if (!(find.getAvailabilityId().getIdVaccine().equals(disponibilita.getAvailabilityId().getIdVaccine()))) {
+            if (!(find.getAvailabilityId().getIdVaccine() == disponibilita.getAvailabilityId().getIdVaccine())) {
                 test = false;
             }
         }
