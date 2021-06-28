@@ -44,8 +44,12 @@ public class VaccineService {
         else
             throw new IllegalStateException("Insert a Valid ID");
 
-        vaccine.setQuantity(vaccine.getQuantity() - 1);
-        vaccineRepository.save(vaccine);
+        if (vaccine.getQuantity() > 0) {
+            vaccine.setQuantity(vaccine.getQuantity() - 1);
+            vaccineRepository.save(vaccine);
+        } else {
+            throw new IllegalStateException("The given vaccine has too few doses");
+        }
     }
 
     public Vaccine getbyId (Long vaccineID){
