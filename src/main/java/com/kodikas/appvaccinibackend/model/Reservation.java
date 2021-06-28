@@ -1,13 +1,13 @@
 package com.kodikas.appvaccinibackend.model;
 
-import com.kodikas.appvaccinibackend.id.IdAvailability;
 import com.kodikas.appvaccinibackend.id.IdReservation;
 import lombok.*;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import javax.persistence.*;
 
 
 @Entity
@@ -19,7 +19,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Reservation {
     @EmbeddedId
-    IdReservation reservationId;
+    private IdReservation reservationId;
     private String clinicName;
     private LocalDate  date;
     private LocalTime  time;

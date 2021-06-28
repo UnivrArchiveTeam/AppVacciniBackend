@@ -24,13 +24,15 @@ class ReservationServiceUnitTest {
 
     @Mock
     private ReservationRepository reservationRepository;
+    @Mock
+    private VaccineService vaccineService;
     private ReservationService underTest;
     private Reservation entry1;
     private Reservation entry2;
 
     @BeforeEach
     void setUp() {
-        underTest = new ReservationService(reservationRepository);
+        underTest = new ReservationService(reservationRepository, vaccineService);
         entry1 = new Reservation(2L,"GRRDFN68H68L414I","Fiera",
                 LocalDate.of(2021,05,20), LocalTime.of(13,0));
 

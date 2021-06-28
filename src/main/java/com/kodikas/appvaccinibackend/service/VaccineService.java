@@ -3,7 +3,6 @@ package com.kodikas.appvaccinibackend.service;
 import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccineRepository;
-import com.kodikas.appvaccinibackend.wrapper.VaccinationCampaignWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +32,20 @@ public class VaccineService {
         else
             throw new IllegalStateException("Insert a Valid ID");
 
-        if (quantity > vaccine.getQuantity())
-            throw new IllegalStateException("Insert a Valid quantity");
-
         vaccine.setQuantity(vaccine.getQuantity() + quantity);
         return vaccineRepository.save(vaccine);
+    }
+
+    public void decreaseQuantity(Long vaccineID) {
+        Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineID);
+        Vaccine vaccine;
+        if (optionalVaccine.isPresent())
+            vaccine = optionalVaccine.get();
+        else
+            throw new IllegalStateException("Insert a Valid ID");
+
+        vaccine.setQuantity(vaccine.getQuantity() - 1);
+        vaccineRepository.save(vaccine);
     }
 
     public Vaccine getbyId (Long vaccineID){

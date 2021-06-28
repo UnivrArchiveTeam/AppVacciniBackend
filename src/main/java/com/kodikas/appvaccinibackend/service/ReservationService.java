@@ -1,6 +1,7 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Reservation;
+import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.ReservationRepository;
 import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
 import lombok.AllArgsConstructor;
@@ -14,12 +15,14 @@ import java.util.List;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final VaccineService vaccineService;
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
     public Reservation addReservation(Reservation newEntry) {
+        vaccineService.decreaseQuantity(newEntry.getReservationId().getIdVaccine());
         return reservationRepository.save(newEntry);
     }
 
