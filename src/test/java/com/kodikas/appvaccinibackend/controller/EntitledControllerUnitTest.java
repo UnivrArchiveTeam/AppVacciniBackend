@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,7 +64,7 @@ class EntitledControllerUnitTest {
     }
 
     @Test
-    void getAllEntitledByCategory() {
+    void getAllEntitledByCategory() throws UnsupportedEncodingException {
         List<Entitled> entitledList = List.of(entry1);
 
         String category = "over80";

@@ -5,6 +5,8 @@ import com.kodikas.appvaccinibackend.wrapper.EntitledWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -24,8 +26,9 @@ public class EntitledController {
         return entitledService.addEntitled(entitled);
     }
 
-    @GetMapping("/{category}")
-    public EntitledWrapper getAllEntitledByCategory(@PathVariable String category){
+    @GetMapping("/{ca}")
+    public EntitledWrapper getAllEntitledByCategory(@PathVariable String ca) throws UnsupportedEncodingException {
+        String category = URLDecoder.decode(ca,"UTF-8");
         System.out.println(category);
         return new EntitledWrapper(entitledService.getEntitledByCategory(category));
     }
