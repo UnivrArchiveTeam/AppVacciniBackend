@@ -23,7 +23,9 @@ public class ReservationConfig {
             Reservation entry2 = new Reservation(1L,"FRRFTH32C49L058J","Bussolengo\nVia Strada San Vittore - Bussolengo - presso Bocciodromo",
                     LocalDate.of(2021,06,28), LocalTime.of(13,0));
 
-            repository.saveAll(List.of(entry1,entry2));
+            Reservation entry3 = new Reservation(1L,"FRRFTH32C49L058J","BussolengoVia Strada San Vittore - Bussolengo - presso Bocciodromo",
+                    LocalDate.of(2021,06,28), LocalTime.of(13,0));
+            repository.saveAll(List.of(entry1,entry2,entry3));
         };
 
     }

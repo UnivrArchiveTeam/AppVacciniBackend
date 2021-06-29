@@ -40,9 +40,6 @@ public class ReservationController {
         //convert String to LocalDate
         LocalDate localDate = LocalDate.parse(date);
         String clinicNameDecode = URLDecoder.decode(clinicName,"UTF-8");
-
-       // System.out.println(">>>>>>MEGA TEST:"+ "\n" + clinicNameDecode +idVaccine +localDate);
-        
         return new ReservationWrapper(reservationService.getReservationbyDate(clinicNameDecode,idVaccine,localDate));
     }
 

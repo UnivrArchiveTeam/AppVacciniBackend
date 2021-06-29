@@ -10,4 +10,6 @@ public interface ReservationRepository  extends JpaRepository<Reservation,String
     List<Reservation> findAllByClinicNameAndReservationId_IdVaccineAndAndDate(String clinicName ,Long idVaccin ,LocalDate Date);
 
     List<Reservation> findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(String fiscalcode ,Long idvaccine);
+
+    List<Reservation> findAllByReservationId_FiscalCode(String fiscalcode);
 }

@@ -29,7 +29,7 @@ public class ReservationService {
 
     public List<Reservation> getReservation(String fiscalCode) {
 
-        List<Reservation> reservationList = reservationRepository.findAllById(List.of(fiscalCode));
+        List<Reservation> reservationList = reservationRepository.findAllByReservationId_FiscalCode(fiscalCode);
 
         if (reservationList.isEmpty()) {
             throw new IllegalStateException("I have not found any reservations for this fiscalCode");
