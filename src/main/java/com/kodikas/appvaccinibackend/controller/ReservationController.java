@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.sql.Wrapper;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @RestController
 @AllArgsConstructor
@@ -40,12 +38,12 @@ public class ReservationController {
         //convert String to LocalDate
         LocalDate localDate = LocalDate.parse(date);
         String clinicNameDecode = URLDecoder.decode(clinicName,"UTF-8");
-        return new ReservationWrapper(reservationService.getReservationbyDate(clinicNameDecode,idVaccine,localDate));
+        return new ReservationWrapper(reservationService.getReservationByDate(clinicNameDecode,idVaccine,localDate));
     }
 
     @GetMapping("/fiscalcode/{fiscalcode}/idvaccine/{idVaccine}")
     public ReservationWrapper getReservationsByfiscalcodeandVaccine(@PathVariable String fiscalcode ,@PathVariable VaccineIdWrapper idVaccine){
-        return new ReservationWrapper(reservationService.getReservationbyFiscalCode(fiscalcode,idVaccine));
+        return new ReservationWrapper(reservationService.getReservationByFiscalCode(fiscalcode,idVaccine));
     }
 
 }

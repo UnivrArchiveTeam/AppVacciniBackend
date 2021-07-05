@@ -2,6 +2,7 @@ package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Reservation;
 import com.kodikas.appvaccinibackend.repository.ReservationRepository;
+import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -102,5 +103,91 @@ class ReservationServiceUnitTest {
 		BDDAssertions.then(throwable)
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessage("I have not found any reservations for this fiscalCode");
+	}
+
+	@Test
+	void getReservationByFiscalCode_availableReservation_pass() {
+		// given
+		List<Reservation> reservation_list = List.of(entry1);
+		Long id = 2L;
+		VaccineIdWrapper idVaccines = new VaccineIdWrapper(
+				List.of(
+						id
+				)
+		);
+		String fiscalCode = "GRRDFN68H68L414I";
+		BDDMockito.given(
+				reservationRepository.findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(fiscalCode, id)
+		).willReturn(reservation_list);
+
+		// when
+		List<Reservation> result = underTest.getReservationByFiscalCode(fiscalCode, idVaccines);
+
+		// then
+		BDDAssertions.then(result).isEqualTo(reservation_list);
+	}
+
+	@Test
+	void getReservationByFiscalCode_noReservation_throwException() {
+		// given
+		Long id = 2L;
+		VaccineIdWrapper idVaccines = new VaccineIdWrapper(
+				List.of(
+						id
+				)
+		);
+		String fiscalCode = "GRRDFN68H68L414I";
+		BDDMockito.given(
+				reservationRepository.findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(fiscalCode, id)
+		).willReturn(Collections.emptyList());
+
+		// when
+		Throwable throwable = catchThrowable(() -> underTest.getReservationByFiscalCode(fiscalCode, idVaccines));
+
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("I have not found any reservations for this fiscalCode");
+	}
+
+	@Test
+	void getReservationByDate_availableReservation_pass() {
+		// given
+		String clinicName = entry1.getClinicName();
+		Long idVaccine = entry1.getReservationId().getIdVaccine();
+		LocalDate date = entry1.getDate();
+		List<Reservation> reservationList = List.of(entry1);
+		BDDMockito.given(
+				reservationRepository.findAllByClinicNameAndReservationId_IdVaccineAndAndDate(clinicName, idVaccine, date)
+		).willReturn(
+				reservationList
+		);
+
+		// when
+		List<Reservation> result = underTest.getReservationByDate(clinicName, idVaccine, date);
+
+		// then
+		BDDAssertions.then(result).isEqualTo(reservationList);
+	}
+
+	@Test
+	void getReservationByDate_noReservation_throwException() {
+		// given
+		String clinicName = entry1.getClinicName();
+		Long idVaccine = entry1.getReservationId().getIdVaccine();
+		LocalDate date = entry1.getDate();
+		BDDMockito.given(
+				reservationRepository.findAllByClinicNameAndReservationId_IdVaccineAndAndDate(clinicName, idVaccine, date)
+		).willReturn(
+				Collections.emptyList()
+		);
+
+		// when
+		Throwable throwable = catchThrowable(() -> underTest.getReservationByDate(clinicName, idVaccine, date));
+
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("I have not found any reservations in date");
 	}
 }

@@ -35,11 +35,11 @@ public class VaccineController {
 
     @GetMapping(path = "/{vaccineID}")
     public Vaccine getVaccine(@PathVariable Long vaccineID) {
-        return vaccineService.getbyId(vaccineID);
+        return vaccineService.getVaccine(vaccineID);
     }
 
     @GetMapping(path = "/campaign/{vaccineID}")
     public VaccinationCampaign getVaccinationCampaign (@PathVariable Long vaccineID) {
-        return vaccineService.getVaccinationCampaign(vaccineID);
+        return vaccineService.getVaccinationCampaignByVaccineId(vaccineID);
     }
 }

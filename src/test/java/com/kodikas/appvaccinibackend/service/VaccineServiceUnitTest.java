@@ -1,14 +1,12 @@
 package com.kodikas.appvaccinibackend.service;
 
+import com.kodikas.appvaccinibackend.model.VaccinationCampaign;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccineRepository;
-
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
@@ -16,8 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -167,4 +166,69 @@ class VaccineServiceUnitTest {
 		BDDMockito.then(vaccineRepository).should(never()).save(any());
 	}
 
+	@Test
+	void getVaccine_validId_pass() {
+		// given
+		BDDMockito.given(vaccineRepository.findById(anyLong())).willReturn(
+				Optional.of(vaccine)
+		);
+
+		// when
+		Vaccine result = underTest.getVaccine(vaccine.getVaccineID());
+
+		// then
+		BDDAssertions.then(result).isEqualTo(vaccine);
+	}
+
+	@Test
+	void getVaccine_invalidId_throwException() {
+		// given
+		Long id = 3L;
+		BDDMockito.given(vaccineRepository.findById(id)).willReturn(
+				Optional.empty()
+		);
+
+		// when
+		Throwable throwable = catchThrowable(() -> underTest.getVaccine(id));
+
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("Insert a Valid ID");
+	}
+
+	@Test
+	void getVaccinationCampaignByVaccineId_validVaccineId_pass() {
+		// given
+		Long id = 8L;
+		VaccinationCampaign vaccinationCampaign = new VaccinationCampaign(
+				"campagna2",
+				Set.of(
+						this.vaccine
+				)
+		);
+		vaccine.setVaccinationCampaign(vaccinationCampaign);
+		BDDMockito.given(vaccineRepository.findByVaccineID(id)).willReturn(vaccine);
+
+		// when
+		VaccinationCampaign result = underTest.getVaccinationCampaignByVaccineId(id);
+
+		// then
+		BDDMockito.then(vaccineRepository).should(times(1)).findByVaccineID(id);
+		BDDAssertions.then(result).isEqualTo(vaccinationCampaign);
+	}
+
+	@Test
+	void getVaccinationCampaignByVaccineId_invalidVaccineId_throwError() {
+		// given
+		Long id = 3L;
+
+		// when
+		Throwable throwable = catchThrowable(() -> underTest.getVaccinationCampaignByVaccineId(id));
+
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("Insert a Valid ID");
+	}
 }
