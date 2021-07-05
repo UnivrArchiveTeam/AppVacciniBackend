@@ -8,10 +8,12 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
 
-	List<Reservation> findAllByClinicNameAndReservationId_IdVaccineAndAndDate(String clinicName, Long idVaccin, LocalDate Date);
+	// findAll by clinicName, idVaccine and date
+	List<Reservation> findAllByClinicNameAndReservationId_IdVaccineAndAndDate(String clinicName, Long idVaccine, LocalDate date);
 
 	// findAll by fiscalcode & idvaccine
-	List<Reservation> findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(String fiscalcode, Long idvaccine);
+	List<Reservation> findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(String fiscalCode, Long idVaccine);
 
-	List<Reservation> findAllByReservationId_FiscalCode(String fiscalcode);
+	// findAll by fiscalcode
+	List<Reservation> findAllByReservationId_FiscalCode(String fiscalCode);
 }
