@@ -3,109 +3,167 @@ package com.kodikas.appvaccinibackend.service;
 import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VaccineServiceUnitTest {
-    @Mock
-    private VaccineRepository vaccineRepository;
-    private VaccineService underTest;
-    private Vaccine vaccine;
+	@Mock
+	private VaccineRepository vaccineRepository;
+	private VaccineService underTest;
+	private Vaccine vaccine;
 
-    @BeforeEach
-    void setUp() {
-        this.underTest = new VaccineService(vaccineRepository);
-        this.vaccine = new Vaccine(
-                8L,
-                "jansen",
-                100L
-        );
-    }
+	@BeforeEach
+	void setUp() {
+		// given
+		this.underTest = new VaccineService(vaccineRepository);
+		this.vaccine = new Vaccine(
+				8L,
+				"jansen",
+				100L
+		);
+	}
 
 
-    @Test
-    void getVaccines_shouldReturnListOfVaccines() {
-        // given
-        List<Vaccine> vaccines = List.of(
-                vaccine
-        );
+	@Test
+	void getVaccines_availableVaccines_pass() {
+		// given
+		List<Vaccine> vaccines = List.of(
+				vaccine
+		);
+		given(vaccineRepository.findAll()).willReturn(vaccines);
 
-        // when
-        when(vaccineRepository.findAll()).thenReturn(vaccines);
+		// when
+		underTest.getVaccines();
 
-        underTest.getVaccines();
+		// then
+		BDDMockito.then(vaccineRepository).should(times(1)).findAll();
+	}
 
-        // then
-        verify(vaccineRepository).findAll();
-    }
+	@Test
+	void addVaccine_validVaccine_pass() {
+		// when
+		underTest.addVaccine(vaccine);
 
-    @Test
-    void addVaccine_shouldCallRepository() {
-        // when
-        underTest.addVaccine(vaccine);
+		// then
+		BDDMockito.then(vaccineRepository).should(times(1)).save(vaccine);
+	}
 
-        // then
-        verify(vaccineRepository).save(vaccine);
-    }
 
-    @Test
-    void addQuantity_shouldCallRepository() {
-        // given
-        Long id = vaccine.getVaccineID();
+	@Test
+	void addQuantity_validQuantity_pass() {
+		// given
+		Long id = vaccine.getVaccineID();
+		given(vaccineRepository.findById(id)).willReturn(Optional.of(vaccine));
+		given(vaccineRepository.save(any(Vaccine.class))).willAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
-        // when
-        when(vaccineRepository.findById(id)).thenReturn(Optional.of(vaccine));
+		// when
+		Vaccine result = underTest.addQuantity(id, 50L);
 
-        underTest.addQuantity(id, 50L);
-        // then
-        verify(vaccineRepository).save(any());
-        assertThat(vaccine.getQuantity()).isEqualTo(150L);
-    }
+		// then
+		BDDMockito.then(vaccineRepository).should(times(1)).save(any());
+		BDDAssertions.then(result.getQuantity()).isEqualTo(150L);
+	}
 
-    @Test
-    void addQuantity_shouldThrowErrorWhenQuantityGreaterThanVaccineQuantity() {
-        // given
-        long quantity = vaccine.getQuantity()+5;
+	@Test
+	void decreaseQuantity_validData_pass() {
+		// given
+		given(vaccineRepository.findById(vaccine.getVaccineID())).willReturn(
+				Optional.of(vaccine)
+		);
+		ArgumentCaptor<Vaccine> vaccineArgumentCaptor = ArgumentCaptor.forClass(Vaccine.class);
 
-        // when
-        when(vaccineRepository.findById(vaccine.getVaccineID())).thenReturn(
-                Optional.of(vaccine)
-        );
+		// when
+		underTest.decreaseQuantity(vaccine.getVaccineID());
 
-        // then
-        assertThatThrownBy(
-                () -> underTest.addQuantity(vaccine.getVaccineID(), quantity)
-        ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("Insert a Valid quantity");
+		// then
+		BDDMockito.then(vaccineRepository).should(times(1)).save(vaccineArgumentCaptor.capture());
+		BDDAssertions.then(vaccineArgumentCaptor.getValue().getQuantity()).isEqualTo(99L);
+	}
 
-        verify(vaccineRepository, never()).save(any());
+	@Test
+	void decreaseQuantity_dosesSmallerThanZero_throwException() {
+		// given
+		vaccine.setQuantity(0L);
+		given(vaccineRepository.findById(vaccine.getVaccineID())).willReturn(
+				Optional.of(vaccine)
+		);
 
-    }
+		// when
+		final Throwable throwable = catchThrowable(() -> underTest.decreaseQuantity(vaccine.getVaccineID()));
 
-    @Test
-    void addQuantity_shouldThrowErrorWhenIdDoesNotExist() {
-        // then
-        assertThatThrownBy(
-                () -> underTest.addQuantity(vaccine.getVaccineID(), 50L)
-        ).isInstanceOf(IllegalStateException.class)
-                .hasMessage("Insert a Valid ID");
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("The given vaccine has too few doses");
 
-        verify(vaccineRepository, never()).save(any());
+		BDDMockito.then(vaccineRepository).should(never()).save(any());
+	}
 
-    }
+	@Test
+	void decreaseQuantity_idDoesNotExist_throwException() {
+		// given
+		given(vaccineRepository.findById(anyLong())).willReturn(Optional.empty());
+
+		// when
+		final Throwable throwable = catchThrowable(() -> underTest.decreaseQuantity(vaccine.getVaccineID()));
+
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("Insert a Valid ID");
+
+		BDDMockito.then(vaccineRepository).should(never()).save(any());
+	}
+
+	@Test
+	void addQuantity_quantitySmallerThanZero_throwException() {
+		// given
+		long quantity = -5;
+		given(vaccineRepository.findById(vaccine.getVaccineID())).willReturn(
+				Optional.of(vaccine)
+		);
+
+		// when
+		final Throwable throwable = catchThrowable(() -> underTest.addQuantity(vaccine.getVaccineID(), quantity));
+
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("Insert a Valid quantity");
+
+		BDDMockito.then(vaccineRepository).should(never()).save(any());
+	}
+
+	@Test
+	void addQuantity_idDoesNotExist_throwError() {
+		// given
+		given(vaccineRepository.findById(anyLong())).willReturn(Optional.empty());
+
+		// when
+		final Throwable throwable = catchThrowable(() -> underTest.addQuantity(vaccine.getVaccineID(), 50L));
+		// then
+		BDDAssertions.then(throwable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessage("Insert a Valid ID");
+
+		BDDMockito.then(vaccineRepository).should(never()).save(any());
+	}
 
 }
