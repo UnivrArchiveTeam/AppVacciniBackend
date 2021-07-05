@@ -42,7 +42,6 @@ public class EntitledService {
         return entitledList;
     }
 
-
     public List<String> getCategories() {
         return entitledRepository.findAll().stream().map(Entitled::getCategory).collect(Collectors.toList());
     }
