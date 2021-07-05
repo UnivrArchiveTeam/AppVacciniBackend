@@ -102,7 +102,6 @@ class EntitledServiceUnitTest {
 	}
 
 	@Test
-	// TODO: controlla se rimuovere
 	void getEntitledByCategory_unavailableCategory_throwException() {
 		// given
 		String category = "under40";

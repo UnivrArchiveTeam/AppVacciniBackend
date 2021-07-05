@@ -28,7 +28,6 @@ public class ReservationService {
 
 
     public List<Reservation> getReservation(String fiscalCode) {
-
         List<Reservation> reservationList = reservationRepository.findAllByReservationId_FiscalCode(fiscalCode);
 
         if (reservationList.isEmpty()) {
