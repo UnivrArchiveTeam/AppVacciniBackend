@@ -57,7 +57,11 @@ public class Vaccine {
         this.vaccinationCampaign = vaccinationCampaign;
     }
 
-    @JsonIgnore
+	public Vaccine(long vaccineID) {
+        this.setVaccineID(vaccineID);
+	}
+
+	@JsonIgnore
     public VaccinationCampaign getVaccinationCampaign() {
         return vaccinationCampaign;
     }

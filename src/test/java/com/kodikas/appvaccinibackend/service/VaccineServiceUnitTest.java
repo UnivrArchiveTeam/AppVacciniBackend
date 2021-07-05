@@ -158,6 +158,7 @@ class VaccineServiceUnitTest {
 
 		// when
 		final Throwable throwable = catchThrowable(() -> underTest.addQuantity(vaccine.getVaccineID(), 50L));
+
 		// then
 		BDDAssertions.then(throwable)
 				.isInstanceOf(IllegalStateException.class)
