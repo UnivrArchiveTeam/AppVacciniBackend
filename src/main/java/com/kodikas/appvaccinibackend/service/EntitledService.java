@@ -35,13 +35,11 @@ public class EntitledService {
     public List<Entitled> getEntitledByCategory(String category){
         List<Entitled> entitledList = entitledRepository.findAllByCategory(category);
 
-//        if(entitledList.isEmpty())
-//            throw new IllegalStateException("I have not found anyone entitled to this category");
-
+        if(entitledList.isEmpty())
+            throw new IllegalStateException("I have not found anyone entitled to this category");
 
         return entitledList;
     }
-
 
     public List<String> getCategories() {
         return entitledRepository.findAll().stream().map(Entitled::getCategory).collect(Collectors.toList());

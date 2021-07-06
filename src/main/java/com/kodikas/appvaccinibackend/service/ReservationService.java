@@ -1,7 +1,6 @@
 package com.kodikas.appvaccinibackend.service;
 
 import com.kodikas.appvaccinibackend.model.Reservation;
-import com.kodikas.appvaccinibackend.model.Vaccine;
 import com.kodikas.appvaccinibackend.repository.ReservationRepository;
 import com.kodikas.appvaccinibackend.wrapper.VaccineIdWrapper;
 import lombok.AllArgsConstructor;
@@ -14,59 +13,59 @@ import java.util.List;
 @AllArgsConstructor
 public class ReservationService {
 
-    private final ReservationRepository reservationRepository;
-    private final VaccineService vaccineService;
+	private final ReservationRepository reservationRepository;
+	private final VaccineService vaccineService;
 
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
-    }
+	public List<Reservation> getAllReservations() {
+		return reservationRepository.findAll();
+	}
 
-    public Reservation addReservation(Reservation newEntry) {
-        vaccineService.decreaseQuantity(newEntry.getReservationId().getIdVaccine());
-        return reservationRepository.save(newEntry);
-    }
+	public Reservation addReservation(Reservation newEntry) {
+		vaccineService.decreaseQuantity(newEntry.getReservationId().getIdVaccine());
+		return reservationRepository.save(newEntry);
+	}
 
 
-    public List<Reservation> getReservation(String fiscalCode) {
+	public List<Reservation> getReservation(String fiscalCode) {
+		List<Reservation> reservationList = reservationRepository.findAllByReservationId_FiscalCode(fiscalCode);
 
-        List<Reservation> reservationList = reservationRepository.findAllByReservationId_FiscalCode(fiscalCode);
+		if (reservationList.isEmpty()) {
+			throw new IllegalStateException("I have not found any reservations for this fiscalCode");
+		}
 
-        if (reservationList.isEmpty()) {
-            throw new IllegalStateException("I have not found any reservations for this fiscalCode");
-        }
+		return reservationList;
+	}
 
-        return reservationList;
-    }
+	public List<Reservation> getReservationByDate(String clinicName, Long idVaccine, LocalDate date) {
 
-    public List<Reservation> getReservationbyDate(String clinicName, Long idVaccine, LocalDate date) {
+		List<Reservation> reservationList = null;
 
-        List<Reservation> reservationList = null;
+		reservationList = reservationRepository.findAllByClinicNameAndReservationId_IdVaccineAndAndDate(clinicName, idVaccine, date);
 
-        reservationList = reservationRepository.findAllByClinicNameAndReservationId_IdVaccineAndAndDate(clinicName, idVaccine, date);
+		if (reservationList.isEmpty()) {
+			throw new IllegalStateException("I have not found any reservations in date");
+		}
 
-        if (reservationList.isEmpty()) {
-            throw new IllegalStateException("I have not found any reservations in date");
-        }
+		return reservationList;
+	}
 
-        return reservationList;
-    }
+	public List<Reservation> getReservationByFiscalCode(String fiscalCode, VaccineIdWrapper idVaccines) {
 
-    public List<Reservation> getReservationbyFiscalCode(String fiscalcode, VaccineIdWrapper idVaccines) {
+		List<Reservation> reservationList = null;
 
-        List<Reservation> reservationList = null;
+		for (long idVaccine : idVaccines.getIdVaccines()) {
 
-        for (long idVaccine : idVaccines.getIdVaccines()) {
+			if (reservationList == null) {
+				reservationList = reservationRepository.findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(fiscalCode, idVaccine);
+			} else {
+				reservationList.addAll(reservationRepository.findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(fiscalCode, idVaccine));
+			}
+		}
 
-            if (reservationList.isEmpty()) {
-                reservationList = reservationRepository.findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(fiscalcode, idVaccine);
-            } else {
-                reservationList.addAll(reservationRepository.findAllByReservationId_FiscalCodeAndReservationId_IdVaccine(fiscalcode, idVaccine));
-            }
-        }
-        if (reservationList.isEmpty()) {
-            throw new IllegalStateException("I have not found any reservations by Fiscalcode");
-        }
+		if (reservationList == null || reservationList.isEmpty()) {
+			throw new IllegalStateException("I have not found any reservations for this fiscalCode");
+		}
 
-        return reservationList;
-    }
+		return reservationList;
+	}
 }

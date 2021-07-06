@@ -25,6 +25,8 @@ public class VaccinationCampaignService {
                 && vaccinationCampaignRepository.existsByDiseaseName(vaccinationCampaign.getDiseaseName())
         ) {
             throw new IllegalStateException("The given diseaseName is already present");
+        } else if (vaccinationCampaign.getDiseaseName() == null) {
+            throw new IllegalStateException("Invalid diseaseName");
         }
 
         if (! vaccinationCampaign.getVaccines().isEmpty()) {
