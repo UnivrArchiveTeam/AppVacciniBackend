@@ -9,6 +9,7 @@ import com.kodikas.appvaccinibackend.repository.VaccineRepository;
 import com.kodikas.appvaccinibackend.service.VaccineService;
 import com.kodikas.appvaccinibackend.wrapper.VaccinationCampaignWrapper;
 import com.kodikas.appvaccinibackend.wrapper.VaccineWrapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,25 +43,22 @@ class VaccineControllerAcceptanceTest {
 
     @Autowired private VaccineRepository vaccineRepository;
 
+    @AfterEach
+    void tearDown() {
+        vaccineRepository.deleteAll();
+    }
+
     @BeforeEach
     void setUp() {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        vaccineRepository.deleteAll();
         vaccine = new Vaccine(
                 "jansen",
-                100L,
-                new VaccinationCampaign(
-                        "campagna2"
-                )
+                100L
         );
         expectedVaccine = new Vaccine(
                 1L,
                 "jansen",
-                100L,
-                new VaccinationCampaign(
-                        2L,
-                        "campagna2"
-                )
+                100L
         );
     }
 
