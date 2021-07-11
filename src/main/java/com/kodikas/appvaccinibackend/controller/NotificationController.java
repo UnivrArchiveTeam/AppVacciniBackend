@@ -19,7 +19,7 @@ public class NotificationController {
 	}
 
 	@PostMapping
-	public Notification addNotification(Notification notification) {
+	public Notification addNotification(@RequestBody Notification notification) {
 		return notificationService.addNotification(notification);
 	}
 }
