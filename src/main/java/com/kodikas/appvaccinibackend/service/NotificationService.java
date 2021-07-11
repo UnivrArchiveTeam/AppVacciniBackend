@@ -5,6 +5,7 @@ import com.kodikas.appvaccinibackend.repository.NotificationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,5 +19,12 @@ public class NotificationService {
 
 	public Notification addNotification(Notification notification) {
 		return notificationRepository.save(notification);
+	}
+
+	@Transactional
+	public void deleteNotification(Notification notification) {
+		String fiscalCode = notification.getIdNotification().getFiscalCode();
+		long campaignId = notification.getIdNotification().getCampaignId();
+		notificationRepository.deleteNotificationByIdNotification_CampaignIdAndIdNotification_FiscalCode(campaignId, fiscalCode);
 	}
 }

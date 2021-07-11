@@ -22,4 +22,9 @@ public class NotificationController {
 	public Notification addNotification(@RequestBody Notification notification) {
 		return notificationService.addNotification(notification);
 	}
+
+	@DeleteMapping
+	public void deleteNotification(@RequestBody Notification notification) {
+		notificationService.deleteNotification(notification);
+	}
 }
